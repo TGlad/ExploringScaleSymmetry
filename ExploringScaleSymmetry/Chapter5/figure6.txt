@@ -1,0 +1,455 @@
+/* To run, open https://hirnsohle.de/test/fractalLab/ then press the 2D button to generate the Mandelbrot set.
+ * Now go to the Fragment tab and replace the text with this text and then press the Save fractal button and give it a name
+ * Now press the Fractal library button, then the Paste parameters button, and paste in the following:
+{"scale":2, "power":2, "bailout":4, "minIterations":1, "juliaMode":false, "offset":[0.36,0.06], "colorMode":0, "bailoutStyle":0, "colorScale":1, "colorCycle":1, "colorCycleOffset":0, "colorCycleMirror":true, "hsv":false, "iterationColorBlend":0, "colorIterations":4, "color1":[1,1,1], "color2":[0,0.53,0.8], "color3":[0,0,0], "transparent":false, "gamma":1, "orbitTrap":false, "orbitTrapOffset":[0,0], "orbitTrapScale":1, "orbitTrapEdgeDetail":0.5, "orbitTrapRotation":0, "orbitTrapSpin":0, "texture":"/images/flower.png", "rotation":0, "cameraPosition":[-0.5,0,2.5], "size":[1284,550], "outputSize":[1284,550], "dE":"Tetrahedral", "maxIterations":50, "antialiasing":false, "stepSpeed":0.5}
+ *
+ * Fractal Lab's 2D fractal shader
+ * Fractals by Tom Lowe, 2015
+ * colouring methods based on previous examples by Tom Beddard:
+ *
+ * Copyright 2011, Tom Beddard
+ * http://www.subblue.com
+ *
+ * Licensed under the GPL Version 3 license.
+ * http://www.gnu.org/licenses/ *
+ */
+#ifdef GL_ES
+precision highp float;
+#endif
+
+// The primary parameters
+#define dE Tetrahedral              // {"label":"Fractal type", "control":"select", "options":["Tetrahedral", "Dihedral"]}
+#define maxIterations 50            // {"label":"Iterations", "min":1, "max":400, "step":1, "group_label":"2D parameters"}
+#define antialiasing 0.5            // {"label":"Anti-aliasing", "control":"bool", "default":false, "group_label":"Render quality"}
+
+
+// The following is a long list of parameters and boiler plate code.
+// For the actual fractal algorithm jump to the Tetrahedal or Dihedral functions.
+
+uniform float scale;                // {"label":"Scale",        "min":-10,  "max":10,   "step":0.1,     "default":2,    "group":"Fractal", "group_label":"Fractal parameters"}
+uniform float power;                // {"label":"Power",        "min":-20,  "max":20,   "step":0.001,     "default":2,    "group":"Fractal"}
+uniform float bailout;              // {"label":"Bailout", "min":0.1, "max":50, "step":0.01, "default":4, "group":"Fractal"}
+uniform int   minIterations;        // {"label":"Min. iterations", "min":1, "max":400, "step":1, "group":"Fractal"}
+
+uniform bool  juliaMode;            // {"label":"Enable", "default":false,    "group":"Fractal", "group_label":"Julia mode"}
+uniform vec2  offset;               // {"label":["Offset x","Offset y"],  "min":-2,   "max":2,    "step":0.001,    "default":[0.36,0.06],  "group":"Fractal"}
+
+uniform int   colorMode;            // {"label":"Colour mode",  "min":0,  "max":6,   "step":1,     "default":0,    "group":"Colour"}
+uniform int   bailoutStyle;         // {"label":"Colour style", "min":0,  "max":4,   "step":1,     "default":0,    "group":"Colour"}
+uniform float colorScale;           // {"label":"Colour scale",  "min":0,  "max":10,   "step":0.01,     "default":1,    "group":"Colour"}
+uniform float colorCycle;           // {"label":"Colour cycle", "min":0,  "max":10,   "step":0.01,     "default":1,    "group":"Colour"}
+uniform float colorCycleOffset;     // {"label":"Colour cycle offset", "min":-10,  "max":10,   "step":0.01,     "default":0,    "group":"Colour"}
+uniform bool  colorCycleMirror;     // {"label":"Colour mirror", "default":true,    "group":"Colour"}
+uniform bool  hsv;                  // {"label":"Rainbow", "default":false,    "group":"Colour"}
+uniform float iterationColorBlend;  // {"label":"Iteration blend", "min":0,  "max":10,   "step":0.01,     "default":0,    "group":"Colour"}
+
+uniform int   colorIterations;      // {"label":"Colour iterations", "default": 4, "min":0, "max": 30, "step":1, "group":"Colour", "group_label":"Base colour"}
+uniform vec3  color1;               // {"label":"Colour 1",  "default":[1.0, 1.0, 1.0], "group":"Colour", "control":"color"}
+uniform vec3  color2;               // {"label":"Colour 2",  "default":[0, 0.53, 0.8], "group":"Colour", "control":"color"}
+uniform vec3  color3;               // {"label":"Inside/background colour",  "default":[0.0, 0.0, 0.0], "group":"Colour", "control":"color"}
+uniform bool  transparent;          // {"label":"Transparent background", "default":false, "group":"Colour"}
+uniform float gamma;                // {"label":"Gamma correction", "default":1, "min":0.1, "max":2, "step":0.01, "group":"Colour"}
+
+uniform bool  orbitTrap;            // {"label":"Orbit trap", "default":false, "group":"Image", "group_label":"Map images into fractal space"}
+uniform vec2  orbitTrapOffset;      // {"label":["Orbit offset x", "Orbit trap y"], "min":-3, "max":3, "default":[0, 0], "step":0.001, "group":"Image"}
+uniform float orbitTrapScale;       // {"label":"Image scale", "min": 0.1, "max": 10, "step": 0.001, "default":1, "group":"Image"}
+uniform float orbitTrapEdgeDetail;  // {"label":"Edge detail", "min": 0, "max": 1, "step": 0.001, "default":0.5, "group":"Image"}
+uniform float orbitTrapRotation;    // {"label":"Rotation", "min": -360, "max": 360, "step": 0.1, "default":0, "group":"Image"}
+uniform float orbitTrapSpin;        // {"label":"Spin", "min": -360, "max": 360, "step": 0.1, "default":0, "group":"Image"}
+uniform sampler2D texture;          // {"label":"Mapping image URL", "default":"/images/flower.png", "group":"Image"}
+
+uniform float rotation;             // {"label":"Rotation",         "min":-180, "max":180,  "step":0.5,     "default":0,    "group":"Camera", "group_label":"Camera parameters"}
+uniform vec3  cameraPosition;       // {"label":["Camera x", "Camera y", "Camera z"],   "default":[-0.5, 0, 2.5], "min":0, "max": 200, "step":0.0000001, "control":"camera", "group":"Camera"}
+uniform vec2  size;                 // {"default":[400, 300]}
+uniform vec2  outputSize;           // {"default":[800, 600]}
+
+float aspectRatio = outputSize.x / outputSize.y;
+mat2  rotationMatrix;
+mat2  orbitRotation;
+mat2  orbitSpin;
+
+
+#define BAILOUT 4.0
+#define LOG2 float(log(2.0))
+
+// Complex math operations
+#define complexMult(a,b) vec2(a.x*b.x - a.y*b.y, a.x*b.y + a.y*b.x)
+#define complexMag(z) float(pow(length(z), 2.0))
+#define complexReciprocal(z) vec2(z.x / complexMag(z), -z.y / complexMag(z))
+#define complexDivision(a,b) complexMult(a, complexReciprocal(b))
+#define complexArg(z) float(atan(z.y, z.x))
+#define complexLog(z) vec2(log(length(z)), complexArg(z))
+#define complexExp(z) vec2(exp(z.x) * cos(z.y), exp(z.x) * sin(z.y))
+#define sinh(x) float((exp(x) - exp(-x)) / 2.0)
+#define cosh(x) float((exp(x) + exp(-x)) / 2.0)
+#define complexSin(z) vec2(sin(z.x) * cosh(z.y), cos(z.x) * sinh(z.y))
+#define complexCos(z) vec2(cos(z.x) * cosh(z.y), -sin(z.x) * sinh(z.y))
+#define complexTan(z) vec2(sin(2.0 * z.x)/(cos(2.0 * z.x) + cosh(2.0 * z.y)), sinh(2.0 * z.y)/(cos(2.0 * z.x) + cosh(2.0 * z.y)))
+#define complexSinh(z) vec2(sinh(z.x) * cos(z.y), cosh(z.x) * sin(z.y))
+#define complexCosh(z) vec2(cosh(z.x) * cos(z.y), sinh(z.x) * sin(z.y))
+#define complexTanh(z) vec2(sinh(2.0 * z.x)/(cosh(2.0 * z.a) + cos(2.0 * z.y)), sin(2.0 * z.y)/(cosh(2.0 * z.x) + cos(2.0 * z.y)))
+#define polar(r,a) vec2(cos(a) * r, sin(a) * r)
+#define complexPower(z,p) vec2(polar(pow(length(z), float(p)), float(p) * complexArg(z)))
+
+// x^y = exp(y * log(x))
+#define complexPower2(z, p) vec2(complexExp(complexMult(p, complexLog(z))))
+
+
+// RGB to HSV
+// http://www.easyrgb.com/index.php?X=MATH&H=20#text20
+vec3 rgb2hsv(vec3 color)
+{
+    float rgb_min = min(color.r, min(color.g, color.b));
+    float rgb_max = max(color.r, max(color.g, color.b));
+    float rgb_delta = rgb_max - rgb_min;
+    
+    float v = rgb_max;
+    float h, s;
+    
+    if (rgb_delta == 0.0) {
+        // Grey
+        h = 0.0;
+        s = 0.0;
+    } else {
+        // Colour
+        s = rgb_delta / rgb_max;
+        float r_delta = (((rgb_max - color.r) / 6.0) + (rgb_delta / 2.0)) / rgb_delta;
+        float g_delta = (((rgb_max - color.g) / 6.0) + (rgb_delta / 2.0)) / rgb_delta;
+        float b_delta = (((rgb_max - color.b) / 6.0) + (rgb_delta / 2.0)) / rgb_delta;
+        
+        if (color.r == rgb_max) {
+            h = b_delta - g_delta;
+        } else if (color.g == rgb_max) {
+            h = 1.0 / 3.0 + r_delta - b_delta;
+        } else if (color.b == rgb_max) {
+            h = 2.0 / 3.0 + g_delta - r_delta;
+        }
+        
+        if (h < 0.0) h += 1.0;
+        if (h > 1.0) h -= 1.0;
+    }
+    
+    return vec3(h, s, v);
+}
+
+
+vec3 hsv2rgb(vec3 hsv)
+{
+    float h, s, v, r, g, b, j, p, q, t;
+    int i;
+    vec3 color;
+    
+    h = hsv.x;
+    s = hsv.y;
+    v = hsv.z;
+    
+    if (h == 1.0) {
+        h = 0.0;
+    }
+    
+    if (v == 0.0) {
+        // No brightness so return black
+        color = vec3(0.0);
+        
+    } else if (s == 0.0) {
+        // No saturation so return grey
+        color = vec3(v);
+        
+    } else {
+        // RGB color
+        h *= 6.0;
+        i = int(floor(h));
+        j = h - float(i);
+        p = v * (1.0 - s);
+        q = v * (1.0 - (s * j));
+        t = v * (1.0 - (s * (1.0 - j)));
+        
+        if (i == 0) {
+            r = v;
+            g = t;
+            b = p;
+        } else if (i == 1) {
+            r = q;
+            g = v;
+            b = p;
+        } else if (i == 2) {
+            r = p;
+            g = v;
+            b = t;
+        } else if (i == 3) {
+            r = p;
+            g = q;
+            b = v;
+        } else if (i == 4) {
+            r = t;
+            g = p;
+            b = v;
+        } else if (i == 5) {
+            r = v;
+            g = p;
+            b = q;
+        }
+        color = vec3(r, g, b);
+    }
+    
+    return color;
+}
+
+
+// ============================================================================================ //
+
+
+float _bailout = exp(bailout);
+float log2Bailout = log(2.0 * log(_bailout));
+float logPower = log(abs(power));
+
+bool bailoutLimit(vec2 z) {
+    bool bailing = false;
+    
+    if (bailoutStyle == 3 && (pow(z.x, 2.0) - pow(z.y, 2.0)) >= _bailout) {
+        bailing = true;
+        
+    } else if (bailoutStyle == 4 && (z.y * z.y - z.y * z.x) >= bailout) {
+        bailing = true;
+        
+    } else if (bailoutStyle == 2 && (pow(z.y, 2.0) - pow(z.x, 2.0)) >= _bailout) {
+        bailing = true;
+        
+    } else if (bailoutStyle == 1 && (abs(z.x) > bailout || abs(z.y) > _bailout)) {
+        bailing = true;
+        
+    } else if (dot(z, z) >= _bailout) {
+        bailing = true;
+    }
+    
+    return bailing;
+}
+
+
+vec4 colorMapping(float n, vec2 z) {
+    vec3 color = color3,
+        c1 = color1,
+        c2 = color2;
+    
+    if (hsv) {
+        c1 = rgb2hsv(c1);
+        c2 = rgb2hsv(c2);
+    }
+    
+    if (colorMode == 3) {
+        color = atan(z.y, z.x) > 0.0 ? c1 : c2;
+        
+    } else if (colorMode == 4) {
+        color = mod(n, 2.0) == 0.0 ? c1 : c2;
+        
+    } else if (colorMode == 5) {
+        color = (abs(z.x) < bailout / 2.0 || abs(z.y) < bailout / 2.0) ? c1 : c2;
+        
+    } else if (colorMode == 6) {
+        float v = 0.5 * sin(floor(colorScale) * complexArg(z)) + 0.5;
+        color = mix(c1, c2, v);
+         
+    } else {
+        float v = abs(1.0 - n / float(maxIterations));
+        float v0 = v;
+        float vp, v1;
+        
+        if (colorMode != 2) {
+            // Smooth colouring
+            // From: http://en.wikipedia.org/wiki/Mandelbrot_set#Continuous_.28smooth.29_coloring
+            vp = abs((log2Bailout - log(log(abs(length(z))))) / logPower);
+            v1 = abs(1.0 - (n + 1.0) / float(maxIterations));
+            
+            if (colorMode == 1) {
+                if (n == 0.0) {
+                    v = v - (v - v1) * vp;
+                } else {
+                    v = v1 - (v1 - v) * vp;
+                }
+            } else {
+                v = v + (v1 - v) * vp;
+            }
+        }
+        
+        if (colorMode == 2 && n == 0.0) v = 1.0;
+        
+        v = pow(v, colorScale);
+        v *= colorCycle;
+        v += colorCycleOffset;
+        
+        if (colorCycleMirror) {
+            bool even = mod(v, 2.0) < 1.0 ? true : false;
+            if (even) {
+                v = 1.0 - mod(v, 1.0);
+            } else {
+                v = mod(v, 1.0);
+            }
+        } else {
+            v = 1.0 - mod(v, 1.0);
+        }
+        
+        if (hsv) {
+            color = hsv2rgb(mix(c1, c2, clamp(v, 0.0, 1.0)));
+        } else {
+           color = mix(c1, c2, clamp(v, 0.0, 1.0));
+        }
+    }
+    
+    return vec4(color, 1.0);
+}
+
+#ifdef dETetrahedral
+
+vec4 Tetrahedral(vec2 z) { 
+    vec4  color = vec4(color3, 1.0);
+    float n = 0.0;
+    vec2  c = juliaMode ? offset : z;
+    vec2 z2 = z;
+    float pixelRadius = 0.5/size.x * aspectRatio * cameraPosition.z;
+    z2.x += pixelRadius;
+    vec2 c2 = z2;
+    
+    float root2 = sqrt(float(2));
+    float asin120 = 0.866025;
+    for (int i = 0; i < int(maxIterations); i++) {
+        n += 1.0;
+        {
+        vec2 zA = z - root2 * vec2(1, 0);
+        vec2 zB = z - root2 * vec2(-0.5, asin120);
+        vec2 zC = z - root2 * vec2(-0.5, -asin120);
+        vec2 za = root2 * z - vec2(-1,0);
+        vec2 zb = root2 * z - vec2(0.5, asin120);
+        vec2 zc = root2 * z - vec2(0.5,-asin120);
+        vec2 znum = complexMult(z, complexMult(zA, complexMult(zB,zC)));
+        vec2 zden = complexMult(za, complexMult(zb, zc));
+        z = complexDivision(znum, zden) + c;
+        }
+        {
+        vec2 zA = z2 - root2 * vec2(1, 0);
+        vec2 zB = z2 - root2 * vec2(-0.5, asin120);
+        vec2 zC = z2 - root2 * vec2(-0.5, -asin120);
+        vec2 za = root2 * z2 - vec2(-1,0);
+        vec2 zb = root2 * z2 - vec2(0.5, asin120);
+        vec2 zc = root2 * z2 - vec2(0.5,-asin120);
+        vec2 znum = complexMult(z2, complexMult(zA, complexMult(zB,zC)));
+        vec2 zden = complexMult(za, complexMult(zb, zc));
+        z2 = complexDivision(znum, zden) + c2;
+        }
+        vec2 bet = z2 - z;
+        float r2 = bet.x*bet.x + bet.y*bet.y;
+        vec2 d1 = z - (vec2(-1,0)/root2);
+        float dist1 = d1.x*d1.x + d1.y*d1.y;
+        vec2 d2 = z - (vec2(0.5,asin120)/root2);
+        float dist2 = d2.x*d2.x + d2.y*d2.y;
+        vec2 d3 = z - (vec2(0.5,-asin120)/root2);
+        float dist3 = d3.x*d3.x + d3.y*d3.y;
+        if (dist1 < r2 || dist2<r2 || dist3<r2) {
+            color = colorMapping(n, z);
+            break;
+        }
+    }
+    
+    if (iterationColorBlend > 0.0) {
+        float blend = clamp(1.0 - (n / float(maxIterations)) * iterationColorBlend, 0.0, 1.0);
+        color.rgb = mix(color3, color.rgb, blend);
+    }
+    
+    return color;
+}
+#endif
+#ifdef dEDihedral
+
+vec4 Dihedral(vec2 z) {
+    vec4  color = vec4(color3, 1.0);
+    float n = 0.0;
+    vec2  c = juliaMode ? offset : z;
+    vec2 z2 = z;
+    float pixelRadius = 0.5/size.x * aspectRatio * cameraPosition.z;
+    z2.x += pixelRadius;
+    vec2 c2 = z2;
+    
+    float root2 = sqrt(float(2));
+    float asin120 = 0.866025;
+    for (int i = 0; i < int(maxIterations); i++) {
+        n += 1.0;
+        {
+        vec2 zA = z - vec2(0, 1);
+        vec2 zB = z + vec2(0, 1);
+        vec2 za = z - vec2(1,0);
+        vec2 zb = z + vec2(1,0);
+        vec2 znum = complexMult(zA, complexMult(zA, complexMult(zB,zB)));
+        vec2 zden = 2.0*complexMult(z, complexMult(za, zb));
+        z = complexDivision(znum, zden) + c;
+        }
+        {
+        vec2 zA = z2 - vec2(0, 1);
+        vec2 zB = z2 + vec2(0, 1);
+        vec2 za = z2 - vec2(1,0);
+        vec2 zb = z2 + vec2(1,0);
+        vec2 znum = complexMult(zA, complexMult(zA, complexMult(zB,zB)));
+        vec2 zden = 2.0*complexMult(z2, complexMult(za, zb));
+        z2 = complexDivision(znum, zden) + c2;
+        }
+        vec2 bet = z2 - z;
+        float r2 = bet.x*bet.x + bet.y*bet.y;
+        vec2 d1 = z;
+        float dist1 = d1.x*d1.x + d1.y*d1.y;
+        vec2 d2 = z - vec2(1,0);
+        float dist2 = d2.x*d2.x + d2.y*d2.y;
+        vec2 d3 = z + vec2(1,0);
+        float dist3 = d3.x*d3.x + d3.y*d3.y;
+        if (dist1 < r2 || dist2<r2 || dist3<r2) {
+            color = colorMapping(n, z);
+            break;
+        }
+    }
+    
+    if (iterationColorBlend > 0.0) {
+        float blend = clamp(1.0 - (n / float(maxIterations)) * iterationColorBlend, 0.0, 1.0);
+        color.rgb = mix(color3, color.rgb, blend);
+    }
+    
+    return color;
+}
+
+#endif
+
+// ============================================================================================ //
+
+
+vec4 render(vec2 pixel) {
+    vec2  z = ((pixel - (size * 0.5)) / size) * vec2(aspectRatio, 1.0) * cameraPosition.z + cameraPosition.xy;
+    z *= rotationMatrix;
+    
+    return dE(z);
+}
+
+
+// The main loop
+void main()
+{
+    vec4 color = vec4(0.0);
+    float n = 0.0;
+    
+    float rc = cos(radians(rotation));
+    float rs = sin(radians(rotation));
+    rotationMatrix = mat2(rc, rs, -rs, rc);
+    
+    
+#ifdef antialiasing
+    for (float x = 0.0; x < 1.0; x += float(antialiasing)) {
+        for (float y = 0.0; y < 1.0; y += float(antialiasing)) {
+            color += render(gl_FragCoord.xy + vec2(x, y));
+            n += 1.0;
+        }
+    }
+    color /= n;
+#else
+    color = render(gl_FragCoord.xy);
+#endif
+    
+    if (color.a < 0.00392) discard; // Less than 1/255
+    
+    gl_FragColor = vec4(pow(color.rgb, vec3(1.0 / gamma)), 1.0);
+    
+}

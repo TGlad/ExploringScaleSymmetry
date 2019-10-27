@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Chapter1">
+      <UniqueIdentifier>{8e957dff-29e2-4f7c-9811-791c93e4bd26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chapter2">
+      <UniqueIdentifier>{7feb681e-20fc-4536-9910-32b7f6ed4009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chapter3">
+      <UniqueIdentifier>{84fce60e-3a9e-43f6-9eff-debb3400f4fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chapter4">
+      <UniqueIdentifier>{7f43c2c2-0a56-49de-b3e5-e85dcac0e4b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chapter5">
+      <UniqueIdentifier>{3714c116-2dd8-41e3-919e-c2019c8a5af6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chapter6">
+      <UniqueIdentifier>{37cd443a-2be4-48f7-9679-3c754d5f9b47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chapter7">
+      <UniqueIdentifier>{c3c65ed9-b14f-44d2-9228-36e0c437c16f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chapter8">
+      <UniqueIdentifier>{5cf69857-5cc1-4f00-b626-22ab732e073e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chapter9">
+      <UniqueIdentifier>{27ffe508-8e81-4637-bd05-f7c43c959e4e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bmp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="figure2.cpp">
+      <Filter>Source Files\Chapter2</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter3\figure1.cpp">
+      <Filter>Source Files\Chapter3</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter3\figure1_alternative.cpp">
+      <Filter>Source Files\Chapter3</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter3\figure5.cpp">
+      <Filter>Source Files\Chapter3</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter3\figure9.cpp">
+      <Filter>Source Files\Chapter3</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter3\figure10.cpp">
+      <Filter>Source Files\Chapter3</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter3\figure12.cpp">
+      <Filter>Source Files\Chapter3</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter4\figure9.cpp">
+      <Filter>Source Files\Chapter4</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter4\figure11.cpp">
+      <Filter>Source Files\Chapter4</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter4\figure20.cpp">
+      <Filter>Source Files\Chapter4</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter5\figure22.cpp">
+      <Filter>Source Files\Chapter5</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter5\figure25.cpp">
+      <Filter>Source Files\Chapter5</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\figure17.cpp">
+      <Filter>Source Files\Chapter6</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\figure17_big.cpp">
+      <Filter>Source Files\Chapter6</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter7\figure1.cpp">
+      <Filter>Source Files\Chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter7\figure3.cpp">
+      <Filter>Source Files\Chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter7\figure4.cpp">
+      <Filter>Source Files\Chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter7\figure4b.cpp">
+      <Filter>Source Files\Chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter7\figure4c.cpp">
+      <Filter>Source Files\Chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter7\figure6.cpp">
+      <Filter>Source Files\Chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter7\figure12.cpp">
+      <Filter>Source Files\Chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter7\figure13.cpp">
+      <Filter>Source Files\Chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter8\figure1.cpp">
+      <Filter>Source Files\Chapter8</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter8\figure1_spongecluster.cpp">
+      <Filter>Source Files\Chapter8</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter8\figure2.cpp">
+      <Filter>Source Files\Chapter8</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter8\figure6_cluster.cpp">
+      <Filter>Source Files\Chapter8</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter8\figure6_tree.cpp">
+      <Filter>Source Files\Chapter8</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter9\figure2.cpp">
+      <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter9\figure3.cpp">
+      <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter9\figure4.cpp">
+      <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter9\figure5.cpp">
+      <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter9\figure11.cpp">
+      <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter9\figure12.cpp">
+      <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter9\figure12_disktree.cpp">
+      <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter9\figure12_forddisks.cpp">
+      <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter9\figure12_spheretree.cpp">
+      <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="bmp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter2\figure19.cpp">
+      <Filter>Source Files\Chapter2</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
