@@ -85,7 +85,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bmp.cpp" />
+    <ClCompile Include="Chapter2\figure10.cpp" />
+    <ClCompile Include="Chapter2\figure15.cpp" />
+    <ClCompile Include="Chapter2\figure16.cpp" />
     <ClCompile Include="Chapter2\figure19.cpp" />
+    <ClCompile Include="Chapter2\figure3.cpp" />
+    <ClCompile Include="Chapter2\figure4.cpp" />
+    <ClCompile Include="Chapter2\figure6.cpp" />
     <ClCompile Include="Chapter3\figure1.cpp" />
     <ClCompile Include="Chapter3\figure10.cpp" />
     <ClCompile Include="Chapter3\figure12.cpp" />
@@ -97,31 +103,22 @@
     <ClCompile Include="Chapter4\figure9.cpp" />
     <ClCompile Include="Chapter5\figure22.cpp" />
     <ClCompile Include="Chapter5\figure25.cpp" />
+    <ClCompile Include="Chapter6\figure12.cpp" />
     <ClCompile Include="Chapter6\figure17.cpp" />
-    <ClCompile Include="Chapter6\figure17_big.cpp" />
     <ClCompile Include="Chapter7\figure1.cpp" />
     <ClCompile Include="Chapter7\figure12.cpp" />
     <ClCompile Include="Chapter7\figure13.cpp" />
     <ClCompile Include="Chapter7\figure3.cpp" />
     <ClCompile Include="Chapter7\figure4.cpp" />
-    <ClCompile Include="Chapter7\figure4b.cpp" />
-    <ClCompile Include="Chapter7\figure4c.cpp" />
     <ClCompile Include="Chapter7\figure6.cpp" />
-    <ClCompile Include="Chapter8\figure1.cpp" />
-    <ClCompile Include="Chapter8\figure1_spongecluster.cpp" />
+    <ClCompile Include="Chapter7\figure7.cpp" />
     <ClCompile Include="Chapter8\figure2.cpp" />
-    <ClCompile Include="Chapter8\figure6_cluster.cpp" />
-    <ClCompile Include="Chapter8\figure6_tree.cpp" />
-    <ClCompile Include="Chapter9\figure11.cpp" />
     <ClCompile Include="Chapter9\figure12.cpp" />
     <ClCompile Include="Chapter9\figure12_disktree.cpp" />
     <ClCompile Include="Chapter9\figure12_forddisks.cpp" />
     <ClCompile Include="Chapter9\figure12_spheretree.cpp" />
     <ClCompile Include="Chapter9\figure2.cpp" />
-    <ClCompile Include="Chapter9\figure3.cpp" />
-    <ClCompile Include="Chapter9\figure4.cpp" />
     <ClCompile Include="Chapter9\figure5.cpp" />
-    <ClCompile Include="figure2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -56,9 +56,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="figure2.cpp">
-      <Filter>Source Files\Chapter2</Filter>
-    </ClCompile>
     <ClCompile Include="Chapter3\figure1.cpp">
       <Filter>Source Files\Chapter3</Filter>
     </ClCompile>
@@ -95,9 +92,6 @@
     <ClCompile Include="Chapter6\figure17.cpp">
       <Filter>Source Files\Chapter6</Filter>
     </ClCompile>
-    <ClCompile Include="Chapter6\figure17_big.cpp">
-      <Filter>Source Files\Chapter6</Filter>
-    </ClCompile>
     <ClCompile Include="Chapter7\figure1.cpp">
       <Filter>Source Files\Chapter7</Filter>
     </ClCompile>
@@ -105,12 +99,6 @@
       <Filter>Source Files\Chapter7</Filter>
     </ClCompile>
     <ClCompile Include="Chapter7\figure4.cpp">
-      <Filter>Source Files\Chapter7</Filter>
-    </ClCompile>
-    <ClCompile Include="Chapter7\figure4b.cpp">
-      <Filter>Source Files\Chapter7</Filter>
-    </ClCompile>
-    <ClCompile Include="Chapter7\figure4c.cpp">
       <Filter>Source Files\Chapter7</Filter>
     </ClCompile>
     <ClCompile Include="Chapter7\figure6.cpp">
@@ -122,34 +110,13 @@
     <ClCompile Include="Chapter7\figure13.cpp">
       <Filter>Source Files\Chapter7</Filter>
     </ClCompile>
-    <ClCompile Include="Chapter8\figure1.cpp">
-      <Filter>Source Files\Chapter8</Filter>
-    </ClCompile>
-    <ClCompile Include="Chapter8\figure1_spongecluster.cpp">
-      <Filter>Source Files\Chapter8</Filter>
-    </ClCompile>
     <ClCompile Include="Chapter8\figure2.cpp">
-      <Filter>Source Files\Chapter8</Filter>
-    </ClCompile>
-    <ClCompile Include="Chapter8\figure6_cluster.cpp">
-      <Filter>Source Files\Chapter8</Filter>
-    </ClCompile>
-    <ClCompile Include="Chapter8\figure6_tree.cpp">
       <Filter>Source Files\Chapter8</Filter>
     </ClCompile>
     <ClCompile Include="Chapter9\figure2.cpp">
       <Filter>Source Files\Chapter9</Filter>
     </ClCompile>
-    <ClCompile Include="Chapter9\figure3.cpp">
-      <Filter>Source Files\Chapter9</Filter>
-    </ClCompile>
-    <ClCompile Include="Chapter9\figure4.cpp">
-      <Filter>Source Files\Chapter9</Filter>
-    </ClCompile>
     <ClCompile Include="Chapter9\figure5.cpp">
-      <Filter>Source Files\Chapter9</Filter>
-    </ClCompile>
-    <ClCompile Include="Chapter9\figure11.cpp">
       <Filter>Source Files\Chapter9</Filter>
     </ClCompile>
     <ClCompile Include="Chapter9\figure12.cpp">
@@ -169,6 +136,30 @@
     </ClCompile>
     <ClCompile Include="Chapter2\figure19.cpp">
       <Filter>Source Files\Chapter2</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter2\figure3.cpp">
+      <Filter>Source Files\Chapter2</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter2\figure4.cpp">
+      <Filter>Source Files\Chapter2</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter2\figure6.cpp">
+      <Filter>Source Files\Chapter2</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter2\figure10.cpp">
+      <Filter>Source Files\Chapter2</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter2\figure15.cpp">
+      <Filter>Source Files\Chapter2</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter2\figure16.cpp">
+      <Filter>Source Files\Chapter2</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter7\figure7.cpp">
+      <Filter>Source Files\Chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\figure12.cpp">
+      <Filter>Source Files\Chapter6</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
