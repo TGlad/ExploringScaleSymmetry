@@ -1,0 +1,10 @@
+Isoceles pyramidal surface info:
+
+Long length: 1
+short length: 0.780778
+Obtuse angle: 1.16974 rads, 67.02116 degrees
+Acute angle: 0.802112 rads, 45.9576  degrees
+
+Dimension: 2.32059
+triangle height: 0.92065
+Pyramid height: h = 0.552095

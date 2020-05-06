@@ -52,6 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Code\Eigen;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -67,6 +68,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Code\Eigen;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -79,46 +81,47 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bmp.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="include\bmp.h" />
+    <ClInclude Include="include\stdafx.h" />
+    <ClInclude Include="include\targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bmp.cpp" />
-    <ClCompile Include="Chapter2\figure10.cpp" />
-    <ClCompile Include="Chapter2\figure15.cpp" />
-    <ClCompile Include="Chapter2\figure16.cpp" />
-    <ClCompile Include="Chapter2\figure19.cpp" />
-    <ClCompile Include="Chapter2\figure3.cpp" />
-    <ClCompile Include="Chapter2\figure4.cpp" />
-    <ClCompile Include="Chapter2\figure6.cpp" />
-    <ClCompile Include="Chapter3\figure1.cpp" />
-    <ClCompile Include="Chapter3\figure10.cpp" />
-    <ClCompile Include="Chapter3\figure12.cpp" />
-    <ClCompile Include="Chapter3\figure1_alternative.cpp" />
-    <ClCompile Include="Chapter3\figure5.cpp" />
-    <ClCompile Include="Chapter3\figure9.cpp" />
-    <ClCompile Include="Chapter4\figure11.cpp" />
-    <ClCompile Include="Chapter4\figure20.cpp" />
-    <ClCompile Include="Chapter4\figure9.cpp" />
-    <ClCompile Include="Chapter5\figure22.cpp" />
-    <ClCompile Include="Chapter5\figure25.cpp" />
-    <ClCompile Include="Chapter6\figure12.cpp" />
-    <ClCompile Include="Chapter6\figure17.cpp" />
-    <ClCompile Include="Chapter7\figure1.cpp" />
-    <ClCompile Include="Chapter7\figure12.cpp" />
-    <ClCompile Include="Chapter7\figure13.cpp" />
-    <ClCompile Include="Chapter7\figure3.cpp" />
-    <ClCompile Include="Chapter7\figure4.cpp" />
-    <ClCompile Include="Chapter7\figure6.cpp" />
-    <ClCompile Include="Chapter7\figure7.cpp" />
-    <ClCompile Include="Chapter8\figure2.cpp" />
-    <ClCompile Include="Chapter9\figure12.cpp" />
-    <ClCompile Include="Chapter9\figure12_disktree.cpp" />
-    <ClCompile Include="Chapter9\figure12_forddisks.cpp" />
-    <ClCompile Include="Chapter9\figure12_spheretree.cpp" />
-    <ClCompile Include="Chapter9\figure2.cpp" />
-    <ClCompile Include="Chapter9\figure5.cpp" />
+    <ClCompile Include="Chapter2\ch2_figure10.cpp" />
+    <ClCompile Include="Chapter2\ch2_figure15.cpp" />
+    <ClCompile Include="Chapter2\ch2_figure16.cpp" />
+    <ClCompile Include="Chapter2\ch2_figure19.cpp" />
+    <ClCompile Include="Chapter2\ch2_figure3.cpp" />
+    <ClCompile Include="Chapter2\ch2_figure4.cpp" />
+    <ClCompile Include="Chapter2\ch2_figure6.cpp" />
+    <ClCompile Include="Chapter3\ch3_figure1.cpp" />
+    <ClCompile Include="Chapter3\ch3_figure10.cpp" />
+    <ClCompile Include="Chapter3\ch3_figure12.cpp" />
+    <ClCompile Include="Chapter3\ch3_figure1_alternative.cpp" />
+    <ClCompile Include="Chapter3\ch3_figure5.cpp" />
+    <ClCompile Include="Chapter3\ch3_figure9.cpp" />
+    <ClCompile Include="Chapter4\ch4_figure11.cpp" />
+    <ClCompile Include="Chapter4\ch4_figure20.cpp" />
+    <ClCompile Include="Chapter4\ch4_figure9.cpp" />
+    <ClCompile Include="Chapter5\ch5_figure22.cpp" />
+    <ClCompile Include="Chapter5\ch5_figure25.cpp" />
+    <ClCompile Include="Chapter6\ch6_figure12.cpp" />
+    <ClCompile Include="Chapter6\ch6_figure17.cpp" />
+    <ClCompile Include="Chapter7\ch7_figure1.cpp" />
+    <ClCompile Include="Chapter7\ch7_figure12.cpp" />
+    <ClCompile Include="Chapter7\ch7_figure13.cpp" />
+    <ClCompile Include="Chapter7\ch7_figure3.cpp" />
+    <ClCompile Include="Chapter7\ch7_figure4.cpp" />
+    <ClCompile Include="Chapter7\ch7_figure6.cpp" />
+    <ClCompile Include="Chapter7\ch7_figure7.cpp" />
+    <ClCompile Include="Chapter8\ch8_figure2.cpp" />
+    <ClCompile Include="Chapter9\ch9_figure12.cpp" />
+    <ClCompile Include="Chapter9\ch9_figure12_disktree.cpp" />
+    <ClCompile Include="Chapter9\ch9_figure12_forddisks.cpp" />
+    <ClCompile Include="Chapter9\ch9_figure12_spheretree.cpp" />
+    <ClCompile Include="Chapter9\ch9_figure2.cpp" />
+    <ClCompile Include="Chapter9\ch9_figure5.cpp" />
+    <ClCompile Include="include\bmp.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
