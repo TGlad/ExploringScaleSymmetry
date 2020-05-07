@@ -6,7 +6,6 @@
 // Set this value to change the number of sides
 const int sides = 5;
 
-
 struct Section
 {
   Vector2d pos;
@@ -21,7 +20,7 @@ static double scale = 760.0;
 static Vector2d offset(1.0, 0.5);
 static vector<Vector2d> shape;
 
-void saveSVG(const string &fileName, const vector<Section> &list)
+inline void saveSVG(const string &fileName, const vector<Section> &list)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -30,9 +29,9 @@ void saveSVG(const string &fileName, const vector<Section> &list)
   for (auto &sec : list)
   {
     Vector2d side(sec.up[1], -sec.up[0]);
-    for (int i = 0; i < (int)tri.size(); i++)
+    for (int i = 0; i < (int)shape.size(); i++)
     {
-      Vector2d end = sec.pos + tri[i][0] * side + tri[i][1] * sec.up;
+      Vector2d end = sec.pos + shape[i][0] * side + shape[i][1] * sec.up;
       svg << "<path d = \"M " << scale*(sec.pos[0] + offset[0]) << " " << scale - scale*(sec.pos[1] + offset[1]);
       svg << " L " << scale*(end[0] + offset[0]) << " " << scale - scale*(end[1] + offset[1]);
       svg << "\" stroke=\"black\" stroke-width=\"1\" />\n"; 
@@ -43,7 +42,7 @@ void saveSVG(const string &fileName, const vector<Section> &list)
   svg.close();
 }
 
-vector<Section> transform(vector<Section> &list, const Vector2d &translation)
+inline vector<Section> transform(vector<Section> &list, const Vector2d &translation)
 {
   vector<Section> newChild = list;
   for (int i = 0; i < (int)newChild.size(); i++)
@@ -68,6 +67,7 @@ int chapter2Figure19()
   vector<Vector2d> ends(sides);
   for (int i = 0; i<sides; i++)
     ends[i] = shape[i] * scl;
+
   for (int j = 0; j < 7; j++)
   {
     vector<Section> newList;
@@ -76,7 +76,7 @@ int chapter2Figure19()
     {
       vector<Section> newChild = transform(list, 2.0*ends[i]);
       newList.insert(newList.end(), newChild.begin(), newChild.end());
-      newEnds[i] = -ends[(i + (sides/2)) % sides] + s*ends[i];
+      newEnds[i] = -ends[(i + (sides/2)) % sides] + 2.0*ends[i];
     }
     list.insert(list.end(), newList.begin(), newList.end());
     for (int i = 0; i < sides; i++)

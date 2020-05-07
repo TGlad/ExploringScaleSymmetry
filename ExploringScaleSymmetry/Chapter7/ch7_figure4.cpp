@@ -11,7 +11,7 @@ static Vector3d seaWaterColour = Vector3d(0.8, 0.9, 0.6);
 static const int width = 1024;
 static const int height = 512;
 
-void putpixel(vector<BYTE> &out, const Vector2i &pos, const Vector3d &colour)
+inline void putpixel(vector<BYTE> &out, const Vector2i &pos, const Vector3d &colour)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= height)
     return;
@@ -23,22 +23,22 @@ void putpixel(vector<BYTE> &out, const Vector2i &pos, const Vector3d &colour)
 
 const double PI = 3.14159;
 
-Vector3d mix(const Vector3d &a, const Vector3d &b, double t)
+inline Vector3d mix(const Vector3d &a, const Vector3d &b, double t)
 {
   return a + (b - a)*t;
 }
 
-Vector3d reflect(const Vector3d &ray, const Vector3d &normal)
+inline Vector3d reflect(const Vector3d &ray, const Vector3d &normal)
 {
   return ray - normal * 2.0*ray.dot(normal);
 }
 
 // lighting
-double diffuse(const Vector3d &n, const Vector3d &l, double p)
+inline double diffuse(const Vector3d &n, const Vector3d &l, double p)
 {
   return pow(n.dot(l) * 0.4 + 0.6, p);
 }
-double specular(const Vector3d &n, const Vector3d &l, const Vector3d &e, double s)
+inline double specular(const Vector3d &n, const Vector3d &l, const Vector3d &e, double s)
 {
   double nrm = (s + 8.0) / (PI * 8.0);
   return pow(max(reflect(e, n).dot(l), 0.0), s) * nrm;
@@ -52,7 +52,7 @@ Vector3d getSkyColor(Vector3d e)
 }
 
 // Some approximations of reflections, refractions and the Fresnel reflectivity term. 
-Vector3d getSeaColour(const Vector3d &p, const Vector3d &n, const Vector3d &l, const Vector3d &eye, const Vector3d &dist)
+inline Vector3d getSeaColour(const Vector3d &p, const Vector3d &n, const Vector3d &l, const Vector3d &eye, const Vector3d &dist)
 {
   double fresnel = max(0.0, min(1.0 - n.dot(-eye), 1.0));
   fresnel = pow(fresnel, 2.0) * 1.0;

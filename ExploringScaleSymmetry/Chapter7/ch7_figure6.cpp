@@ -23,10 +23,10 @@ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
-double scale = 750.0;
-Vector2d offset(0.6, 0);
+static double scale = 750.0;
+static Vector2d offset(0.6, 0);
 
-void saveSVG(const string &fileName, const vector<Node> &tree)
+inline void saveSVG(const string &fileName, const vector<Node> &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());

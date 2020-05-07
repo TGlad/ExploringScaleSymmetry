@@ -16,7 +16,7 @@ public:
 
 static double scale = 750.0;
 
-void saveSVG(const string &fileName, const vector<Node> &list)
+inline void saveSVG(const string &fileName, const vector<Node> &list)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -33,7 +33,7 @@ void saveSVG(const string &fileName, const vector<Node> &list)
   svg.close();
 }
 
-void split(vector<Node> &list, const Node &node)
+inline void split(vector<Node> &list, const Node &node)
 {
   list.push_back(node);
   if (node.radius <= minLength)

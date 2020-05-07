@@ -121,6 +121,9 @@ void generateCrumple(const string &fileName, int maxCorrugations, double bendAng
 
 int chapter2Figure10()
 {
+  // simulate the command line here. Remove to turn this into a main function.
+  const int argc = 1; _TCHAR* argv[argc] = { NULL };
+
   // arguments:
   double bendAngle = 15;
   double yawAngle = 90;

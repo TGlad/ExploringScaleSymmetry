@@ -14,7 +14,7 @@ static double r = 0.025 / 2.0; // this is the expansion radius.
 static int width = 3200; // 3200
 static int height = width; // keep the same
 
-void setPixel(vector<BYTE> &out, const Vector2i &pos, double col)
+inline void setPixel(vector<BYTE> &out, const Vector2i &pos, double col)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= height)
     return;
@@ -24,7 +24,7 @@ void setPixel(vector<BYTE> &out, const Vector2i &pos, double col)
   out[ind + 2] = (int)(255.0*col);
 }
 
-double distanceToDisks(Vector2d &p)
+inline double distanceToDisks(Vector2d &p)
 {
   double scale = 1.0; 
   int numIterations = 8;
@@ -56,7 +56,7 @@ double distanceToDisks(Vector2d &p)
   return d;
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int chapter9Figure12_forddisks()
 {
   long s2;
   vector<BYTE> out(width*width * 3); // .bmp pixel buffer

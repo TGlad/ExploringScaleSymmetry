@@ -10,7 +10,7 @@ static double orbitalDist1 = 3.0; static double orbitalDist2 = 6.315;      // re
 static const int width = 1024;
 static const int height = 1024;
 
-void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
+inline void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= width)
     return;
@@ -18,7 +18,7 @@ void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
   out[ind + 0] = out[ind + 1] = out[ind + 2] = shade;
 }
 
-void drawDisk(const Vector2d &pos, vector<BYTE> &out, double rad, int shade)
+inline void drawDisk(const Vector2d &pos, vector<BYTE> &out, double rad, int shade)
 {
   for (int x = (int)(pos[0] - rad); x <= (int)(pos[0] + rad); x++)
     for (int y = (int)(pos[1] - rad); y <= (int)(pos[1] + rad); y++)
@@ -40,7 +40,7 @@ public:
 static double time = 0.0;
 
 // recursive construction of child planets
-void buildCluster(vector<Node> &cluster, const Node &node)
+inline void buildCluster(vector<Node> &cluster, const Node &node)
 {
   cluster.push_back(node);
   if (node.radius < 1.0)

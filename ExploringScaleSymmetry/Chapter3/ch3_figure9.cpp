@@ -7,7 +7,6 @@
 static double p = 1.25;  // p is the pythagoras scale, 2 gives right angles branching. 
 static double c = 0.2; // c is the Cantor number, 1/3 gives even (Y-shaped) branching.
 
-
 struct Section
 {
   Vector2d pos, peak;
@@ -27,7 +26,7 @@ static Vector2d offset(0.0, 0);
 static double xVal = 0;
 static double weight = 0;
 
-void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+inline void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d start = origin + xAx*pos[0] + yAx*pos[1];
   Vector2d x = xAx*xAxis[0] + yAx*xAxis[1];
@@ -45,7 +44,7 @@ void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, c
     c.draw(svg, p, x, y);
 }
 
-void saveSVG(const string &fileName, vector<Section> &forest)
+inline void saveSVG(const string &fileName, vector<Section> &forest)
 {
   xVal = 0;
   weight = 0;
@@ -59,7 +58,7 @@ void saveSVG(const string &fileName, vector<Section> &forest)
   svg.close();
 }
 
-void Section::split(int level)
+inline void Section::split(int level)
 {
   double minLength = 0.005;
   if (length <= minLength)

@@ -5,7 +5,7 @@
 // The number of iterations
 static int order = 5; 
 
-void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector2d &p12, bool flip = false)
+inline void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector2d &p12, bool flip = false)
 {
   if (order < 0)
     return;
@@ -45,8 +45,8 @@ void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector
 
 #include <fstream>
 static ofstream svg;
-double svgwidth = 900.0;
-void saveSVG(const string &fileName, const vector<Vector2d> points)
+static double svgwidth = 900.0;
+inline void saveSVG(const string &fileName, const vector<Vector2d> points)
 {
   double scale = 0.85;
   svg.open(fileName.c_str());

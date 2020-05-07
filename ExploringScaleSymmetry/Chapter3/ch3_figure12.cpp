@@ -1,7 +1,7 @@
 // Generates one of the cross family of structures. 
+#include <fstream>
 #include "stdafx.h"
 #include "bmp.h"
-#include <fstream>
 
 // Change this parameter for cross structures with different numbers of sides. 
 static int sides = 5;
@@ -22,7 +22,7 @@ static double scale = 750.0;
 static Vector2d offset(1.0, 0.5);
 static vector<Vector2d> tri;
 
-void saveSVG(const string &fileName, const vector<Section> &list)
+inline void saveSVG(const string &fileName, const vector<Section> &list)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -44,7 +44,7 @@ void saveSVG(const string &fileName, const vector<Section> &list)
   svg.close();
 }
 
-vector<Section> transform(vector<Section> &list, const Vector2d &translation)
+inline vector<Section> transform(vector<Section> &list, const Vector2d &translation)
 {
   vector<Section> newChild = list;
   for (int i = 0; i < (int)newChild.size(); i++)

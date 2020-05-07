@@ -1,5 +1,6 @@
 // Generates the basic fractal curve types in vector file format (.svg). 
 // the well-known Levy C, Koch and Dragon curves
+#include <fstream>
 #include "stdafx.h"
 #include "bmp.h"
 
@@ -10,7 +11,7 @@ static double lift = 0.5*tan(30.0 * pi / 180.0); // lift is the height of the mi
 // The iteration depth of fractal curve. 
 static int order = 14; 
 
-void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector2d &p12, bool flip = false)
+inline void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector2d &p12, bool flip = false)
 {
   if (order < 0)
     return;
@@ -32,10 +33,9 @@ void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector
   addChild(ps, order - 1, mid, p1, f2);
 }
 
-#include <fstream>
 static ofstream svg;
-double svgwidth = 900.0;
-void saveSVG(const string &fileName, const vector<Vector2d> points)
+static double svgwidth = 900.0;
+inline void saveSVG(const string &fileName, const vector<Vector2d> points)
 {
   double scale = 0.85;
   svg.open(fileName.c_str());

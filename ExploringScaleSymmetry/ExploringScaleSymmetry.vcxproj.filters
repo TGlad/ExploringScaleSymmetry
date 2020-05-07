@@ -54,12 +54,12 @@
     <ClInclude Include="include\targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\PolyMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="include\bmp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Chapter2\ch2_figure3.cpp">
@@ -163,6 +163,12 @@
     </ClCompile>
     <ClCompile Include="Chapter9\ch9_figure12_spheretree.cpp">
       <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="include\PolyMesh.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\bmp.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

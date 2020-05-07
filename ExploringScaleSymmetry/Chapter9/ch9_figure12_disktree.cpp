@@ -14,7 +14,7 @@ static double r = 0.025 / 2.0; // this is the expansion radius
 static int width = 4000;
 static int height = width; 
 
-void setPixel(vector<BYTE> &out, const Vector2i &pos, double col)
+inline void setPixel(vector<BYTE> &out, const Vector2i &pos, double col)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= height)
     return;
@@ -24,7 +24,7 @@ void setPixel(vector<BYTE> &out, const Vector2i &pos, double col)
   out[ind + 2] = (int)(255.0*col);
 }
 
-double distanceToTree(Vector2d &p)
+inline double distanceToTree(Vector2d &p)
 {
   double scale = 1.0;
   double ratio = 2.0 / 3.0;
@@ -56,7 +56,7 @@ double distanceToTree(Vector2d &p)
   return d;
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int chapter9Figure12_disktree()
 {
   long s2;
   vector<BYTE> out(width*width * 3); // .bmp pixel buffer

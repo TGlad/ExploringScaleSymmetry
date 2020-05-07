@@ -30,7 +30,7 @@ public:
 
 static int width = 1024;
 static int height = 750;
-Vector2d offset(500.0, 600.0);
+static Vector2d offset(500.0, 600.0);
 static vector<Vector2d> leaves;
 #if defined TRITREE_SOLID || defined TRITREE_OUTLINE || defined TRITREE_SKELETON
 static double minLength = 0.01;
@@ -41,7 +41,7 @@ static double minLength = 0.0015;
 #endif
 static double area = 0.0;
 
-void drawGraph(const string &fileName, vector<double> &graph, double yscale, double minY)
+inline void drawGraph(const string &fileName, vector<double> &graph, double yscale, double minY)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -59,7 +59,7 @@ static Vector2d minVec(1e10, 1e10);
 static Vector2d maxVec(-1e10, -1e10);
 
 #if defined MENGER
-void recurse(vector<Node> &list, Node &node)
+inline void recurse(vector<Node> &list, Node &node)
 {
   if (node.length < minLength)
   {
@@ -82,7 +82,7 @@ void recurse(vector<Node> &list, Node &node)
   }
 }
 #elif defined VISCEK
-void recurse(vector<Node> &list, Node &node)
+inline void recurse(vector<Node> &list, Node &node)
 {
   if (node.length < minLength)
   {
@@ -105,7 +105,7 @@ void recurse(vector<Node> &list, Node &node)
   recurse(list, child);
 }
 #elif defined MUSHROOM
-void recurse(vector<Node> &list, Node &node)
+inline void recurse(vector<Node> &list, Node &node)
 {
   if (node.length < minLength)
   {
@@ -221,7 +221,7 @@ void recurse(vector<Node> &list, Node &node)
 }
 #endif
 
-void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
+inline void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= height)
     return;

@@ -27,7 +27,7 @@ static Vector2d offset(1.0, 0);
 static double xVal = 0;
 static double weight = 0;
 
-void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+inline void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d start = origin + xAx*pos[0] + yAx*pos[1];
   Vector2d x = xAx*xAxis[0] + yAx*xAxis[1];
@@ -45,7 +45,7 @@ void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, c
     c.draw(svg, p, x, y);
 }
 
-void saveSVG(const string &fileName, Section &tree)
+inline void saveSVG(const string &fileName, Section &tree)
 {
   xVal = 0;
   weight = 0;
@@ -59,7 +59,7 @@ void saveSVG(const string &fileName, Section &tree)
 }
 
 // recursively split each branch
-void Section::split()
+inline void Section::split()
 {
   double minLength = 0.005; // this controls the minimum detail level
   if (length <= minLength)

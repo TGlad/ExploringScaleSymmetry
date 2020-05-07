@@ -14,7 +14,7 @@ static int width = (automataSize * 31) / 10;
 static int height = width;
 static int fullWidth = width;
 
-void putpixel(vector<BYTE> &image, const Vector2i &pos, const Vector3d &col)
+inline void putpixel(vector<BYTE> &image, const Vector2i &pos, const Vector3d &col)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= height)
     return;
@@ -23,20 +23,20 @@ void putpixel(vector<BYTE> &image, const Vector2i &pos, const Vector3d &col)
     image[ind + i] = (BYTE)(255.0*col[i]);
 }
 
-void putpix(vector<BYTE> &out, const Vector2i &pos, int shade)
+inline void putpix(vector<BYTE> &out, const Vector2i &pos, int shade)
 {
   if (pos[0] < 0 || pos[0] >= fullWidth || pos[1] < 0 || pos[1] >= fullWidth)
     return;
   out[pos[0] + fullWidth*pos[1]] = shade;
 }
-int getpix(vector<BYTE> &out, const Vector2i &pos)
+inline int getpix(vector<BYTE> &out, const Vector2i &pos)
 {
   if (pos[0] < 0 || pos[0] >= fullWidth || pos[1] < 0 || pos[1] >= fullWidth)
     return 0;
   return out[pos[0] + fullWidth*pos[1]];
 }
 
-Vector2i toVector2i(const Vector2d &pos)
+inline Vector2i toVector2i(const Vector2d &pos)
 {
   Vector2i vec;
   vec[0] = (int)pos[0];

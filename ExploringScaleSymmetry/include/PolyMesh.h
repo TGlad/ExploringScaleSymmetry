@@ -1,6 +1,5 @@
 #pragma once
-#include "/Code/Eigen/Eigen"
-#include "/Code/Eigen/StdVector"
+#include "stdafx.h"
 #include <vector>
 #include <iostream>
 using namespace Eigen;

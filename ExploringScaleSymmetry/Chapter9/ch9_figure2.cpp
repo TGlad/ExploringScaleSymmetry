@@ -26,7 +26,7 @@ static vector<Vector2d> leaves;
 
 // Note that the structure is drawn as multiple pentagons. That is because the base shape used is a pentagon. 
 // Of course we could just draw points for the limit set, but the original substitution rule is with pentagons so we keep that here.
-void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+inline void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d minV(-1.26, 0.62);
   Vector2d maxV(1.36, 1.85);
@@ -56,7 +56,7 @@ void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, cons
     c.draw(svg, p, x, y);
 }
 
-void saveSVGLeaves(const string &fileName)
+inline void saveSVGLeaves(const string &fileName)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -69,7 +69,7 @@ void saveSVGLeaves(const string &fileName)
   svg.close();
 }
 
-void saveSVG(const string &fileName, Node &tree)
+inline void saveSVG(const string &fileName, Node &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -80,7 +80,7 @@ void saveSVG(const string &fileName, Node &tree)
   svg.close();
 }
 
-void drawGraph(const string &fileName, vector<double> &graph, double yscale, double minY)
+inline void drawGraph(const string &fileName, vector<double> &graph, double yscale, double minY)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -96,7 +96,7 @@ void drawGraph(const string &fileName, vector<double> &graph, double yscale, dou
 }
 
 // The substitution rule is applied recursively here
-void Node::split(int index)
+inline void Node::split(int index)
 {
   if (index == 0)
   {
@@ -123,7 +123,7 @@ void Node::split(int index)
     c.split(index - 1);
 }
 
-void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
+inline void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= height)
     return;

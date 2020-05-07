@@ -236,7 +236,7 @@ void PolyMesh::saveOBJ(const string &fileName, const Vector3d &offset)
 }
 
 static ofstream svg;
-double scale = 900.0;
+static double scale = 900.0;
 void PolyMesh::openSVG(const string &fileName, int number)
 {
   svg.open(fileName.c_str());

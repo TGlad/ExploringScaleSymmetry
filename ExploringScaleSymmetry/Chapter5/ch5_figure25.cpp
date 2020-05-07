@@ -18,7 +18,7 @@ static const int width = 160;
 static const int height = 160;
 #endif
 
-void setPixel(vector<BYTE> &out, int x, int y, const Vector3d &col)
+inline void setPixel(vector<BYTE> &out, int x, int y, const Vector3d &col)
 {
   if (x < 0 || x >= width || y < 0 || y >= height)
     return;
@@ -36,7 +36,7 @@ static Vector3d xAxis = diag.cross(Vector3d(0, 0, 1)).normalized();
 static Vector3d yAxis = diag.cross(xAxis);
 
 // The Mobius transform operation
-Vector3d distort(Vector3d pos, double &radius, int i)
+inline Vector3d distort(Vector3d pos, double &radius, int i)
 {
   pos -= bends[i];
   double mult = bends[i].squaredNorm() / pos.squaredNorm();
@@ -48,7 +48,7 @@ Vector3d distort(Vector3d pos, double &radius, int i)
   return pos;
 }
 
-double recurse(Vector3d pos, double radius, int level, const Vector3d &c)
+inline double recurse(Vector3d pos, double radius, int level, const Vector3d &c)
 {
   const double thresh = 0.55; 
   double z = pos.dot(diag);

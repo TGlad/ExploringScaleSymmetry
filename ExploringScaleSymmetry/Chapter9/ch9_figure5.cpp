@@ -18,8 +18,8 @@ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
-double scale = 750.0;
-Vector2d offset(0.5, 0);
+static double scale = 750.0;
+static Vector2d offset(0.5, 0);
 static vector<Vector2d> leaves;
 
 void saveTree(const string &fileName, vector<Node> &tree)

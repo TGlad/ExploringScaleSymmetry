@@ -6,7 +6,7 @@
 static int width = 1024;
 static int height = 1024;
 
-void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
+inline void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= width)
     return;
@@ -14,7 +14,7 @@ void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
   out[ind + 0] = out[ind + 1] = out[ind + 2] = shade;
 }
 
-void drawDisk(const Vector2d &pos, vector<BYTE> &out, double rad, int shade)
+inline void drawDisk(const Vector2d &pos, vector<BYTE> &out, double rad, int shade)
 {
   for (int x = (int)(pos[0] - rad); x <= (int)(pos[0] + rad); x++)
     for (int y = (int)(pos[1] - rad); y <= (int)(pos[1] + rad); y++)
@@ -34,7 +34,7 @@ public:
 };
 static int side = 0;
 
-void buildCluster(vector<Node> &cluster, const Node &node, int level, int type)
+inline void buildCluster(vector<Node> &cluster, const Node &node, int level, int type)
 {
   cluster.push_back(node);
   if (node.radius < 0.5)

@@ -15,12 +15,12 @@ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
-double scale = 750.0;
-Vector2d offset(0.55, 0);
+static double scale = 750.0;
+static Vector2d offset(0.55, 0);
 static vector<Vector2d> leaves;
 static double minLength = 0.01;
 
-void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+inline void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d start = origin + xAx*pos[0] + yAx*pos[1];
   Vector2d x = xAx*xAxis[0] + yAx*xAxis[1];
@@ -49,7 +49,7 @@ void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, cons
     leaves.push_back(corners[2]); // pos is in local space!
 }
 
-void saveSVGLeaves(const string &fileName)
+inline void saveSVGLeaves(const string &fileName)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -61,7 +61,7 @@ void saveSVGLeaves(const string &fileName)
   svg << "</svg>" << endl;
   svg.close();
 }
-void saveSVG(const string &fileName, Node &tree)
+inline void saveSVG(const string &fileName, Node &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -73,7 +73,7 @@ void saveSVG(const string &fileName, Node &tree)
 }
 static const double cantorScale = 0.3333;
 #define CLASSIFICATION
-void Node::split()
+inline void Node::split()
 {
   if (length <= minLength)
   {
@@ -143,7 +143,7 @@ void Node::split()
   dir = -dir;
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int chapter3Figure1_alternative()
 {
   Node base;
   base.xAxis = Vector2d(1, 0);
