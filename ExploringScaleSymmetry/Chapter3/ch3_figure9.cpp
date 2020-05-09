@@ -6,19 +6,21 @@
 // the following are parameters that can be set.
 static double p = 1.25;  // p is the pythagoras scale, 2 gives right angles branching. 
 static double c = 0.2; // c is the Cantor number, 1/3 gives even (Y-shaped) branching.
-
-struct Section
+namespace
 {
-  Vector2d pos, peak;
-  Vector2d xAxis, yAxis;
-  double width, width2, length;
-  double dir;
-  vector<Section> children;
-  void split(int level);
-  void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
-public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
+  struct Section
+  {
+    Vector2d pos, peak;
+    Vector2d xAxis, yAxis;
+    double width, width2, length;
+    double dir;
+    vector<Section> children;
+    void split(int level);
+    void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  };
+}
 
 static double gradient = 0.0;
 static double scale = 750.0;
@@ -26,7 +28,7 @@ static Vector2d offset(0.0, 0);
 static double xVal = 0;
 static double weight = 0;
 
-inline void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d start = origin + xAx*pos[0] + yAx*pos[1];
   Vector2d x = xAx*xAxis[0] + yAx*xAxis[1];
@@ -44,7 +46,7 @@ inline void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d 
     c.draw(svg, p, x, y);
 }
 
-inline void saveSVG(const string &fileName, vector<Section> &forest)
+static void saveSVG(const string &fileName, vector<Section> &forest)
 {
   xVal = 0;
   weight = 0;
@@ -58,7 +60,7 @@ inline void saveSVG(const string &fileName, vector<Section> &forest)
   svg.close();
 }
 
-inline void Section::split(int level)
+void Section::split(int level)
 {
   double minLength = 0.005;
   if (length <= minLength)

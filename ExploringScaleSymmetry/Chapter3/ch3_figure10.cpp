@@ -5,18 +5,20 @@
 
 // Controls detail level
 static double minLength = 0.5;
-
-struct Node
+namespace
 {
-  Vector2d pos;
-  double radius;
-public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
+  struct Node
+  {
+    Vector2d pos;
+    double radius;
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  };
+}
 
 static double scale = 750.0;
 
-inline void saveSVG(const string &fileName, const vector<Node> &list)
+static void saveSVG(const string &fileName, const vector<Node> &list)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -33,7 +35,7 @@ inline void saveSVG(const string &fileName, const vector<Node> &list)
   svg.close();
 }
 
-inline void split(vector<Node> &list, const Node &node)
+static void split(vector<Node> &list, const Node &node)
 {
   list.push_back(node);
   if (node.radius <= minLength)

@@ -4,23 +4,26 @@
 #include <fstream>
 
 // Set this value to change the number of sides
-const int sides = 5;
+const int sides = 3;
 
-struct Section
+namespace
 {
-  Vector2d pos;
-  Vector2d up;
-  void expand();
-  void draw(ofstream &svg, const Vector2d &origin);
-public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
+  struct FlakeSection
+  {
+    Vector2d pos;
+    Vector2d up;
+    void expand();
+    void draw(ofstream &svg, const Vector2d &origin);
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  };
+}
 
 static double scale = 760.0;
 static Vector2d offset(1.0, 0.5);
 static vector<Vector2d> shape;
 
-inline void saveSVG(const string &fileName, const vector<Section> &list)
+static void saveSVG(const string &fileName, const vector<FlakeSection, Eigen::aligned_allocator<FlakeSection> > &list)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -42,9 +45,9 @@ inline void saveSVG(const string &fileName, const vector<Section> &list)
   svg.close();
 }
 
-inline vector<Section> transform(vector<Section> &list, const Vector2d &translation)
+static vector<FlakeSection, Eigen::aligned_allocator<FlakeSection> > transform(vector<FlakeSection, Eigen::aligned_allocator<FlakeSection> > &list, const Vector2d &translation)
 {
-  vector<Section> newChild = list;
+  vector<FlakeSection, Eigen::aligned_allocator<FlakeSection> > newChild = list;
   for (int i = 0; i < (int)newChild.size(); i++)
   {
     newChild[i].pos = -newChild[i].pos + translation;
@@ -60,21 +63,21 @@ int chapter2Figure19()
     double angle = (double)i * 2.0*pi / (double)sides;
     shape.push_back(2.0 * Vector2d(sin(angle), cos(angle)));
   }
-  vector<Section> list(1);
+  vector<FlakeSection, Eigen::aligned_allocator<FlakeSection> > list(1);
   list[0].pos = Vector2d(0, 0);
-  double scl = 0.005; 
+  double scl = 0.001; 
   list[0].up = Vector2d(0, scl);
   vector<Vector2d> ends(sides);
   for (int i = 0; i<sides; i++)
     ends[i] = shape[i] * scl;
 
-  for (int j = 0; j < 7; j++)
+  for (int j = 0; j < 5; j++)
   {
-    vector<Section> newList;
+    vector<FlakeSection, Eigen::aligned_allocator<FlakeSection> > newList;
     vector<Vector2d> newEnds(sides);
     for (int i = 0; i < sides; i++)
     {
-      vector<Section> newChild = transform(list, 2.0*ends[i]);
+      vector<FlakeSection, Eigen::aligned_allocator<FlakeSection> > newChild = transform(list, 2.0*ends[i]);
       newList.insert(newList.end(), newChild.begin(), newChild.end());
       newEnds[i] = -ends[(i + (sides/2)) % sides] + 2.0*ends[i];
     }
@@ -88,7 +91,7 @@ int chapter2Figure19()
     saveSVG("vicsek.svg", list);
   else if (sides == 5)
     saveSVG("pentadendrite.svg", list);
-  else if (sides == 5)
+  else if (sides == 6)
     saveSVG("hexaflake.svg", list);
   return 0;
 }

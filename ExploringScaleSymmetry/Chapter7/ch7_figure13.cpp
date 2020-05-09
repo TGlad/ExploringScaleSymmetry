@@ -15,14 +15,14 @@ using namespace Eigen;
 static ofstream svg;
 static double scale = 1600.0;
 
-inline void openSVG(const string &fileName)
+static void openSVG(const string &fileName)
 {
   svg.open(fileName.c_str());
   svg << "<svg width = \"" << (int)scale << "\" height = \"" << (int)(scale*1.05) << "\" xmlns = \"http://www.w3.org/2000/svg\">" << endl;
 }
 
 static int icount = 0;
-inline void saveSVG(const Vector2d &offset, const vector<Vector3d> &points)
+static void saveSVG(const Vector2d &offset, const vector<Vector3d> &points)
 {
   double s = 2.0;
   svg << "<path d = \"M " << scale*(s*points[0][2] + offset[1]) << " " << scale*(1.0 - s*points[0][1] - offset[0]);
@@ -32,7 +32,7 @@ inline void saveSVG(const Vector2d &offset, const vector<Vector3d> &points)
   svg << "\" fill=\"none\" stroke-width=\"2\" stroke=\"" << cols[icount++] << "\" />\n";
 }
 
-inline void closeSVG()
+static void closeSVG()
 {
   svg << "</svg>" << endl;
   svg.close();

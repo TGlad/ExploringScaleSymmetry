@@ -9,7 +9,7 @@ static int numIterations = 6;
 static int width = 1024;
 static int height = 1024;
 
-inline void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
+static void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= width)
     return;

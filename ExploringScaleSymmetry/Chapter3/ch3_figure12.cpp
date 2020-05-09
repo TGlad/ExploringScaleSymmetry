@@ -7,22 +7,24 @@
 static int sides = 5;
 // Controls the detail level
 static int numIterations = 7;
-
-struct Section
+namespace
 {
-  Vector2d pos;
-  Vector2d up;
-  void expand();
-  void draw(ofstream &svg, const Vector2d &origin);
-public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
+  struct Section
+  {
+    Vector2d pos;
+    Vector2d up;
+    void expand();
+    void draw(ofstream &svg, const Vector2d &origin);
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  };
+}
 
 static double scale = 750.0;
 static Vector2d offset(1.0, 0.5);
 static vector<Vector2d> tri;
 
-inline void saveSVG(const string &fileName, const vector<Section> &list)
+static void saveSVG(const string &fileName, const vector<Section> &list)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -44,7 +46,7 @@ inline void saveSVG(const string &fileName, const vector<Section> &list)
   svg.close();
 }
 
-inline vector<Section> transform(vector<Section> &list, const Vector2d &translation)
+static vector<Section> transform(vector<Section> &list, const Vector2d &translation)
 {
   vector<Section> newChild = list;
   for (int i = 0; i < (int)newChild.size(); i++)

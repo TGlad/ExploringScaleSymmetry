@@ -10,14 +10,14 @@ static double radius = 60.0;
 static const int width = 1024;
 static const int height = 1024;
 
-inline void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
+static void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= width)
     return;
   int ind = 3 * (pos[0] + width*pos[1]);
   out[ind + 0] = out[ind + 1] = out[ind + 2] = shade;
 }
-inline int getpixel(vector<BYTE> &out, const Vector2i &pos)
+static int getpixel(vector<BYTE> &out, const Vector2i &pos)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= width)
     return 0;
@@ -39,7 +39,7 @@ struct Ball
 };
 
 // Recursive function to add child balls to the structure
-inline void addBalls(vector<Ball> &balls, Ball &ball)
+static void addBalls(vector<Ball> &balls, Ball &ball)
 {
   balls.push_back(ball);
   if (ball.scale < 1.0/32.0)
@@ -75,7 +75,7 @@ inline void addBalls(vector<Ball> &balls, Ball &ball)
   addBalls(balls, ball1);
 }
 
-inline void drawDisk(const Vector2d &pos, vector<BYTE> &out, double rad, int shade)
+static void drawDisk(const Vector2d &pos, vector<BYTE> &out, double rad, int shade)
 {
   for (int x = (int)(pos[0] - rad); x <= (int)(pos[0] + rad); x++)
     for (int y = (int)(pos[1] - rad); y <= (int)(pos[1] + rad); y++)

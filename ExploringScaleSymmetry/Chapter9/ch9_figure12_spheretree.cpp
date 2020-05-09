@@ -14,7 +14,7 @@ static double r = 0.00625 / 2.0; // the expansion radius
 static int width = 100;
 static int height = width;
 
-inline void setPixel(vector<BYTE> &out, const Vector2i &pos, double col)
+static void setPixel(vector<BYTE> &out, const Vector2i &pos, double col)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= height)
     return;
@@ -24,7 +24,7 @@ inline void setPixel(vector<BYTE> &out, const Vector2i &pos, double col)
   out[ind + 2] = (int)(255.0*col);
 }
 
-inline double distanceToTree(Vector3d p)
+static double distanceToTree(Vector3d p)
 {
   const double rad = 0.5;
   Vector3d s0(0.0, 1.0, rad);

@@ -59,7 +59,7 @@ void generateCrumple(const string &fileName, int maxCorrugations, double bendAng
   double y = 0; 
   srand(centreType);
   Vector3d offset(x, y, 0);
-  vector <Node, Eigen::aligned_allocator<Node> > oldNodes;
+  vector <Vertex, Eigen::aligned_allocator<Vertex> > oldNodes;
   vector<Vector2d, Eigen::aligned_allocator<Vector2d> > edge0, edge1;
   do
   {

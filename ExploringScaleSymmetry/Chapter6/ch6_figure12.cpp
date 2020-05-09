@@ -15,14 +15,14 @@ static int height = (eachWidth + vgap) * cols;
 static int X = 0;
 static int Y = 0;
 
-inline void putpix(vector<BYTE> &out, const Vector2i &pos, int shade)
+static void putpix(vector<BYTE> &out, const Vector2i &pos, int shade)
 {
   if (pos[0] < 0 || pos[0] > eachWidth || pos[1] < 0 || pos[1] > eachWidth)
     return;
   int ind = 3 * (X*(eachWidth + gap) + pos[0] + width*(Y*(eachWidth + vgap) + pos[1]));
   out[ind + 0] = out[ind + 1] = out[ind + 2] = shade;
 }
-inline int getpix(vector<BYTE> &out, const Vector2i &pos)
+static int getpix(vector<BYTE> &out, const Vector2i &pos)
 {
   if (pos[0] < 0 || pos[0] > eachWidth || pos[1] < 0 || pos[1] > eachWidth)
     return 0;
@@ -67,7 +67,7 @@ void diamond(vector<BYTE> &out, int x0, int y0, int x2, int y2)
   putpix(out, Vector2i(x1, y1), on[count] ? 255 : 0);
 }
 
-inline Vector2i toVector2i(const Vector2d &pos)
+static Vector2i toVector2i(const Vector2d &pos)
 {
   Vector2i vec;
   vec[0] = (int)pos[0];
@@ -79,7 +79,7 @@ inline Vector2i toVector2i(const Vector2d &pos)
   return vec;
 }
 
-inline bool addMid(vector<BYTE> &out, const Vector2d &pos0, const Vector2d &pos1, const Vector2d &pos2)
+static bool addMid(vector<BYTE> &out, const Vector2d &pos0, const Vector2d &pos1, const Vector2d &pos2)
 {
   Vector2i mid = toVector2i((pos0 + pos1 + pos2) / 3.0);
   if (mid[0] < -eachWidth / 2 || mid[0] >= eachWidth / 2 || mid[1] < -eachWidth / 2 || mid[1] >= eachWidth/2)

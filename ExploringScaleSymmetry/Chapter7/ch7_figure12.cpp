@@ -8,7 +8,7 @@ typedef complex<double> Complex;
 static double width = 700; 
 static double height = 1524;
 
-inline void saveSVG(const string &fileName, vector<Vector2d> &points)
+static void saveSVG(const string &fileName, vector<Vector2d> &points)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -28,7 +28,7 @@ inline void saveSVG(const string &fileName, vector<Vector2d> &points)
 }
 
 // Spatial Koch
-inline void recurseKoch(vector<Vector2d> &points, Vector2d &point, double flip)
+static void recurseKoch(vector<Vector2d> &points, Vector2d &point, double flip)
 {
   double l = (point - points.back()).norm();
   if (l < 4.0)
@@ -47,7 +47,7 @@ inline void recurseKoch(vector<Vector2d> &points, Vector2d &point, double flip)
 }
 
 // Newtonian version of Koch curve
-inline void recurseWeierstrass(vector<Vector2d> &points, Vector2d &point, double flip)
+static void recurseWeierstrass(vector<Vector2d> &points, Vector2d &point, double flip)
 {
   double l = (point - points.back())[1];
   if (l < 4.0)
@@ -66,7 +66,7 @@ inline void recurseWeierstrass(vector<Vector2d> &points, Vector2d &point, double
 }
 
 // Minkowskian version of the Koch curve
-inline void recurseMinkowski(vector<Vector2d> &points, Vector2d &point, double flip)
+static void recurseMinkowski(vector<Vector2d> &points, Vector2d &point, double flip)
 {
   double l = (point - points.back())[1];
   if (l < 4.0)

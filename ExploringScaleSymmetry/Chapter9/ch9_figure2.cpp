@@ -4,18 +4,20 @@
 #include "bmp.h"
 #include <sstream>
 #include <fstream>
-
-struct Node
+namespace
 {
-  Vector2d pos;
-  Vector2d xAxis, yAxis;
-  double nodeWidth;
-  vector<Node> children;
-  void split(int index);
-  void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
-public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
+  struct Node
+  {
+    Vector2d pos;
+    Vector2d xAxis, yAxis;
+    double nodeWidth;
+    vector<Node> children;
+    void split(int index);
+    void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  };
+}
 
 static int width = 1024;
 static int height = 750;
@@ -26,7 +28,7 @@ static vector<Vector2d> leaves;
 
 // Note that the structure is drawn as multiple pentagons. That is because the base shape used is a pentagon. 
 // Of course we could just draw points for the limit set, but the original substitution rule is with pentagons so we keep that here.
-inline void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d minV(-1.26, 0.62);
   Vector2d maxV(1.36, 1.85);
@@ -56,7 +58,7 @@ inline void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xA
     c.draw(svg, p, x, y);
 }
 
-inline void saveSVGLeaves(const string &fileName)
+static void saveSVGLeaves(const string &fileName)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -69,7 +71,7 @@ inline void saveSVGLeaves(const string &fileName)
   svg.close();
 }
 
-inline void saveSVG(const string &fileName, Node &tree)
+static void saveSVG(const string &fileName, Node &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -80,7 +82,7 @@ inline void saveSVG(const string &fileName, Node &tree)
   svg.close();
 }
 
-inline void drawGraph(const string &fileName, vector<double> &graph, double yscale, double minY)
+static void drawGraph(const string &fileName, vector<double> &graph, double yscale, double minY)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -96,7 +98,7 @@ inline void drawGraph(const string &fileName, vector<double> &graph, double ysca
 }
 
 // The substitution rule is applied recursively here
-inline void Node::split(int index)
+void Node::split(int index)
 {
   if (index == 0)
   {
@@ -123,7 +125,7 @@ inline void Node::split(int index)
     c.split(index - 1);
 }
 
-inline void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
+static void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= height)
     return;

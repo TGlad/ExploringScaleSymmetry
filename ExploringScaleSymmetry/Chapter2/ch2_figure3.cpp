@@ -9,9 +9,9 @@ static int type = 0; // 0: Levy C curve, 1: Koch curve, 2: Dragon curve
 // This defines the amount of bend in the curve
 static double lift = 0.5*tan(30.0 * pi / 180.0); // lift is the height of the mid point when the width is unit length. This is the correct lift for the Koch curve
 // The iteration depth of fractal curve. 
-static int order = 14; 
+static int order = 10;
 
-inline void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector2d &p12, bool flip = false)
+static void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector2d &p12, bool flip = false)
 {
   if (order < 0)
     return;
@@ -24,10 +24,12 @@ inline void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const
   bool f1, f2;
   if (type == 0)
     f1 = f2 = flip;
-  else if (type == 1 || type == -1)
+  else if (type == 1)
     f1 = f2 = !flip;
   else if (type == 2)
+  {
     f1 = true; f2 = false;
+  }
   addChild(ps, order - 1, p0, mid, f1);
   ps.push_back(mid);
   addChild(ps, order - 1, mid, p1, f2);
@@ -35,7 +37,7 @@ inline void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const
 
 static ofstream svg;
 static double svgwidth = 900.0;
-inline void saveSVG(const string &fileName, const vector<Vector2d> points)
+static void saveSVG(const string &fileName, const vector<Vector2d> points)
 {
   double scale = 0.85;
   svg.open(fileName.c_str());
@@ -56,10 +58,8 @@ int chapter2Figure3()
   vector<Vector2d> ps;
   ps.push_back(Vector2d(-0.5, 0));
   Vector2d p2(0.5, 0.0);
-  addChild(ps, order, ps[0], p2, true); // recursive function creates the first edge of the snowflake
+  addChild(ps, order, ps[0], p2, false); // recursive function creates the first edge of the snowflake
   ps.push_back(p2);
-  stringstream stream;
-  stream << "fractal_curve_" << type << ".svg";
   if (type == 0)
     saveSVG("LevyC_curve.svg", ps);
   else if (type == 1)

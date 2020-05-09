@@ -2,25 +2,27 @@
 #include "bmp.h"
 #include <fstream>
 static double gradient = 0.0001;// 0.15;
-struct Node
+namespace
 {
-  Vector2d pos, peak;
-  Vector2d xAxis, yAxis;
-  double width, width2, length;
-  double dir;
-  vector<Node> children;
-  void split();
-  void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
-public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
-
+  struct Node
+  {
+    Vector2d pos, peak;
+    Vector2d xAxis, yAxis;
+    double width, width2, length;
+    double dir;
+    vector<Node> children;
+    void split();
+    void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  };
+}
 double scale = 750.0;
 Vector2d offset(0.55, 0);
 static vector<Vector2d> leaves;
 static double minLength = 0.01;
 
-inline void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d start = origin + xAx*pos[0] + yAx*pos[1];
   Vector2d x = xAx*xAxis[0] + yAx*xAxis[1];
@@ -49,7 +51,7 @@ inline void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xA
     leaves.push_back(corners[2]); // pos is in local space!
 }
 
-inline void saveSVGLeaves(const string &fileName)
+static void saveSVGLeaves(const string &fileName)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -61,7 +63,7 @@ inline void saveSVGLeaves(const string &fileName)
   svg << "</svg>" << endl;
   svg.close();
 }
-inline void saveSVG(const string &fileName, Node &tree)
+static void saveSVG(const string &fileName, Node &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -73,7 +75,7 @@ inline void saveSVG(const string &fileName, Node &tree)
 }
 static const double cantorScale = 0.3333;
 
-inline void Node::split()
+void Node::split()
 {
   if (length <= minLength)
   {

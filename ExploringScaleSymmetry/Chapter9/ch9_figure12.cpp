@@ -18,15 +18,17 @@
 //#define TRITREE_LEAVES
 //#define TRITREE_SKELETON
 //#define TRITREE_BRANCHES
-
-struct Node
+namespace
 {
-  Vector2d pos;
-  Vector2d up;
-  double length;
-public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
+  struct Node
+  {
+    Vector2d pos;
+    Vector2d up;
+    double length;
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  };
+}
 
 static int width = 1024;
 static int height = 750;
@@ -41,7 +43,7 @@ static double minLength = 0.0015;
 #endif
 static double area = 0.0;
 
-inline void drawGraph(const string &fileName, vector<double> &graph, double yscale, double minY)
+static void drawGraph(const string &fileName, vector<double> &graph, double yscale, double minY)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -59,7 +61,7 @@ static Vector2d minVec(1e10, 1e10);
 static Vector2d maxVec(-1e10, -1e10);
 
 #if defined MENGER
-inline void recurse(vector<Node> &list, Node &node)
+static void recurse(vector<Node> &list, Node &node)
 {
   if (node.length < minLength)
   {
@@ -82,7 +84,7 @@ inline void recurse(vector<Node> &list, Node &node)
   }
 }
 #elif defined VISCEK
-inline void recurse(vector<Node> &list, Node &node)
+static void recurse(vector<Node> &list, Node &node)
 {
   if (node.length < minLength)
   {
@@ -105,7 +107,7 @@ inline void recurse(vector<Node> &list, Node &node)
   recurse(list, child);
 }
 #elif defined MUSHROOM
-inline void recurse(vector<Node> &list, Node &node)
+static void recurse(vector<Node> &list, Node &node)
 {
   if (node.length < minLength)
   {
@@ -221,7 +223,7 @@ void recurse(vector<Node> &list, Node &node)
 }
 #endif
 
-inline void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
+static void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 {
   if (pos[0] < 0 || pos[0] >= width || pos[1] < 0 || pos[1] >= height)
     return;

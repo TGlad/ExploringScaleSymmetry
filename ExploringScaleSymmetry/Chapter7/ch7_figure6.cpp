@@ -10,23 +10,25 @@ static double scale1 = 0.75; static double scale2 = 0.53828;  // relative size o
 static double angle1 = -0.4; static double angle2 = 0.6;      // relative angle of child branch 1 and 2
 static double sway = 0.25;                                    // amplitude of angular oscillation of branches
 
-
-struct Node
+namespace
 {
-  Vector2d pos;
-  double angle;
-  Vector2d xAxis() const { return Vector2d(cos(angle), sin(angle)); }
-  Vector2d yAxis() const { return Vector2d(-sin(angle), cos(angle)); }
-  double length;
-  bool flip;
-public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
+  struct Node
+  {
+    Vector2d pos;
+    double angle;
+    Vector2d xAxis() const { return Vector2d(cos(angle), sin(angle)); }
+    Vector2d yAxis() const { return Vector2d(-sin(angle), cos(angle)); }
+    double length;
+    bool flip;
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  };
+}
 
 static double scale = 750.0;
 static Vector2d offset(0.6, 0);
 
-inline void saveSVG(const string &fileName, const vector<Node> &tree)
+static void saveSVG(const string &fileName, const vector<Node> &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());

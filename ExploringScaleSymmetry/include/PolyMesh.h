@@ -5,10 +5,10 @@
 using namespace Eigen;
 using namespace std;
 
-struct Node
+struct Vertex
 {
-  Node(const Vector3d &p, const Vector2d &uv) : pos(p), uv(uv){}
-  Node(){}
+  Vertex(const Vector3d &p, const Vector2d &uv) : pos(p), uv(uv){}
+  Vertex(){}
   Vector3d pos;
   Vector2d uv;
   vector<Vector2i> newNodesAdded;
@@ -31,7 +31,7 @@ struct PolyMesh
   bool reflect(const Vector3d &pos, const Vector3d &normal); // returns if reflection happened
   void reflectNode(int i, const Vector3d &pos, const Vector3d &normal);
 
-  vector<Node, Eigen::aligned_allocator<Node> > nodes;
+  vector<Vertex, Eigen::aligned_allocator<Vertex> > nodes;
   vector<Face> faces; // this is a list of edge indices per face
   bool didReflect;
 

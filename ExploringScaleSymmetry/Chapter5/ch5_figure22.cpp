@@ -12,7 +12,7 @@ static int strength = 6; // affects the colour scale
 static int width;
 static int height;
 
-inline void setPixel(vector<BYTE> &out, int x, int y, const Vector3i &col)
+static void setPixel(vector<BYTE> &out, int x, int y, const Vector3i &col)
 {
   if (x < 0 || x >= width || y < 0 || y >= height)
     return;
@@ -34,7 +34,7 @@ static Vector2d flips[2];
 static Vector2d bends[2];
 static Vector2d shifts[2];
 
-inline void init()
+static void init()
 {
   // define the colour gradient as a heatmap (red up to blue)
   for (int i = 0; i < specSize; i++)

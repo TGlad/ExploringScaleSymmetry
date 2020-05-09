@@ -1,11 +1,12 @@
 // Generates the 1.5D 'mushroom fractal', as a vector graphic .svg file
+#include <fstream>
 #include "stdafx.h"
 #include "bmp.h"
 
 // The number of iterations
-static int order = 5; 
+static int order = 3; 
 
-inline void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector2d &p12, bool flip = false)
+static void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector2d &p12, bool flip = false)
 {
   if (order < 0)
     return;
@@ -43,10 +44,9 @@ inline void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const
   addChild(ps, order - 1, p0h, p1, flip);
 }
 
-#include <fstream>
 static ofstream svg;
 static double svgwidth = 900.0;
-inline void saveSVG(const string &fileName, const vector<Vector2d> points)
+static void saveSVG(const string &fileName, const vector<Vector2d> points)
 {
   double scale = 0.85;
   svg.open(fileName.c_str());
@@ -65,8 +65,8 @@ inline void saveSVG(const string &fileName, const vector<Vector2d> points)
 int chapter2Figure15()
 {
   vector<Vector2d> ps;
-  ps.push_back(Vector2d(-0.5, 0));
-  Vector2d p2(0.5, 0.0);
+  ps.push_back(Vector2d(-0.5, -0.5));
+  Vector2d p2(0.5, -0.5);
   addChild(ps, order + 2, ps[0], p2, true); // recursive function creates the first edge of the snowflake
   ps.push_back(p2);
   saveSVG("mushroom_curve.svg", ps);

@@ -31,7 +31,7 @@ void PolyMesh::reflectFace(int faceID, const Vector3d &pos, const Vector3d &norm
         {
           nodeAdded = nodes.size();
           nodes[n].newNodesAdded.push_back(Vector2i(max(n1, n2), nodeAdded));
-          Node newNode;
+          Vertex newNode;
           double t = d / (nodes[n2].pos - nodes[n1].pos).dot(normal);
           newNode.pos = nodes[n2].pos + (nodes[n1].pos - nodes[n2].pos)*t;
           newNode.uv = nodes[n2].uv + (nodes[n1].uv - nodes[n2].uv)*t;
@@ -104,14 +104,14 @@ bool PolyMesh::reflect(const Vector3d &pos, const Vector3d &normal)
 PolyMesh::PolyMesh()
 {
   didReflect = false;
-  Node n1;
-  Node n2(Vector3d(0, 0, 0), Vector2d(0, 0));
+  Vertex n1;
+  Vertex n2(Vector3d(0, 0, 0), Vector2d(0, 0));
   // initialise to a square, flat bit of paper
   nodes.resize(4);
-  nodes[0] = Node(Vector3d(0, 0, 0), Vector2d(0, 0));
-  nodes[1] = Node(Vector3d(1, 0, 0), Vector2d(1, 0));
-  nodes[2] = Node(Vector3d(1, 1, 0), Vector2d(1, 1));
-  nodes[3] = Node(Vector3d(0, 1, 0), Vector2d(0, 1));
+  nodes[0] = Vertex(Vector3d(0, 0, 0), Vector2d(0, 0));
+  nodes[1] = Vertex(Vector3d(1, 0, 0), Vector2d(1, 0));
+  nodes[2] = Vertex(Vector3d(1, 1, 0), Vector2d(1, 1));
+  nodes[3] = Vertex(Vector3d(0, 1, 0), Vector2d(0, 1));
   faces.resize(1);
 
   faces[0].head = new Face::FaceNode;

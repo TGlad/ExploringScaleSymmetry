@@ -9,7 +9,7 @@ static int type = 1; // 1: new type 1, 2: new type 2, 3: new type 3
 static double lift = 0.5*tan(30.0 * pi / 180.0); // lift is the height of the mid point when the width is unit length. This is the correct lift for the Koch curve
 static int order = 14;
 
-inline void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector2d &p12, bool flip = false)
+static void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const Vector2d &p12, bool flip = false)
 {
   if (order < 0)
     return;
@@ -58,7 +58,7 @@ inline void addChild(vector<Vector2d> &ps, int order, const Vector2d &p02, const
 
 static ofstream svg;
 static double svgwidth = 900.0;
-inline void saveSVG(const string &fileName, const vector<Vector2d> points)
+static void saveSVG(const string &fileName, const vector<Vector2d> points)
 {
   double scale = 0.85;
   svg.open(fileName.c_str());

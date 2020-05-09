@@ -6,7 +6,7 @@
 static int width = 1024;
 static int height = 512;
 
-inline void setPixel(vector<BYTE> &out, int x, int y, const Vector3i &col)
+static void setPixel(vector<BYTE> &out, int x, int y, const Vector3i &col)
 {
   if (x < 0 || x >= width || y < 0 || y >= height)
     return;
@@ -16,7 +16,7 @@ inline void setPixel(vector<BYTE> &out, int x, int y, const Vector3i &col)
   out[ind + 2] = col[2];
 }
 
-inline void drawPolygon(vector<BYTE> &out, double scale, double h, Vector3i &col)
+static void drawPolygon(vector<BYTE> &out, double scale, double h, Vector3i &col)
 {
   for (int y = (int)(h*(double)height); y < (int)((h + scale)*(double)height); y++)
   {

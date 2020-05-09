@@ -4,19 +4,21 @@
 #include <fstream>
 
 static double minLength = 0.001;
-
-struct Node
+namespace
 {
-  Vector2d left, right;
-  Vector2d getTop() const
+  struct Node
   {
-    Vector2d mid = (left + right) / 2.0;
-    Vector2d dif = (right - left) * sqrt(3.0) / 2.0;
-    return mid + Vector2d(-dif[1], dif[0]);
-  }
-public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
+    Vector2d left, right;
+    Vector2d getTop() const
+    {
+      Vector2d mid = (left + right) / 2.0;
+      Vector2d dif = (right - left) * sqrt(3.0) / 2.0;
+      return mid + Vector2d(-dif[1], dif[0]);
+    }
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  };
+}
 
 static double scale = 750.0;
 static Vector2d offset(0.5, 0);
