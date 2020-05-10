@@ -99,7 +99,6 @@
     <ClCompile Include="Chapter3\ch3_figure1.cpp" />
     <ClCompile Include="Chapter3\ch3_figure10.cpp" />
     <ClCompile Include="Chapter3\ch3_figure12.cpp" />
-    <ClCompile Include="Chapter3\ch3_figure1_alternative.cpp" />
     <ClCompile Include="Chapter3\ch3_figure5.cpp" />
     <ClCompile Include="Chapter3\ch3_figure9.cpp" />
     <ClCompile Include="Chapter4\ch4_figure11.cpp" />

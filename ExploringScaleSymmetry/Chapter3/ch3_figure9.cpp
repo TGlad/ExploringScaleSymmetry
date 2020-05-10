@@ -6,15 +6,16 @@
 // the following are parameters that can be set.
 static double p = 1.25;  // p is the pythagoras scale, 2 gives right angles branching. 
 static double c = 0.2; // c is the Cantor number, 1/3 gives even (Y-shaped) branching.
+
 namespace
 {
-  struct Section
+  struct ForestSection
   {
     Vector2d pos, peak;
     Vector2d xAxis, yAxis;
     double width, width2, length;
     double dir;
-    vector<Section> children;
+    vector<ForestSection, Eigen::aligned_allocator<ForestSection> > children;
     void split(int level);
     void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
   public:
@@ -28,7 +29,7 @@ static Vector2d offset(0.0, 0);
 static double xVal = 0;
 static double weight = 0;
 
-void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+void ForestSection::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d start = origin + xAx*pos[0] + yAx*pos[1];
   Vector2d x = xAx*xAxis[0] + yAx*xAxis[1];
@@ -46,7 +47,7 @@ void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, c
     c.draw(svg, p, x, y);
 }
 
-static void saveSVG(const string &fileName, vector<Section> &forest)
+static void saveSVG(const string &fileName, vector<ForestSection, Eigen::aligned_allocator<ForestSection> > &forest)
 {
   xVal = 0;
   weight = 0;
@@ -60,12 +61,12 @@ static void saveSVG(const string &fileName, vector<Section> &forest)
   svg.close();
 }
 
-void Section::split(int level)
+void ForestSection::split(int level)
 {
-  double minLength = 0.005;
+  double minLength = 0.01;
   if (length <= minLength)
     return;
-  Section child1, child2;
+  ForestSection child1, child2;
 
   double w2 = pow(width, p);
   double w2b = pow(width2, p);
@@ -128,8 +129,9 @@ int chapter3Figure9()
     cout << "gradient less than zero." << endl;
     return 1;
   }
-  vector<Section> forest;
-  Section base;
+  cout << "gradient: " << gradient << endl;
+  vector<ForestSection, Eigen::aligned_allocator<ForestSection> > forest;
+  ForestSection base;
   base.xAxis = Vector2d(0, 1);
   base.yAxis = Vector2d(-1, 0);
   base.length = 50.0;

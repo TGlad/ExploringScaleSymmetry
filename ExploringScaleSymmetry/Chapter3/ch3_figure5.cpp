@@ -9,13 +9,13 @@ static double c = 0.52; // c is the Cantor number, 1/3 gives even (Y-shaped) bra
 
 namespace
 {
-  struct Section
+  struct TreeSection
   {
     Vector2d pos, peak;
     Vector2d xAxis, yAxis;
     double width, width2, length;
     double dir;
-    vector<Section> children;
+    vector<TreeSection, Eigen::aligned_allocator<TreeSection> > children;
     void split();
     void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
   public:
@@ -29,7 +29,7 @@ static Vector2d offset(1.0, 0);
 static double xVal = 0;
 static double weight = 0;
 
-void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+void TreeSection::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d start = origin + xAx*pos[0] + yAx*pos[1];
   Vector2d x = xAx*xAxis[0] + yAx*xAxis[1];
@@ -47,7 +47,7 @@ void Section::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, c
     c.draw(svg, p, x, y);
 }
 
-static void saveSVG(const string &fileName, Section &tree)
+static void saveSVG(const string &fileName, TreeSection &tree)
 {
   xVal = 0;
   weight = 0;
@@ -61,12 +61,12 @@ static void saveSVG(const string &fileName, Section &tree)
 }
 
 // recursively split each branch
-void Section::split()
+void TreeSection::split()
 {
-  double minLength = 0.005; // this controls the minimum detail level
+  double minLength = 0.01; // this controls the minimum detail level
   if (length <= minLength)
     return;
-  Section child1, child2;
+  TreeSection child1, child2;
 
   double w2 = pow(width, p);
   double w2b = pow(width2, p);
@@ -130,10 +130,10 @@ int chapter3Figure5()
     cout << "gradient less than zero. Choose a different p or c." << endl;
     exit(1);
   }
-  Section base;
+  TreeSection base;
   base.xAxis = Vector2d(1, 0);
   base.yAxis = Vector2d(0, 1);
-  base.length = 1.1;
+  base.length = 0.5;
   base.width = base.length * gradient;
   base.width2 = 0;
   base.pos = Vector2d(0, 0);

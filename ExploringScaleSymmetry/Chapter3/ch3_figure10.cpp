@@ -7,7 +7,7 @@
 static double minLength = 0.5;
 namespace
 {
-  struct Node
+  struct RingNode
   {
     Vector2d pos;
     double radius;
@@ -18,7 +18,7 @@ namespace
 
 static double scale = 750.0;
 
-static void saveSVG(const string &fileName, const vector<Node> &list)
+static void saveSVG(const string &fileName, const vector<RingNode, Eigen::aligned_allocator<RingNode> > &list)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -35,23 +35,23 @@ static void saveSVG(const string &fileName, const vector<Node> &list)
   svg.close();
 }
 
-static void split(vector<Node> &list, const Node &node)
+static void split(vector<RingNode, Eigen::aligned_allocator<RingNode> > &list, const RingNode &node)
 {
   list.push_back(node);
   if (node.radius <= minLength)
   {
     return;
   }
-  Node child1;
+  RingNode child1;
   double s = 1.151;
   child1.pos = node.pos + s*Vector2d(sqrt(3.0) / 2.0, 0.5)*node.radius;
   child1.radius = node.radius / 3.0;
   split(list, child1);
-  Node child2;
+  RingNode child2;
   child2.pos = node.pos + s*Vector2d(-sqrt(3.0) / 2.0, 0.5)*node.radius;
   child2.radius = node.radius / 3.0;
   split(list, child2);
-  Node child3;
+  RingNode child3;
   child3.pos = node.pos + s*Vector2d(0, -1.0)*node.radius;
   child3.radius = node.radius / 3.0;
   split(list, child3);
@@ -59,10 +59,10 @@ static void split(vector<Node> &list, const Node &node)
 
 int chapter3Figure10()
 {
-  Node base;
+  RingNode base;
   base.pos = Vector2d(scale/2.0, 50 + scale/2.0);
   base.radius = 200.0;
-  vector<Node> list;
+  vector<RingNode, Eigen::aligned_allocator<RingNode> > list;
   split(list, base);
 
   saveSVG("recursive_rings.svg", list);

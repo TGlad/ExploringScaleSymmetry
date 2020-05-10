@@ -9,7 +9,7 @@ static int sides = 5;
 static int numIterations = 7;
 namespace
 {
-  struct Section
+  struct CrossSection
   {
     Vector2d pos;
     Vector2d up;
@@ -24,7 +24,7 @@ static double scale = 750.0;
 static Vector2d offset(1.0, 0.5);
 static vector<Vector2d> tri;
 
-static void saveSVG(const string &fileName, const vector<Section> &list)
+static void saveSVG(const string &fileName, const vector<CrossSection, aligned_allocator<CrossSection> > &list)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -46,9 +46,9 @@ static void saveSVG(const string &fileName, const vector<Section> &list)
   svg.close();
 }
 
-static vector<Section> transform(vector<Section> &list, const Vector2d &translation)
+static vector<CrossSection, aligned_allocator<CrossSection> > transform(vector<CrossSection, aligned_allocator<CrossSection> > &list, const Vector2d &translation)
 {
-  vector<Section> newChild = list;
+  vector<CrossSection, aligned_allocator<CrossSection> > newChild = list;
   for (int i = 0; i < (int)newChild.size(); i++)
   {
     newChild[i].pos = -newChild[i].pos + translation;
@@ -64,7 +64,7 @@ int chapter3Figure12()
     double angle = (double)i * 2.0*pi / (double)sides;
     tri.push_back(2.0 * Vector2d(sin(angle), cos(angle)));
   }
-  vector<Section> list(1);
+  vector<CrossSection, aligned_allocator<CrossSection> > list(1);
   list[0].pos = Vector2d(0, 0);
   double scl = 0.005;
   list[0].up = Vector2d(0, scl);
@@ -73,11 +73,11 @@ int chapter3Figure12()
     ends[i] = tri[i] * scl;
   for (int j = 0; j < numIterations; j++)
   {
-    vector<Section> newList;
+    vector<CrossSection, aligned_allocator<CrossSection> > newList;
     vector<Vector2d> newEnds(sides);
     for (int i = 0; i < sides; i++)
     {
-      vector<Section> newChild = transform(list, ends[i]);
+      vector<CrossSection, aligned_allocator<CrossSection> > newChild = transform(list, ends[i]);
       newList.insert(newList.end(), newChild.begin(), newChild.end());
       newEnds[i] = -ends[(i + (sides/2)) % sides] + ends[i];
     }

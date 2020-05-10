@@ -1,16 +1,19 @@
 #include "stdafx.h"
 #include "bmp.h"
 #include <fstream>
-static double gradient = 0.0001;// 0.15;
+static int type = 0; // 0 = thick tree, 1 = thin tree, 2 = tree leaves
+
+
+static double gradient = type == 0 ? 0.15 : 0.0001;
 namespace
 {
-  struct Node
+  struct TreeNode
   {
     Vector2d pos, peak;
     Vector2d xAxis, yAxis;
     double width, width2, length;
     double dir;
-    vector<Node> children;
+    vector<TreeNode, Eigen::aligned_allocator<TreeNode> > children;
     void split();
     void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
   public:
@@ -22,7 +25,7 @@ Vector2d offset(0.55, 0);
 static vector<Vector2d> leaves;
 static double minLength = 0.01;
 
-void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+void TreeNode::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d start = origin + xAx*pos[0] + yAx*pos[1];
   Vector2d x = xAx*xAxis[0] + yAx*xAxis[1];
@@ -63,7 +66,7 @@ static void saveSVGLeaves(const string &fileName)
   svg << "</svg>" << endl;
   svg.close();
 }
-static void saveSVG(const string &fileName, Node &tree)
+static void saveSVG(const string &fileName, TreeNode &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -75,13 +78,13 @@ static void saveSVG(const string &fileName, Node &tree)
 }
 static const double cantorScale = 0.3333;
 
-void Node::split()
+void TreeNode::split()
 {
   if (length <= minLength)
   {
     return;
   }
-  Node child1, child2;
+  TreeNode child1, child2;
 
   double areaLoss = (sqr(width) - sqr(width2)) * cantorScale;
   double c = sqrt((sqr(width)+sqr(width2)+areaLoss)/2.0);
@@ -140,18 +143,22 @@ void Node::split()
 
 int chapter3Figure1()
 {
-  Node base;
+  TreeNode base;
   base.xAxis = Vector2d(1, 0);
   base.yAxis = Vector2d(0, 1);
   base.length = 1.05;
-  base.width = base.length * gradient; //  / rawLength;// *gradient;
+  base.width = base.length * gradient; //  / rawLength;
   base.width2 = 0;
   base.pos = Vector2d(0, 0);
   base.dir = 1.0;
 
   base.split();
 
-  saveSVG("simpletree.svg", base);
-  saveSVGLeaves("simpletree_leaves.svg");
+  if (type == 0)
+    saveSVG("widetree.svg", base);
+  else if (type == 1)
+    saveSVG("thintree.svg", base);
+  else if (type == 2)
+    saveSVGLeaves("treeleaves.svg");
   return 0;
 }

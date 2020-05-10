@@ -86,9 +86,6 @@
     <ClCompile Include="Chapter3\ch3_figure1.cpp">
       <Filter>Source Files\Chapter3</Filter>
     </ClCompile>
-    <ClCompile Include="Chapter3\ch3_figure1_alternative.cpp">
-      <Filter>Source Files\Chapter3</Filter>
-    </ClCompile>
     <ClCompile Include="Chapter3\ch3_figure5.cpp">
       <Filter>Source Files\Chapter3</Filter>
     </ClCompile>
