@@ -15,7 +15,7 @@ namespace
     Vector2d xAxis, yAxis;
     double width, width2, length;
     double dir;
-    vector<ForestSection, Eigen::aligned_allocator<ForestSection> > children;
+    vector<ForestSection, aligned_allocator<ForestSection> > children;
     void split(int level);
     void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
   public:

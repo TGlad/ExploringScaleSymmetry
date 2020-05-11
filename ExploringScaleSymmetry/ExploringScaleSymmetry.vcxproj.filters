@@ -167,5 +167,11 @@
     <ClCompile Include="include\bmp.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="Chapter3\ch3_figure17.cpp">
+      <Filter>Source Files\Chapter3</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter9\ch9_figure4.cpp">
+      <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

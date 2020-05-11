@@ -7,9 +7,7 @@
 
 // Define which shape to extract the Minkowski content from
 #define MUSHROOM
-//#define BINARY_TREE1
-//#define BINARY_TREE2
-//#define BINARY_TREE3
+//#define BINARY_TREE
 //#define BINARY_TREE_LEAVES
 //#define MENGER 
 //#define VISCEK
@@ -18,6 +16,10 @@
 //#define TRITREE_LEAVES
 //#define TRITREE_SKELETON
 //#define TRITREE_BRANCHES
+//#define DISK_TREE
+//#define FORD_DISKS
+//#define SPHERE_TREE
+
 namespace
 {
   struct Node
@@ -36,7 +38,7 @@ static Vector2d offset(500.0, 600.0);
 static vector<Vector2d> leaves;
 #if defined TRITREE_SOLID || defined TRITREE_OUTLINE || defined TRITREE_SKELETON
 static double minLength = 0.01;
-#elif defined BINARY_TREE1 || defined BINARY_TREE2 || defined BINARY_TREE3 
+#elif defined BINARY_TREE 
 static double minLength = 0.0025;
 #else
 static double minLength = 0.0015;
@@ -61,7 +63,7 @@ static Vector2d minVec(1e10, 1e10);
 static Vector2d maxVec(-1e10, -1e10);
 
 #if defined MENGER
-static void recurse(vector<Node> &list, Node &node)
+static void recurse(vector<Node, aligned_allocator<Node> > &list, Node &node)
 {
   if (node.length < minLength)
   {
@@ -84,7 +86,7 @@ static void recurse(vector<Node> &list, Node &node)
   }
 }
 #elif defined VISCEK
-static void recurse(vector<Node> &list, Node &node)
+static void recurse(vector<Node, aligned_allocator<Node> > &list, Node &node)
 {
   if (node.length < minLength)
   {
@@ -107,7 +109,7 @@ static void recurse(vector<Node> &list, Node &node)
   recurse(list, child);
 }
 #elif defined MUSHROOM
-static void recurse(vector<Node> &list, Node &node)
+static void recurse(vector<Node, aligned_allocator<Node> > &list, Node &node)
 {
   if (node.length < minLength)
   {
@@ -149,7 +151,7 @@ static void recurse(vector<Node> &list, Node &node)
 #elif defined TRITREE_SOLID || defined TRITREE_OUTLINE || defined TRITREE_LEAVES || defined TRITREE_SKELETON || defined TRITREE_BRANCHES
 static const double cos30 = cos(pi / 6.0);
 static const double rt75 = sqrt(0.75);
-void recurse(vector<Node> &list, Node &node)
+void recurse(vector<Node, aligned_allocator<Node> > &list, Node &node)
 {
   minVec = Vector2d(min(minVec[0], node.pos[0]), min(minVec[1], node.pos[1]));
   maxVec = Vector2d(max(maxVec[0], node.pos[0]), max(maxVec[1], node.pos[1]));
@@ -184,9 +186,9 @@ void recurse(vector<Node> &list, Node &node)
   child.up = node.up * 0.5 - side*cos30;
   recurse(list, child);
 }
-#elif defined BINARY_TREE1 || defined BINARY_TREE2 || defined BINARY_TREE3 || defined BINARY_TREE_LEAVES
+#elif defined BINARY_TREE || defined BINARY_TREE_LEAVES
 static const double rt5 = sqrt(0.5);
-void recurse(vector<Node> &list, Node &node)
+void recurse(vector<Node, aligned_allocator<Node> > &list, Node &node)
 {
   minVec = Vector2d(min(minVec[0], node.pos[0]), min(minVec[1], node.pos[1]));
   maxVec = Vector2d(max(maxVec[0], node.pos[0]), max(maxVec[1], node.pos[1]));
@@ -205,13 +207,7 @@ void recurse(vector<Node> &list, Node &node)
 
 
   Node child;
-#if defined BINARY_TREE1
-  child.length = node.length * 5.0 / 12.0;
-#elif defined BINARY_TREE2
   child.length = node.length * 6.0 / 12.0;
-#elif defined BINARY_TREE3
-  child.length = node.length * 7.0 / 12.0;
-#endif
   Vector2d top = node.pos + node.up*node.length;
 
   child.pos = top;
@@ -233,11 +229,18 @@ static void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 
 int chapter9Figure12()
 {
+#if defined DISK_TREE
+  return chapter9Figure12_disktree();
+#elif defined FORD_DISKS
+  return chapter9Figure12_forddisks();
+#elif defined SPHERE_TREE
+  return chapter9Figure12_spheretree();
+#else
   Node base;
   base.pos = Vector2d(0, 0);
   base.up = Vector2d(0, 1);
   base.length = 1.0;
-  vector<Node> list;
+  vector<Node, aligned_allocator<Node> > list;
   recurse(list, base);
 
   long s2;
@@ -310,7 +313,7 @@ int chapter9Figure12()
           Vector2d nearest = ps[0] + dir*max(0.0, min(d, 1.0));
           double minDist = (nearest - p).squaredNorm();
           if (minDist < radius2)
-#elif defined BINARY_TREE1 || defined BINARY_TREE2 || defined BINARY_TREE3 // intersect with one lines
+#elif defined BINARY_TREE // intersect with one lines
           Vector2d p(x, y);
           if (y < 0.5 && (y < x || p.dot(di) < 0.0))
             continue;
@@ -354,20 +357,7 @@ int chapter9Figure12()
 #if defined TRITREE_OUTLINE || defined TRITREE_SKELETON  
     c = Nmink / (m * log(m));
     cout << "radius: " << r << ", c: " << c << endl;
-#elif defined BINARY_TREE1
-    cout << "r scaling process:" << endl;
-    double d = log(2.0) / log(12.0 / 5.0);
-    for (int i = 0; i < 10; i++)
-    {
-      Nmink *= 2.0;
-      m *= 12.0 / 5.0;
-      Nmink += 2.0*m;
-      Nmink -= 1.5*tan(22.5*pi/180.0)/(m*m);
-      Nmink -= 0.5*tan(45.0*pi / 180.0) / (m*m);
-      cout << "m: " << m << ", Nmink: " << Nmink << endl;
-      cout << "estimated c: " << (12.0*m - Nmink) / pow(m, d) << endl;
-    }
-#elif defined BINARY_TREE2
+#elif defined BINARY_TREE
     cout << "r scaling process:" << endl;
     double d = log(2.0) / log(12.0 / 6.0);
     for (int i = 0; i < 10; i++)
@@ -381,28 +371,16 @@ int chapter9Figure12()
       double est = m*log(m) * 2.0 / log(2.0);
       cout << "estimated c: " << (Nmink - est) / pow(m, d) << endl;
     }
-#elif defined BINARY_TREE3
-    cout << "r scaling process:" << endl;
-    double d = log(2.0) / log(12.0 / 7.0);
-    for (int i = 0; i < 10; i++)
-    {
-      Nmink *= 2.0;
-      m *= 12.0 / 7.0;
-      Nmink += 2.0*m;
-      Nmink -= 1.5*tan(22.5*pi / 180.0) / (m*m);
-      Nmink -= 0.5*tan(45.0*pi / 180.0) / (m*m);
-      cout << "m: " << m << ", Nmink: " << Nmink << endl;
-      cout << "estimated c: " << (12.0*m + Nmink) / pow(m, d) << endl;
-    }
 #else
     c = Nmink / pow(m, d);
     cout << "radius: " << r << ", d: " << d << ", c: " << c << endl;
 #endif
 
     BYTE* buf = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-    LPCTSTR file = L"expanded.bmp";
+    LPCTSTR file = L"expanded_shape.bmp";
     SaveBMP(buf, width, height, s2, file);
     delete[] buf;
   }
   return 0;
+#endif
 }

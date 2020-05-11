@@ -99,6 +99,7 @@
     <ClCompile Include="Chapter3\ch3_figure1.cpp" />
     <ClCompile Include="Chapter3\ch3_figure10.cpp" />
     <ClCompile Include="Chapter3\ch3_figure12.cpp" />
+    <ClCompile Include="Chapter3\ch3_figure17.cpp" />
     <ClCompile Include="Chapter3\ch3_figure5.cpp" />
     <ClCompile Include="Chapter3\ch3_figure9.cpp" />
     <ClCompile Include="Chapter4\ch4_figure11.cpp" />
@@ -121,6 +122,7 @@
     <ClCompile Include="Chapter9\ch9_figure12_forddisks.cpp" />
     <ClCompile Include="Chapter9\ch9_figure12_spheretree.cpp" />
     <ClCompile Include="Chapter9\ch9_figure2.cpp" />
+    <ClCompile Include="Chapter9\ch9_figure4.cpp" />
     <ClCompile Include="Chapter9\ch9_figure5.cpp" />
     <ClCompile Include="include\bmp.cpp" />
     <ClCompile Include="include\PolyMesh.cpp" />

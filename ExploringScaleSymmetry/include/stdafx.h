@@ -18,6 +18,7 @@ int chapter3Figure5();
 int chapter3Figure9();
 int chapter3Figure10();
 int chapter3Figure12();
+int chapter3Figure17();
 int chapter4Figure9();
 int chapter4Figure11();
 int chapter4Figure20();
@@ -34,8 +35,12 @@ int chapter7Figure12();
 int chapter7Figure13();
 int chapter8Figure2();
 int chapter9Figure2();
+int chapter9Figure4();
 int chapter9Figure5();
 int chapter9Figure12();
+int chapter9Figure12_disktree();
+int chapter9Figure12_forddisks();
+int chapter9Figure12_spheretree();
 
 #include <stdio.h>
 #include <tchar.h>

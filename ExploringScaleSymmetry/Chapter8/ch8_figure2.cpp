@@ -36,7 +36,7 @@ namespace
 }
 static int side = 0;
 
-static void buildCluster(vector<Node> &cluster, const Node &node, int level, int type)
+static void buildCluster(vector<Node, aligned_allocator<Node> > &cluster, const Node &node, int level, int type)
 {
   cluster.push_back(node);
   if (node.radius < 0.5)
@@ -99,7 +99,7 @@ int chapter8Figure2()
     base.radius = 240;
     base.pos = Vector2d(512, 780);
 
-    vector<Node> cluster;
+    vector<Node, aligned_allocator<Node> > cluster;
     long s2;
     vector<BYTE> out(width*height * 3); // .bmp pixel buffer
     memset(&out[0], 255, out.size() * sizeof(BYTE)); // background is grey

@@ -21,7 +21,7 @@ static void putpixel(vector<BYTE> &out, const Vector2i &pos, const Vector3d &col
   out[ind + 2] = max(0, min((int)(255.0*colour[2]), 255));
 }
 
-const double PI = 3.14159;
+static const double PI = 3.14159;
 
 static Vector3d mix(const Vector3d &a, const Vector3d &b, double t)
 {
@@ -45,7 +45,7 @@ static double specular(const Vector3d &n, const Vector3d &l, const Vector3d &e, 
 }
 
 // sky
-Vector3d getSkyColor(Vector3d e)
+static Vector3d getSkyColor(Vector3d e)
 {
   e[1] = max(e[1], 0.0);
   return Vector3d(pow(1.0 - e[1]*0.4, 2.0), 1.0 - e[1]*0.4, 0.8 + (1.0 - e[1])*0.2);

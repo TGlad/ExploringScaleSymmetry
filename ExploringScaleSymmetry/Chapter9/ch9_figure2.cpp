@@ -4,14 +4,19 @@
 #include "bmp.h"
 #include <sstream>
 #include <fstream>
+
+#define DRAW_LIMIT_SET
+#define DRAW_EXPANDED_SET  // Note: this overwrites the same image file at each expansion radius. Use a breakpoint to make copies of these images.
+#define DRAW_LOGLOG_PLOT
+
 namespace
 {
-  struct Node
+  struct Shape
   {
     Vector2d pos;
     Vector2d xAxis, yAxis;
     double nodeWidth;
-    vector<Node> children;
+    vector<Shape, aligned_allocator<Shape> > children;
     void split(int index);
     void draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx);
   public:
@@ -28,7 +33,7 @@ static vector<Vector2d> leaves;
 
 // Note that the structure is drawn as multiple pentagons. That is because the base shape used is a pentagon. 
 // Of course we could just draw points for the limit set, but the original substitution rule is with pentagons so we keep that here.
-void Node::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
+void Shape::draw(ofstream &svg, const Vector2d &origin, const Vector2d &xAx, const Vector2d &yAx)
 {
   Vector2d minV(-1.26, 0.62);
   Vector2d maxV(1.36, 1.85);
@@ -71,7 +76,7 @@ static void saveSVGLeaves(const string &fileName)
   svg.close();
 }
 
-static void saveSVG(const string &fileName, Node &tree)
+static void saveSVG(const string &fileName, Shape &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -98,13 +103,13 @@ static void drawGraph(const string &fileName, vector<double> &graph, double ysca
 }
 
 // The substitution rule is applied recursively here
-void Node::split(int index)
+void Shape::split(int index)
 {
   if (index == 0)
   {
     return;
   }
-  Node child1, child2;
+  Shape child1, child2;
 
   double scale = 0.5;
   double ang = -0.5;
@@ -135,7 +140,7 @@ static void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 
 int chapter9Figure2()
 {
-  Node base;
+  Shape base;
   base.xAxis = Vector2d(1, 0);
   base.yAxis = Vector2d(0, 1);
   base.nodeWidth = 1.0;
@@ -143,8 +148,10 @@ int chapter9Figure2()
   base.split(12); // the argument is the number of iterations of the substitution
 
   // draw the set
+#if defined DRAW_LIMIT_SET
   saveSVG("substitutionRuleLimitSet.svg", base);
-  cout << "min: " << minVec.transpose() << ", max: " << maxVec.transpose() << endl;
+#endif
+  cout << "min coordinate: " << minVec.transpose() << ", max coordinate: " << maxVec.transpose() << endl;
 
   long s2;
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
@@ -191,18 +198,20 @@ int chapter9Figure2()
     double d = 1.0;
     c = Nmink / pow(m, d);
     cout << "radius: " << r << ", c: " << c << endl;
-    cout << "log(N): " << log(Nmink) << ", log m: " << log(m) << ", ratio: " << log(Nmink) / log(m) << endl;
+    cout << "log(Nmink): " << log(Nmink) << ", log m: " << log(m) << ", ratio: " << log(Nmink) / log(m) << endl;
 
     graph.push_back(c);
-
+#if defined DRAW_EXPANDED_SET
     BYTE* buf = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
     LPCTSTR file = L"substitutionRuleExpandedSet.bmp";
     SaveBMP(buf, width, height, s2, file);
     delete[] buf;
+#endif
   }
 
+#if defined DRAW_LOGLOG_PLOT
   double dif = graph.back() - graph[0];
-  // The content doesn't quite match for this approximate calculation. To illustrate, we shear it slightly to match and show two repeats.
+  // The content doesn't perfectly match for this approximate calculation due to insufficient processing time, so we shear slightly to correct the curve.
   for (int i = 0; i < (int)graph.size(); i++)
     graph[i] -= dif * (double)i / (double)(graph.size() - 1); 
   cout << "dif " << dif << ", " << graph[0] << ", " << graph.back() << endl;
@@ -210,5 +219,6 @@ int chapter9Figure2()
   double yscale = 2.0*(double)height;
   double minY = 9.6;
   drawGraph("substitutionRuleLogLogGraph.svg", graph, yscale, minY);
+#endif
   return 0;
 }

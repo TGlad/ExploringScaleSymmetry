@@ -4,12 +4,12 @@
 #include <fstream>
 
 // smaller values give more complex structures.
-static double k = 4.0;
+static double k = 3.0;
 // controls detail level
-static int numIterations = 8; 
+static int numIterations = 7; 
 
-static const int width = 2048;
-static const int height = 2048;
+static const int width = 1024;
+static const int height = 1024;
 
 static void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 {

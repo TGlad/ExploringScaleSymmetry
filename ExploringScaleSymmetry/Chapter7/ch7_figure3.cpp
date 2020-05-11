@@ -29,17 +29,20 @@ static double ang = atan(4.0);
 static double l = sin(ang);
 static double w = cos(ang);
 
-struct Ball
+namespace
 {
-  Vector2d pos0;
-  Vector2d fwd;
-  bool flip, big;
-  double scale;
-  double time0;
-};
+  struct Ball
+  {
+    Vector2d pos0;
+    Vector2d fwd;
+    bool flip, big;
+    double scale;
+    double time0;
+  };
+}
 
 // Recursive function to add child balls to the structure
-static void addBalls(vector<Ball> &balls, Ball &ball)
+static void addBalls(vector<Ball, aligned_allocator<Ball> > &balls, Ball &ball)
 {
   balls.push_back(ball);
   if (ball.scale < 1.0/32.0)
@@ -89,7 +92,7 @@ int chapter7Figure3()
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   memset(&out[0], 255, out.size() * sizeof(BYTE)); // background is grey
 
-  vector<Ball> balls;
+  vector<Ball, aligned_allocator<Ball> > balls;
   Ball ball;
   ball.pos0 = Vector2d(412.0, -50.0);
   ball.fwd = Vector2d(0, 1);

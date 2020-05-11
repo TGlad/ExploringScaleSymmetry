@@ -5,9 +5,8 @@
 #include <fstream>
 #include <iostream>
 
-static int maxIterations = 32; // lower values have more cloudy results
-static int strength = 6; // affects the colour scale
-
+static int maxIterations = 20; // 32 used in image; // lower values have more cloudy results
+static int strength = 9; // affects the colour scale
 
 static int width;
 static int height;
@@ -62,7 +61,7 @@ static void init()
 }
 
 // applies the Mobius transform
-Vector2d distort(const Vector2d &point, int i, double &radius)
+static Vector2d distort(const Vector2d &point, int i, double &radius)
 {
   Vector2d pos = point - bends[i];
   double mult = bends[i].squaredNorm() / pos.squaredNorm();
@@ -73,7 +72,7 @@ Vector2d distort(const Vector2d &point, int i, double &radius)
   return pos;
 }
 
-void recurse(vector<BYTE> &out, int &count, const Vector2d &point, const Vector2d &offset, int depth, const Vector2d &point0, double radius)
+static void recurse(vector<BYTE> &out, int &count, const Vector2d &point, const Vector2d &offset, int depth, const Vector2d &point0, double radius)
 {
   for (int i = 0; i<2; i++)
   {
@@ -89,11 +88,13 @@ void recurse(vector<BYTE> &out, int &count, const Vector2d &point, const Vector2
   }
 }
 
-void generateFullMap(vector<BYTE> &out)
+static void generateFullMap(vector<BYTE> &out)
 {
   for (int Y = 0; Y<height; Y++)
   {
     double y = minY + (maxY - minY)*(double)Y / (double)(height - 1);
+    if (!(Y % 10))
+      cout << "generating row " << Y << " out of " << height << endl;
     for (int X = 0; X<width; X++)
     {
       double x = minX + (maxX - minX)*(double)X / (double)(width - 1);

@@ -24,7 +24,7 @@ static double scale = 750.0;
 static Vector2d offset(0.5, 0);
 static vector<Vector2d> leaves;
 
-void saveTree(const string &fileName, vector<Node> &tree)
+void saveTree(const string &fileName, vector<Node, aligned_allocator<Node> > &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -42,7 +42,7 @@ void saveTree(const string &fileName, vector<Node> &tree)
   svg.close();
 }
 
-void saveOutline(const string &fileName, vector<Node> &tree)
+void saveOutline(const string &fileName, vector<Node, aligned_allocator<Node> > &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -64,7 +64,7 @@ void saveOutline(const string &fileName, vector<Node> &tree)
   svg.close();
 }
 
-void saveLeaves(const string &fileName, vector<Node> &tree)
+void saveLeaves(const string &fileName, vector<Node, aligned_allocator<Node> > &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -75,7 +75,7 @@ void saveLeaves(const string &fileName, vector<Node> &tree)
   svg.close();
 }
 
-void saveSkeleton(const string &fileName, vector<Node> &tree)
+void saveSkeleton(const string &fileName, vector<Node, aligned_allocator<Node> > &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -94,7 +94,7 @@ void saveSkeleton(const string &fileName, vector<Node> &tree)
   svg.close();
 }
 
-void saveBranchPoints(const string &fileName, vector<Node> &tree)
+void saveBranchPoints(const string &fileName, vector<Node, aligned_allocator<Node> > &tree)
 {
   static ofstream svg;
   svg.open(fileName.c_str());
@@ -110,7 +110,7 @@ void saveBranchPoints(const string &fileName, vector<Node> &tree)
   svg.close();
 }
 
-void recurse(vector<Node> &list, const Node &node)
+void recurse(vector<Node, aligned_allocator<Node> > &list, const Node &node)
 {
   list.push_back(node);
   double length = (node.left - node.right).norm();
@@ -135,7 +135,7 @@ int chapter9Figure5()
   Node base;
   base.left = Vector2d(-0.32, 0.0);
   base.right = Vector2d(0.32, 0.0);
-  vector<Node> list;
+  vector<Node, aligned_allocator<Node> > list;
   recurse(list, base);
 
   saveTree("triangletree1.svg", list);

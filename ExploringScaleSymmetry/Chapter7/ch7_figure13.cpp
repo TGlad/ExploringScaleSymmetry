@@ -43,7 +43,7 @@ static double roothalf = 1.0 / sqrt(2.0);
 static Vector3d u(roothalf, -roothalf, 0);
 static Vector3d v(roothalf, roothalf, 0);
 
-void addKochChild(int order, const Vector3d &p0, const Vector3d &p1, double k)
+static void addKochChild(int order, const Vector3d &p0, const Vector3d &p1, double k)
 {
   Vector3d dir = p1 - p0;
   double dt = dir[0];

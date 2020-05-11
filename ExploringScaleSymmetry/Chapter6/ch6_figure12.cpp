@@ -151,7 +151,7 @@ int chapter6Figure12()
   }
 
   BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"automata.bmp";
+  LPCTSTR file = L"diamond_square_automata.bmp";
   SaveBMP(c, width, height, s2, file);
   delete[] c;
   return 0;

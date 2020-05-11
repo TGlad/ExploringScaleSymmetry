@@ -9,10 +9,10 @@
 
 #define CLOSEIN // close-up view. When not defined, it generates the large view showing the majority of the triangular structure
 
-//#define BIG // define after running without this define, in order to generate a high resolution image
+//#define BIG // enable after running without this define, in order to generate a high resolution image
 #if defined BIG
-static const int width = 1280;
-static const int height = 1280;
+static const int width = 640;
+static const int height = 640;
 #else
 static const int width = 160;
 static const int height = 160;
@@ -82,6 +82,12 @@ bool isInside(Vector3d pos, double startRad)
 
 int chapter5Figure25()
 {
+#if defined(BIG)
+  cout << "Generating large image. Run without macro BIG first, in order to generate cache data, and check view angle in small image" << endl;
+  cout << "Warning, this process is slow as it isn't built with a distance approximator, only an in/out function." << endl;
+#else
+  cout << "Generating cache data and small image. Run with marco BIG defined to generate image from this data" << endl;
+#endif
   long s2;
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   memset(&out[0], 255, out.size() * sizeof(BYTE)); 

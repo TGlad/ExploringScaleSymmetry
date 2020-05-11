@@ -27,7 +27,7 @@ static void drawDisk(const Vector2d &pos, vector<BYTE> &out, double rad, int sha
 }
 namespace
 {
-  struct Node
+  struct Planet
   {
     Vector2d pos;
     double angle;
@@ -42,19 +42,19 @@ namespace
 static double time = 0.0;
 
 // recursive construction of child planets
-static void buildCluster(vector<Node> &cluster, const Node &node)
+static void buildCluster(vector<Planet, aligned_allocator<Planet> > &cluster, const Planet &node)
 {
   cluster.push_back(node);
   if (node.radius < 1.0)
     return;
 
-  Node child1;
+  Planet child1;
   child1.angle = time / (node.radius * orbitalDist1);
   child1.pos = node.pos + child1.yAxis() * node.radius * orbitalDist1;
   child1.radius = node.radius * scale1;
   buildCluster(cluster, child1);
 
-  Node child2;
+  Planet child2;
   child2.angle = time / (node.radius * orbitalDist2);
   child2.pos = node.pos + child2.yAxis() * node.radius * orbitalDist2;
   child2.radius = node.radius * scale2;
@@ -63,12 +63,12 @@ static void buildCluster(vector<Node> &cluster, const Node &node)
 
 int chapter7Figure7()
 {
-  Node base;
+  Planet base;
   base.angle = 0;
   base.radius = 150;
   base.pos = Vector2d(700, -50);
 
-  vector<Node> cluster;
+  vector<Planet, aligned_allocator<Planet> > cluster;
 
   long s2;
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
