@@ -1,7 +1,7 @@
 ﻿#include "View.h"
 #include "Screen.h"
 #include <conio.h>
-#include <string.h>
+#include <string>
 
 int g_type = 1;
 int g_fullView = 0;
@@ -15,15 +15,16 @@ View::View(int width, int height)
 
   evolvers[0] = new Evolver(10); // so we can draw it bigger
   evolvers[0]->depth = 8;
+  evolvers[0]->type = 9;
   for (int i = 1; i<numEvolvers; i++)
     evolvers[i] = new Evolver(8);
 //  evolvers[0]->randomiseMasks();
-  evolvers[1]->load("bacteria.ev1", 1);
-  evolvers[2]->load("bacteria.ev2", 2);
-  evolvers[3]->load("fastFire.ev3", 3);
-  evolvers[4]->load("bacteriaAndDots.ev4", 4);
-  evolvers[5]->load("slime.ev5", 5);
-  evolvers[6]->load("pretty.ev6", 6);
+  evolvers[1]->load("data/figure4.ev9", 9);
+  evolvers[2]->load("data/figure5b.ev9", 9);
+  evolvers[3]->load("data/figure7a.ev7", 7);
+  evolvers[4]->load("data/figure7g.ev7", 7);
+  evolvers[5]->load("data/figure24b.ev1", 1);
+  evolvers[6]->load("data/figure26-27.ev3", 3);
 
   printf("Fractal Automata Search Tool\n");
   printf("Click on your preferred of the seven systems to bring it to the top and generate six new mutated versions below\n");
@@ -186,7 +187,8 @@ void View::load()
       printf("%c", key[c]);
   } while (key[c++] != 0);
   strcat_s(key, ext);
-  evolvers[0]->load(key, g_type);
+  std::string file = "data/" + std::string(key);
+  evolvers[0]->load(file.c_str(), g_type);
   evolvers[0]->randomise();
   for (int i = 1; i<numEvolvers; i++)
   {
@@ -217,7 +219,8 @@ void View::save()
   } while (key[c++] != 0);
   FILE* fp;
   strcat_s(key, ext);
-  if (fopen_s(&fp, key, "wb"))
+  std::string file = "data/" + std::string(key);
+  if (fopen_s(&fp, file.c_str(), "wb"))
   {
     printf("Cannot open file for writing: %s\n", key);
     return;

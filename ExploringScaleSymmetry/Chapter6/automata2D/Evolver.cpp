@@ -1,7 +1,7 @@
 #include "Evolver.h"
 #include "Image.h"
-#include<iostream>
-// #define EXTREME_VARIATIONS
+#include <iostream>
+#include <string.h>
 
 Evolver::Evolver(int depth)
 {
@@ -66,7 +66,7 @@ void Evolver::reset()
   randomise();
 }
 
-void Evolver::load(char* fileName, int type)
+void Evolver::load(const char* fileName, int type)
 {
   this->type = type;
   FILE* fp;
