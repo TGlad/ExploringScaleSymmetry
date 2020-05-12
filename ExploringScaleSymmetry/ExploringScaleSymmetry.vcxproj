@@ -52,12 +52,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Code\Eigen;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Tom\Documents\GitHub\freeglut\include\GL;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\Chapter6\automata2D;C:\Code\Eigen;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\Tom\Documents\GitHub\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -69,7 +70,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Code\Eigen;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Tom\Documents\GitHub\freeglut\include\GL;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\Chapter6\automata2D;C:\Code\Eigen;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
     </ClCompile>
     <Link>
@@ -77,12 +78,22 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Users\Tom\Documents\GitHub\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Chapter6\automata2D\basics.h" />
+    <ClInclude Include="Chapter6\automata2D\Core.h" />
+    <ClInclude Include="Chapter6\automata2D\evolver.h" />
+    <ClInclude Include="Chapter6\automata2D\Image.h" />
+    <ClInclude Include="Chapter6\automata2D\Matrix33.h" />
+    <ClInclude Include="Chapter6\automata2D\Screen.h" />
+    <ClInclude Include="Chapter6\automata2D\ScreenColour.h" />
+    <ClInclude Include="Chapter6\automata2D\Vector3.h" />
+    <ClInclude Include="Chapter6\automata2D\View.h" />
     <ClInclude Include="include\bmp.h" />
     <ClInclude Include="include\PolyMesh.h" />
     <ClInclude Include="include\stdafx.h" />
@@ -107,6 +118,14 @@
     <ClCompile Include="Chapter4\ch4_figure9.cpp" />
     <ClCompile Include="Chapter5\ch5_figure22.cpp" />
     <ClCompile Include="Chapter5\ch5_figure25.cpp" />
+    <ClCompile Include="Chapter6\automata2D\Core.cpp" />
+    <ClCompile Include="Chapter6\automata2D\Evolver.cpp" />
+    <ClCompile Include="Chapter6\automata2D\Image.cpp" />
+    <ClCompile Include="Chapter6\automata2D\Matrix33.cpp" />
+    <ClCompile Include="Chapter6\automata2D\renderEngine.cpp" />
+    <ClCompile Include="Chapter6\automata2D\Screen.cpp" />
+    <ClCompile Include="Chapter6\automata2D\Vector3.cpp" />
+    <ClCompile Include="Chapter6\automata2D\View.cpp" />
     <ClCompile Include="Chapter6\ch6_figure12.cpp" />
     <ClCompile Include="Chapter6\ch6_figure17.cpp" />
     <ClCompile Include="Chapter7\ch7_figure1.cpp" />

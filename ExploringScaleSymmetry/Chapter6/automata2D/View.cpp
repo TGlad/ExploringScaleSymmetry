@@ -149,7 +149,7 @@ void View::resetFromHead(char c)
     0, 0, 0, 0 };
   if (c == 0)
     for (int j = 0; j < 16; j++)
-      starts[j] = rand() % 2;
+      starts[j] = (rand() % 2)==1;
   else if (c == 'o')
     for (int j = 0; j < 16; j++)
       starts[j] = o[j];

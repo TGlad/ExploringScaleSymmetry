@@ -40,6 +40,9 @@
     <Filter Include="Source Files\Chapter9">
       <UniqueIdentifier>{27ffe508-8e81-4637-bd05-f7c43c959e4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Chapter6\automata2D">
+      <UniqueIdentifier>{53cd3fe7-2469-4b11-90c1-e1c84fa4e7da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -56,6 +59,33 @@
     </ClInclude>
     <ClInclude Include="include\PolyMesh.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata2D\basics.h">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata2D\Core.h">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata2D\evolver.h">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata2D\Image.h">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata2D\Matrix33.h">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata2D\Screen.h">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata2D\ScreenColour.h">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata2D\Vector3.h">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata2D\View.h">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +202,30 @@
     </ClCompile>
     <ClCompile Include="Chapter9\ch9_figure4.cpp">
       <Filter>Source Files\Chapter9</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata2D\Core.cpp">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata2D\Evolver.cpp">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata2D\Image.cpp">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata2D\Matrix33.cpp">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata2D\renderEngine.cpp">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata2D\Screen.cpp">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata2D\Vector3.cpp">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata2D\View.cpp">
+      <Filter>Source Files\Chapter6\automata2D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

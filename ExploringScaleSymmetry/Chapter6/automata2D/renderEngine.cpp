@@ -70,9 +70,14 @@ void mouse(int button, int state, int x, int y)
    }
 }
 
-int main(int argc, char** argv)
+int chapter6Figure3()
 {
-   glutInit(&argc, argv);   
+   int n = 1;
+   char *name = "automata";
+   int *argc = &n;
+   char **argv = &name;
+
+   glutInit(argc, argv);   
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
    glutInitWindowSize(width, height); 
    glutInitWindowPosition(100, 100);
@@ -81,7 +86,7 @@ int main(int argc, char** argv)
    glutDisplayFunc(display); 
    glutReshapeFunc(reshape);
    glutMouseFunc(mouse);
-   glutIdleFunc(update); // starts the updating
+   glutIdleFunc(update); 
    glutMainLoop();
    return 0;
 }

@@ -11,7 +11,7 @@
 //#define BINARY_TREE_LEAVES
 //#define MENGER 
 //#define VISCEK
-//#define TRITREE_SOLID
+//#define TRITREE_SOLIDcd Doc
 //#define TRITREE_OUTLINE
 //#define TRITREE_LEAVES
 //#define TRITREE_SKELETON

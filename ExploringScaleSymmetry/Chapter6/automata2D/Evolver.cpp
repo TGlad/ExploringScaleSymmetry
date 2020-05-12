@@ -313,7 +313,7 @@ void recursiveTree(int x0, int y0, int x2, int y2, int level, int side)
   
   int x1 = (x0 + x2)/2;
   int y1 = (y0 + y2)/2;
-  double up = scale;//*scale; 
+  float up = scale;
   if (side == 0)
     height[x1][y1] = up + (height[x0][y0] + height[x2][y2])/2.0f;
   else
@@ -974,7 +974,7 @@ void Evolver::update()
             int& pixel = mapTo->pixel(i, j);
             int fromX = -1 + (1 + i+j)/2;
             int fromY = -1 + (size + j-i)/2;
-            pixel = getNewValueParentsOctagonal2(mapFrom, fromX, fromY, (i+j)%2, extended, level) ? 192 : 0;
+            pixel = getNewValueParentsOctagonal2(mapFrom, fromX, fromY, ((i+j)%2)==1, extended, level) ? 192 : 0;
           }
         }
       }

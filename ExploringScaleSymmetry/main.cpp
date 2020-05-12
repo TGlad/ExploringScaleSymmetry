@@ -12,7 +12,7 @@ int _tmain(int argc, _TCHAR* argv[])
   chapters[3][1] = &chapter3Figure1; chapters[3][5] = &chapter3Figure5; chapters[3][9] = &chapter3Figure9; chapters[3][10] = &chapter3Figure10; chapters[3][12] = &chapter3Figure12; chapters[3][17] = &chapter3Figure17;
   chapters[4][9] = &chapter4Figure9; chapters[4][11] = &chapter4Figure11; chapters[4][20] = &chapter4Figure20;
   chapters[5][22] = &chapter5Figure22; chapters[5][25] = &chapter5Figure25;
-  chapters[6][12] = &chapter6Figure12; chapters[6][17] = &chapter6Figure17;
+  chapters[6][3] = &chapter6Figure3; chapters[6][12] = &chapter6Figure12; chapters[6][17] = &chapter6Figure17;
   chapters[7][1] = &chapter7Figure1; chapters[7][3] = &chapter7Figure3; chapters[7][4] = &chapter7Figure4; chapters[7][6] = &chapter7Figure6; chapters[7][7] = &chapter7Figure7; chapters[7][12] = &chapter7Figure12; chapters[7][13] = &chapter7Figure13;
   chapters[8][2] = &chapter8Figure2;
   chapters[9][2] = &chapter9Figure2; chapters[9][4] = &chapter9Figure4; chapters[9][5] = &chapter9Figure5; chapters[9][12] = &chapter9Figure12;
@@ -31,7 +31,7 @@ int _tmain(int argc, _TCHAR* argv[])
   }
   cout << "Exploring Scale Symmetry: Figure Generation. Example usage:" << endl;
   cout << " generateFigure 2 3  -- generates Chapter 2, Figure 3." << endl;
-  cout << "Figure options and parameters are at the top of each figure's .cpp file."
+  cout << "Figure options and parameters are at the top of each figure's .cpp file." << endl;
   cout << "The available figures to generate are:" << endl;
   for (int c = 0; c < 10; c++)
   {
