@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 #pragma once
 #include "stdafx.h"
 

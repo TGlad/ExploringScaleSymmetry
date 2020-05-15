@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates image of scale-symmetric billiards. The balls are all the same density, and collide elastically 
 #include "stdafx.h"
 #include "bmp.h"

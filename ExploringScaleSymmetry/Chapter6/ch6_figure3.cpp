@@ -1,3 +1,5 @@
+// Thomas Lowe, 2020.
+// Select-and-mutate interface for finding interesting scale-symmetric automata
 #include <stdlib.h>
 #include <glut.h>
 #include <stdio.h>

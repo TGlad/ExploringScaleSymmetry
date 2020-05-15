@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Calculates the volume of the expanded sphere tree (or its surface or centre points), by the radius r, and renders a slice to file.
 // Calculating for multiple values of the radius r, allows you to estimate the fractal dimension and unnormalised Minkowski content of the structure.
 #include "stdafx.h"

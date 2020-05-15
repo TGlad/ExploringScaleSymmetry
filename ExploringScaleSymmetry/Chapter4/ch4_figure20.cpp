@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates a disk tree, which is a form of recursive Ford spheres. 
 #include "stdafx.h"
 #include "bmp.h"

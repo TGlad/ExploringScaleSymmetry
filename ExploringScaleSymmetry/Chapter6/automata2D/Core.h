@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿// Thomas Lowe, 2020.
+#pragma once
 #include "basics.h"
 #include "View.h"
 #include "Screen.h"

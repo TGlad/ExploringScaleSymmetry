@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // 2D bubble fractal. 
 #include "stdafx.h"
 #include "bmp.h"

@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Calculates the expanded area of Ford Disks (or their boundary or their centre points), and renders the expanded shape to file.
 // Calculating this area for multiple radii can be used to extract the (unnormalised) fractal content, and the fractal dimension.
 #include "stdafx.h"

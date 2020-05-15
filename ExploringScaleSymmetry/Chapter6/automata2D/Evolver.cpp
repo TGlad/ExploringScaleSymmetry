@@ -1,3 +1,5 @@
+// Thomas Lowe, 2020.
+// Defines the evolution of the automaton. Typically a fixed function of the neighbouring cells.
 #include "Evolver.h"
 #include "Image.h"
 #include <iostream>
@@ -303,67 +305,22 @@ void Evolver::set(const Evolver& evolver)
   for (int i = 0; i<1<<7; i++)
     octagonalMasks[i] = evolver.octagonalMasks[i];
 }
-static float height[513][513];
-void recursiveTree(int x0, int y0, int x2, int y2, int level, int side)
-{
-  if ((x2 - x0) == 1)
-    return;
-  float humpiness = 1.0;
-  float scale = humpiness * (float)(x2 - x0) / 513.0f;
-  
-  int x1 = (x0 + x2)/2;
-  int y1 = (y0 + y2)/2;
-  float up = scale;
-  if (side == 0)
-    height[x1][y1] = up + (height[x0][y0] + height[x2][y2])/2.0f;
-  else
-    height[x1][y1] = up + (height[x0][y2] + height[x2][y0])/2.0f;
-
-  height[x0][y1] = (height[x0][y0] + height[x0][y2])/2.0f - up*0.707f;
-  height[x2][y1] = (height[x2][y0] + height[x2][y2])/2.0f - up*0.707f;
-  height[x1][y0] = (height[x0][y0] + height[x2][y0])/2.0f - up*0.707f;
-  height[x1][y2] = (height[x0][y2] + height[x2][y2])/2.0f - up*0.707f;
-
-  recursiveTree(x0, y0, x1, y1, level, 0);
-  recursiveTree(x0, y1, x1, y2, level, 1);
-  recursiveTree(x1, y0, x2, y1, level, 1);
-  recursiveTree(x1, y1, x2, y2, level, 0);
-}
 
 void Evolver::draw()
-{/*
-  height[0][0] = 0.707f;
-  height[512][0] = 0.0f;
-  height[0][512] = 0.0f;
-  height[512][512] = 0.707f;
-
-  recursiveTree(0,0,512,512, 0, 0);
-  for (int i = 0; i<512; i++)
-  {
-    for (int j = 0; j<512; j++)
-    {
-      float val = 10.0f * (5.0f + 512.0f*(height[i][j+1] - height[i][j]));
-      float val2 = 32.0f + 5.0f * (10.0f + 512.0f*(height[i+1][j] - height[i][j]));
-      val = (height[i][j] * 127.0f)*0.7f + val*0.3f;
-      val2 = (height[i][j] * 127.0f)*0.7f + val2*0.3f;
-
-      int shade = (int)max(0.0f, min(val, 255.0f));
-      int shade2 = (int)max(0.0f, min(val2, 255.0f));
-      int col = shade + (shade << 8) + (shade2 << 16);
-      bitmaps[depth]->setPixel(i, j, col);
-    }
-  }*/
-
+{
   bitmaps[depth]->generateTexture();
   bitmaps[depth]->draw();
 }
-
 void Evolver::drawMask()
 {
-  int level = 8;
-  bitmapDuals[level]->generateTexture();
-  bitmapDuals[level]->draw();
+  if (type == 9)
+  {
+    int level = 8;
+    bitmapDuals[level]->generateTexture();
+    bitmapDuals[level]->draw();
+  }
 }
+
 bool Evolver::getNewValue(int level, int X, int Y)
 {
   int dirX = X%2 ? 1 : -1;

@@ -1,3 +1,5 @@
+// Thomas Lowe, 2020.
+// Polygon mesh class that supports mirroring a mesh around a plane (splitting some triangles in the process). 
 #include "PolyMesh.h"
 #include <iostream>
 #include <fstream>

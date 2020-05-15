@@ -1,3 +1,5 @@
+// Thomas Lowe, 2020.
+// OpenGL image rendering
 #include "Image.h"
 #include "glut.h"
 #include "string.h"
@@ -21,13 +23,6 @@ void Image::draw()
 
 void Image::generateTexture()
 {
-//   for (int x = 0; x<width; x+=10)
-//   {
-//     for (int j = 0; j<height; j+=10)
-//     {
-//       setPixel(x, j, 255);//Vector3(0.5f, 1.0f, 1.0f));
-//     }
-//   }
   glBindTexture(GL_TEXTURE_2D, textureID);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

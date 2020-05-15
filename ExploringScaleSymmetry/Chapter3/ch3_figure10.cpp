@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates a recursive rings structure. A form of multiplcation rule.
 #include "stdafx.h"
 #include "bmp.h"

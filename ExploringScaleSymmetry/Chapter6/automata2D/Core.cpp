@@ -1,4 +1,5 @@
-﻿#include "Core.h"
+﻿// Thomas Lowe, 2020.
+#include "Core.h"
 #include "Screen.h"
 #include <conio.h>
 #include <windows.h>

@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates the crumpled surface fractal as a .ply or .obj, with parameters passed in at the command line 
 #include "stdafx.h"
 #include "PolyMesh.h"

@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates the basic fractal curve types in vector file format (.svg). 
 // the well-known Levy C, Koch and Dragon curves
 #include <fstream>

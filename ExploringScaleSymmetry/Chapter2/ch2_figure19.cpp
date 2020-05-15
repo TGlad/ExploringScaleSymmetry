@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates a member of the dendrite family. A tridendrite, Vicsek fractal, Pentadendrite or a hexaflake
 #include "stdafx.h"
 #include "bmp.h"

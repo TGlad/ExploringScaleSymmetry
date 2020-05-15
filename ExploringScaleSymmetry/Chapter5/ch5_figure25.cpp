@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates a 3D Mobius multiset. The method uses an inside-outside test rather than a distance function, so is fairly slow.
 // for this reason, you can run with BIG undefined (which caches coarse depth information to file, and a low res image), 
 // then run with BIG defined to generate a high resolution image.

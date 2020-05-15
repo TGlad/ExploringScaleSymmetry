@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates the set of 64 diamond-square automata of two colours.
 #include "stdafx.h"
 #include "bmp.h"

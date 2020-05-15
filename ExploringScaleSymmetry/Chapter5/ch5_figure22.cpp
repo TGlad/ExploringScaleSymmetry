@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates a Mobius multiset with a large iteration count, to approximate the limit set, and remove cloudy results.
 #include "stdafx.h"
 #include "bmp.h"

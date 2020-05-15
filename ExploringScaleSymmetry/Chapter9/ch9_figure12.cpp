@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Calculates the (unnormalised) Minkowski content (c) of multiple scale-symmetric shapes.
 // Also generates an image showing the expanded shape
 #include "stdafx.h"

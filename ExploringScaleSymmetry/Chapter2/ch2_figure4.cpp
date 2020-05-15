@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates the three alternative permutations of the basic fractal curve, in vector file format (.svg). 
 #include <fstream>
 #include "stdafx.h"

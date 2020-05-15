@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Calculates the fractal content for a limit set over multiple scales, and plots it as a log-log graph, to demonstrate its oscillation.
 // This also plots the limit set itself and the expanded limit set at every scale. Use a breakpoint in this look to see each expanded set.
 #include "stdafx.h"

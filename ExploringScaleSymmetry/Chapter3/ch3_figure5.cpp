@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates a scale-symmetric tree with a fractal border. Adjust p,c for different tree shapes.
 #include <vector>
 #include <fstream>

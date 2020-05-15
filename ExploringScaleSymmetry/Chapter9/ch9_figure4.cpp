@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Calculates the unknown scaling component in the three displayed binary trees. This is the (unnormalised) Minkowski content (c)
 // Also generates an image showing the expanded shape
 #include "stdafx.h"

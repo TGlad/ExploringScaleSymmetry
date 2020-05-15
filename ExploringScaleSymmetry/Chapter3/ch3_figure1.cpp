@@ -1,3 +1,5 @@
+// Thomas Lowe, 2020.
+// Fractal canopies
 #include "stdafx.h"
 #include "bmp.h"
 #include <fstream>

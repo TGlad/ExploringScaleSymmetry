@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates the 2.5 dimensional square-based fractal surface, as a .ply mesh file. 
 #include "stdafx.h"
 #include "PolyMesh.h"

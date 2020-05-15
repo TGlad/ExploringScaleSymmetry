@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates an image of the colour-symmetric and scale-symmetric three-colour automaton, on a symmetric hexagon of seed points.
 // The method generates to a larger image first (called out), then downscales to a smaller one. The result of this is that
 // the dense and repeated mixture of all three colours in the Koch-like fractal regions appears as as a constant colour (a mix of all three). 

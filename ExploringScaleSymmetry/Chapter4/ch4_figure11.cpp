@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Single structure which is a bubble fractal using a crescent base shape.
 #include "stdafx.h"
 #include "bmp.h"

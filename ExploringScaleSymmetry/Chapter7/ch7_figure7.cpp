@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates image of a planetary system of orbiting black holes. The star has two planets, which each have two moons etc.
 #include "stdafx.h"
 #include "bmp.h"

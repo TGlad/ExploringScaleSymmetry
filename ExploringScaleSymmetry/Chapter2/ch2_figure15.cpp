@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates the 1.5D 'mushroom fractal', as a vector graphic .svg file
 #include <fstream>
 #include "stdafx.h"

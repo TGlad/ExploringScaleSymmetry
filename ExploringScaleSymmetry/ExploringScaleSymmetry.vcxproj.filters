@@ -215,9 +215,6 @@
     <ClCompile Include="Chapter6\automata2D\Matrix33.cpp">
       <Filter>Source Files\Chapter6\automata2D</Filter>
     </ClCompile>
-    <ClCompile Include="Chapter6\automata2D\renderEngine.cpp">
-      <Filter>Source Files\Chapter6\automata2D</Filter>
-    </ClCompile>
     <ClCompile Include="Chapter6\automata2D\Screen.cpp">
       <Filter>Source Files\Chapter6\automata2D</Filter>
     </ClCompile>
@@ -226,6 +223,9 @@
     </ClCompile>
     <ClCompile Include="Chapter6\automata2D\View.cpp">
       <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\ch6_figure3.cpp">
+      <Filter>Source Files\Chapter6</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

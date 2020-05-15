@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Calculates the area of the expanded disk tree (or its boundary or centre points), and draws the expanded image.
 // Calling this for multiple values of r, can be used to calculate the fractal dimension and unnormalised Minkowski content.
 #include "stdafx.h"

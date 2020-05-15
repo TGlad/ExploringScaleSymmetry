@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates four of the 25 2D classes, the cluster-tree, cluster-cluster, tree-cluster and tree-tree.
 #include "stdafx.h"
 #include "bmp.h"

@@ -1,4 +1,6 @@
-﻿#include "basics.h"
+﻿// Thomas Lowe, 2020.
+// Simple 3x3 matrix class (written prior to uptake of Eigen)
+#include "basics.h"
 
 Matrix33::Matrix33(const RotationVector& rotationVector)
 {

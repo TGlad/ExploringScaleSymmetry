@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates a zoomed in version of the scale-symmetric 2D tree, which appears as a forest
 #include <vector>
 #include <fstream>

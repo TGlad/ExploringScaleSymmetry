@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates image of scale-symmetric ocean water. It is a first order approximation of water with low amplitude and depth.
 #include "stdafx.h"
 #include "bmp.h"

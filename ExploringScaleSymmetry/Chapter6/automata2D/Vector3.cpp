@@ -1,4 +1,6 @@
-﻿#include "basics.h"
+﻿// Thomas Lowe, 2020.
+// simple 3D vector class (written prior to uptake of Eigen)
+#include "basics.h"
 
 void Vector3::rotate(const Matrix33& mat)
 {

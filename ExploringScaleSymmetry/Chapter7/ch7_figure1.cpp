@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates an image representing colliding segments through time. These conserve momentum (if they are the same density) but not energy.
 #include "stdafx.h"
 #include "bmp.h"

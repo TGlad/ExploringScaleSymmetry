@@ -1,4 +1,5 @@
-﻿#include "Screen.h"
+﻿// Thomas Lowe, 2020.
+#include "Screen.h"
 #include "string.h"
 
 Screen::Screen(int w, int h)

@@ -1,4 +1,6 @@
-﻿#include "View.h"
+﻿// Thomas Lowe, 2020.
+// Defined the main interaction with the select-and-mutate scheme
+#include "View.h"
 #include "Screen.h"
 #include <conio.h>
 #include <string>
@@ -18,7 +20,6 @@ View::View(int width, int height)
   evolvers[0]->type = 9;
   for (int i = 1; i<numEvolvers; i++)
     evolvers[i] = new Evolver(8);
-//  evolvers[0]->randomiseMasks();
   evolvers[1]->load("data/figure4.ev9", 9);
   evolvers[2]->load("data/figure5b.ev9", 9);
   evolvers[3]->load("data/figure7a.ev7", 7);
@@ -31,14 +32,15 @@ View::View(int width, int height)
   printf("Press key 'l' to load, 's' to save, 'f' to toggle full view, with this window in focus.\n");
   printf("Press 't' key to toggle time symmetric mode on/off\n");
   printf("Number keys are mapping families to search within:\n");
-  printf("'1' for num neighbours type (default)\n");
-  printf("'2' for num neighbours & self\n");
-  printf("'3' for complex type\n");
-  printf("'4' birth, survive\n");
-  printf("'5' num neighbours per level\n");
-  printf("'6' parent and its 8 neighbours only\n");
-  printf("'7' parent octagonal\n");
-  printf("'8' parent octagonal, larger search space\n");
+  printf("'1' figure 24b: state is number of neighbour cells (incl parents and children)\n");
+  printf("'2' function of number of neighbours + self\n");
+  printf("'3' figure 26 and 27: for complex type\n");
+  printf("'4' function of (number of neighbours, self set)\n");
+  printf("'5' state is number of neighbours, but independent per level\n");
+  printf("'6' parent and cell's 8 neighbours only\n");
+  printf("'7' figure 7: pseudo-octagonal symmetry\n");
+  printf("'8' pseudo-octagonal symmetry with larger number of parent cells\n");
+  printf("'9' figure 4 and 5: square symmetry\n");
 }
 
 void View::recordToScreen(Screen* screen)

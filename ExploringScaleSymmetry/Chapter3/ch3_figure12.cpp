@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates one of the cross family of structures. 
 #include <fstream>
 #include "stdafx.h"

@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates the Minkowski spacetime version of a Levy C curve of various dimension values, from half down to -1. 
 #include "stdafx.h"
 #include <iostream>

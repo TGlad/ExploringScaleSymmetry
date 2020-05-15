@@ -122,12 +122,12 @@
     <ClCompile Include="Chapter6\automata2D\Evolver.cpp" />
     <ClCompile Include="Chapter6\automata2D\Image.cpp" />
     <ClCompile Include="Chapter6\automata2D\Matrix33.cpp" />
-    <ClCompile Include="Chapter6\automata2D\renderEngine.cpp" />
     <ClCompile Include="Chapter6\automata2D\Screen.cpp" />
     <ClCompile Include="Chapter6\automata2D\Vector3.cpp" />
     <ClCompile Include="Chapter6\automata2D\View.cpp" />
     <ClCompile Include="Chapter6\ch6_figure12.cpp" />
     <ClCompile Include="Chapter6\ch6_figure17.cpp" />
+    <ClCompile Include="Chapter6\ch6_figure3.cpp" />
     <ClCompile Include="Chapter7\ch7_figure1.cpp" />
     <ClCompile Include="Chapter7\ch7_figure12.cpp" />
     <ClCompile Include="Chapter7\ch7_figure13.cpp" />

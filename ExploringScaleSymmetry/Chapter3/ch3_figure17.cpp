@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates 8 example co-similar fractals. In these images the white+yellow shape is a larger version of the white shape. The white+pink shape is a larger version of the pink shape (which is also the yellow shape).
 #include "stdafx.h"
 #include "bmp.h"

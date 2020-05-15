@@ -1,3 +1,4 @@
+// Thomas Lowe, 2020.
 // Generates the pyramidal surface fractal as a .ply triangle-mesh file. 
 #include "stdafx.h"
 #include "PolyMesh.h"
