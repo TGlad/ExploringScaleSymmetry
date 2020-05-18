@@ -24,6 +24,8 @@ View3D::View3D(int width, int height)
   printf("Press 'r' for random and 'h' for plan view of hills.\n");
   printf("Press 'g' for ground view, as shown in Figure 21. \n");
   printf("Number keys are mapping families to search within:\n");
+  printf("Numbers 1-6 score each parent distance differently. e.g. nearest parent scores more than second nearest.\n");
+  printf("Numbers 7-9 are vertically asymmetric, so good for landscapes, use 'g' for side view.\n");
 }
 
 void View3D::recordToScreen(Screen* screen)
