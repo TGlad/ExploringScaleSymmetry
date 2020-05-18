@@ -19,10 +19,10 @@ View3D::View3D(int width, int height)
 
   printf("3D Fractal Automata Search Tool\n");
   printf("Click on your preferred of the seven systems to bring it to the top and generate six new mutated versions below\n");
-  printf("Press key 'l' to load, 's' to save, with this window in focus.\n");
+  printf("Press key 'l' to load, 's' to save, 'f' to toggle full view, , with this window in focus.\n");
   printf("Press 'z','x','c','.' or 'o' for letter shapes, as shown in figure 20.\n");
   printf("Press 'r' for random and 'h' for plan view of hills.\n");
-  printf("Press 'g' for ground view, as shown in Figure 21. \n");
+  printf("Press 'g' for ground view, as shown in Figure 21.\n\n");
   printf("Number keys are mapping families to search within:\n");
   printf("Numbers 1-6 score each parent distance differently. e.g. nearest parent scores more than second nearest.\n");
   printf("Numbers 7-9 are vertically asymmetric, so good for landscapes, use 'g' for side view.\n");
