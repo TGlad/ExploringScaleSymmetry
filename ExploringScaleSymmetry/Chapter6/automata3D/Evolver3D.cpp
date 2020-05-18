@@ -1,4 +1,4 @@
-#include "Evolver.h"
+#include "Evolver3D.h"
 #include "Image.h"
 #include <memory>
 
@@ -32,9 +32,7 @@ static bool letterDot[4][4][4] = {
   {{0,0,0,0},{0,1,1,0},{0,1,1,0},{0,0,0,0}},
   {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}}};
 
-static int depthDiv = 2; // proportional to time
-
-Evolver::Evolver(int type, bool bigSize, bool isDynamic)
+Evolver3D::Evolver3D(int type, bool bigSize)
 {
   sizeAddition = bigSize ? 1 : 0;
   depthUsed = depth+sizeAddition;
@@ -46,18 +44,9 @@ Evolver::Evolver(int type, bool bigSize, bool isDynamic)
   largeBitmapData[0]->clear(64);
   largeBitmapData[1]->clear(64);
 
-  int smallSize = 1<<(depthUsed-1);
-  smallBitmapData[0] = new Image(smallSize, smallSize); // store each pixel
-  smallBitmapData[1] = new Image(smallSize, smallSize); // store each pixel
-  smallBitmapData[0]->clear(64);
-  smallBitmapData[1]->clear(64);
-
   bitmapIndex = 0;
-  dynamicMinLevel = 1; // maximum depth by default
-  bitmap = isDynamic ? smallBitmapData[bitmapIndex] : largeBitmapData[bitmapIndex];
+  bitmap = largeBitmapData[bitmapIndex];
   letter = 'r'; // for random
-  drawLocked = false;
-  endUpdate = false;
 
   for (int i = 0; i<=depthUsed; i++)
   {
@@ -82,43 +71,34 @@ Evolver::Evolver(int type, bool bigSize, bool isDynamic)
     normalColours[i] = Colour(1.0f, 0.85f, 0.4f)*normalBlend + Colour(0.2f, 0.1f, 0.1f)*2.0f*(1.0f - normalBlend);
   }
   
-  
-  setDynamic(isDynamic);
+  setup();
   this->type = type;
   for (int i = 0; i<numTypes; i++)
   {
-    getDynamicValue[i] = NULL;
     getStaticValue[i] = NULL; 
   }
-  getStaticValue[1] = &Evolver::getStatic1;
-  getStaticValue[2] = &Evolver::getStatic2;
-  getStaticValue[3] = &Evolver::getStatic3;
-  getStaticValue[4] = &Evolver::getStatic4;
-  getStaticValue[5] = &Evolver::getStatic5;
-  getStaticValue[6] = &Evolver::getStatic6;
-  getStaticValue[7] = &Evolver::getStatic7;
-  getStaticValue[8] = &Evolver::getStatic8;
-  getStaticValue[9] = &Evolver::getStatic9;
-  getDynamicValue[1] = &Evolver::getDynamic1;
-  getDynamicValue[2] = &Evolver::getDynamic2;
-  getDynamicValue[3] = &Evolver::getDynamic3;
-  getDynamicValue[4] = &Evolver::getDynamic4;
-  getDynamicValue[5] = &Evolver::getDynamic5;
-  getDynamicValue[6] = &Evolver::getDynamic6;
-  getDynamicValue[7] = &Evolver::getDynamic7;
+  getStaticValue[1] = &Evolver3D::getStatic1;
+  getStaticValue[2] = &Evolver3D::getStatic2;
+  getStaticValue[3] = &Evolver3D::getStatic3;
+  getStaticValue[4] = &Evolver3D::getStatic4;
+  getStaticValue[5] = &Evolver3D::getStatic5;
+  getStaticValue[6] = &Evolver3D::getStatic6;
+  getStaticValue[7] = &Evolver3D::getStatic7;
+  getStaticValue[8] = &Evolver3D::getStatic8;
+  getStaticValue[9] = &Evolver3D::getStatic9;
   reset();
 }
 
-void Evolver::reset()
+void Evolver3D::reset()
 {
   randomise();
   randomiseMasks(*this, 50.0f); // 50%
 }
 
-void Evolver::load(char* fileName, int type)
+void Evolver3D::load(char* fileName, int type)
 {
   this->type = type;
-  setDynamic(isDynamic);
+  setup();
   FILE* fp;
   if (fopen_s(&fp, fileName, "rb"))
   {
@@ -129,11 +109,10 @@ void Evolver::load(char* fileName, int type)
   fclose(fp);
 }
 
-void Evolver::randomise()
+void Evolver3D::randomise()
 {
   frame = 1;
   int size = 1<<fixedLevel;
-  dynamicMinLevel = fixedLevel+1;
   
   memset(grids[fixedLevel], 0, sizeof(char) * maxSize[fixedLevel]);
   switch (letter) // a few basic examples
@@ -198,37 +177,19 @@ void Evolver::randomise()
     break;
     case 'r':
     {
-      dynamicMinLevel = 1;
       int count = (size*size*size)/2;
       memset(grids[fixedLevel], 0, maxSize[fixedLevel]);
       for (int i = 0; i<count; i++)
         set(fixedLevel, rand()&3, rand()&3, rand()&3, true);
     }
   }
-  if (isDynamic)
-  {
-    // initialise the bitmaps to some random image:
-    // This is a recursive process, generating the data procedurally as we go deeper in detail level.
-    set(0, 0, 0, 0, true); // the base level has to be on if you think about it, otherwise the whole volume would be culled
-    for (int level = dynamicMinLevel; level<=depthUsed; level++)
-    {
-      memset(grids[level], 0, maxSize[level]);
-      int size = 1<<level;
-      int halfsize = size/depthDiv;
-      for (int k = 0; k<halfsize; k++)
-        for (int j = 0; j<size; j++)
-          for (int i = 0; i<size; i++)
-            if (random() > 0.75f)
-              set(level, i, j, k, true);
-    }
-  }
 }
 
-void Evolver::randomiseMasks(const Evolver& master, float percentVariation)
+void Evolver3D::randomiseMasks(const Evolver3D& master, float percentVariation)
 {
   type = master.type;
   yUp = master.yUp;
-  setDynamic(master.isDynamic);
+  setup();
   float threshold = 1.0f - 2.0f*0.01f*percentVariation;
 
   for (int i = 0; i<genomeSize; i++)
@@ -236,25 +197,25 @@ void Evolver::randomiseMasks(const Evolver& master, float percentVariation)
       genome[i] = !genome[i];
 }
 
-void Evolver::read(FILE* fp)
+void Evolver3D::read(FILE* fp)
 {
   fread(genome, sizeof(bool), genomeSize, fp);
 }
 
-void Evolver::write(FILE* fp)
+void Evolver3D::write(FILE* fp)
 {
   fwrite(genome, sizeof(bool), genomeSize, fp);
 }
 
-void Evolver::set(const Evolver& evolver, bool copyGrid)
+void Evolver3D::set(const Evolver3D& evolver, bool copyGrid)
 {
   type = evolver.type;
   yUp = evolver.yUp;
-  setDynamic(evolver.isDynamic);
+  setup();
 
   memcpy(genome,  evolver.genome,  sizeof(bool)*genomeSize);
 
-  if (copyGrid && !isDynamic)
+  if (copyGrid)
   {
     int size = 1<<fixedLevel;
     memcpy(grids[fixedLevel], evolver.grids[fixedLevel], maxSize[fixedLevel]);
@@ -262,26 +223,15 @@ void Evolver::set(const Evolver& evolver, bool copyGrid)
 }
 
 
-void Evolver::draw()
+void Evolver3D::draw()
 {
-  drawLocked = true;
-  if (isDynamic)
-  {
- //   glPixelZoom(1.0f, 1.0f); // so we have more speed to play with
-    glPixelZoom(2.0f, 2.0f); // so we have more speed to play with
-    smallBitmapData[1-bitmapIndex]->draw(); // draw the opposite to what is being rendered
-  }
-  else
-  {
-    glPixelZoom(1.0f, 1.0f); 
-    largeBitmapData[1-bitmapIndex]->draw(); // draw the opposite to what is being rendered
-  }
-  drawLocked = false; // mutex
+  glPixelZoom(1.0f, 1.0f); 
+  largeBitmapData[1-bitmapIndex]->draw(); // draw the opposite to what is being rendered
 }
 
 
 // take the stacked grid data and generate a single image from it
-void Evolver::updateStaticFast(int level, int x, int y, int z, int targetDepth)
+void Evolver3D::updateStaticFast(int level, int x, int y, int z, int targetDepth)
 {
   if (level == targetDepth-1) 
   {
@@ -311,9 +261,8 @@ void Evolver::updateStaticFast(int level, int x, int y, int z, int targetDepth)
         updateStaticFast(level, x+i, y+j, z+k, targetDepth);
 }
 
-void Evolver::updateStatic()
+void Evolver3D::updateStatic()
 {
-//  timer.start();
   int size = 1<<fixedLevel;
 
 #define UPDATE_FAST
@@ -337,12 +286,9 @@ void Evolver::updateStatic()
           set(i, x, y, z, (this->*getValue)(i, i-1, x, y, z));
   }
 #endif
-//   timer.stop();
-//   timer.print("Update static time\n");
-//   timer.reset();
 }
 
-void Evolver::renderPoint(int level, int x, int y, int z, int totalNeighbours)
+void Evolver3D::renderPoint(int level, int x, int y, int z, int totalNeighbours)
 {
   float shade = 1.0f;
 #define SHADOWS
@@ -395,7 +341,7 @@ void Evolver::renderPoint(int level, int x, int y, int z, int totalNeighbours)
 }
 
 // take the stacked grid data and generate a single image from it
-void Evolver::renderToBitmap(int level, int x, int y, int z, int totalNeighbours)
+void Evolver3D::renderToBitmap(int level, int x, int y, int z, int totalNeighbours)
 {
   // If at highest level then render
   if (level == depthUsed-1) 
@@ -442,110 +388,30 @@ void Evolver::renderToBitmap(int level, int x, int y, int z, int totalNeighbours
     }
   }
 }
-void Evolver::run() // does it on a separate thread
+
+void Evolver3D::update()
 {
-  while (!endUpdate)
+  if (frame == 1)
   {
-    update();
-  }
-  endUpdate = false;
-}
-
-void Evolver::update()
-{
-  // This performs the covolution
-  if (!isDynamic)
-  {
-    if (frame == 1)
-    {
-      memset(zDepth, 255, sizeof(unsigned short)<<(depthUsed + depthUsed));
-      memset(diagonalSet, 0, sizeof(bool)<<(depthUsed + 1 + depthUsed)); // clear shadow buffer
-      bitmap->clear(64);
-
-      updateStatic();
-      int size = 1<<fixedLevel;
-      for (int k = 0; k<size; k++)
-      {
-        for (int j = 0; j<size; j++)
-        {
-          for (int i = 0; i<size; i++)
-          {
-            renderToBitmap(fixedLevel, i, j, k, 0);
-          }
-        }
-      }
- //     while (drawLocked)
-      {
-        bitmapIndex = bitmapIndex * 1;
-      }
-      bitmapIndex = 1-bitmapIndex;
-      bitmap = largeBitmapData[bitmapIndex];
-    }
-    frame++;
-    endUpdate = true;
-    return;
-  }
-
-  // I need to get the timing algorithm right here...
-  int currentLevel = -1;
-  for (int i = 0; i<32 && currentLevel==-1; i++)
-    if ((1<<i) & frame)
-      currentLevel = i; // should go 0,1,0,2,0,1,0,3,...
-  currentLevel = depthUsed - currentLevel; // so most common is the highest detail.
-  if (currentLevel < dynamicMinLevel)
-  {
-    frame = 1;
-    return;
-  }
-  ASSERT(currentLevel <= depthUsed && currentLevel >= dynamicMinLevel);
-
-  frame++; // now on correct frame for updating and drawing
-  int size = 1<<currentLevel;
-  bool isDrawLevel = currentLevel == depthUsed;
-  if (isDrawLevel) // do two updates per frame, since one is small, this keeps the update about even cost
-  {
- //   timer.start();
     memset(zDepth, 255, sizeof(unsigned short)<<(depthUsed + depthUsed));
     memset(diagonalSet, 0, sizeof(bool)<<(depthUsed + 1 + depthUsed)); // clear shadow buffer
     bitmap->clear(64);
-  }
-  int halfsize = size/depthDiv;
-  for (int k = 0; k<halfsize && !endUpdate; k++)
-  {
-    for (int j = 0; j<size; j++)
+
+    updateStatic();
+    int size = 1<<fixedLevel;
+    for (int k = 0; k<size; k++)
     {
-      initialiseNeighbourPlane(currentLevel, j, k);
-      int num1 = 0;
-      int num2 = getNeighbourPlane(0);
-      int num3 = getNeighbourPlane(1);
-      initialiseSetFast(currentLevel, j, k-2);
-      for (int i = 0; i<size; i++) // basic scheme
+      for (int j = 0; j<size; j++)
       {
-        num1 = num2;
-        num2 = num3;
-        num3 = getNeighbourPlane(i+2);
-        int numNeighbours = num1+num2+num3;
- //       ASSERT(numNeighbours == getNumNeighbours(currentLevel, i, j, k, grids[currentLevel]));
-        bool b = numNeighbours == 0 ? false : (this->*getDynamicValue[type])(currentLevel, i, j, k, numNeighbours);
-        setFast(i, b);
- //       setTest(currentLevel, i, j, k-2, b);
-        if (b && isDrawLevel)
-          renderPoint(currentLevel, i, j, k, 0); // rendering right then is slightly faster... perhaps 15%
+        for (int i = 0; i<size; i++)
+        {
+          renderToBitmap(fixedLevel, i, j, k, 0);
+        }
       }
     }
-  }
-  memmove(grids[currentLevel] + scaleZ[currentLevel]*2, grids[currentLevel], scaleZ[currentLevel]*halfsize);
-  if (isDrawLevel)
-  {
-  //  while (drawLocked)
-    {
-      bitmapIndex = bitmapIndex * 1;
-    }
     bitmapIndex = 1-bitmapIndex;
-    bitmap = smallBitmapData[bitmapIndex];
-
-//     timer.stop();
-//     timer.print("Update and draw slow\n");
-//     timer.reset();
+    bitmap = largeBitmapData[bitmapIndex];
   }
+  frame++;
+  return;
 }

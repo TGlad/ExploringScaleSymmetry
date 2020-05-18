@@ -1,9 +1,9 @@
-#include "Evolver.h"
+#include "Evolver3D.h"
 #include <memory.h>
 // Code related to specific rule types
 
 // type 1 
-bool Evolver::getStatic1(int level, int parentLevel, int x, int y, int z)
+bool Evolver3D::getStatic1(int level, int parentLevel, int x, int y, int z)
 {
   int dirX = x%2 ? 1 : -1;
   int xParent = x>>1;
@@ -47,7 +47,7 @@ bool Evolver::getStatic1(int level, int parentLevel, int x, int y, int z)
 }
 
 // type 1
-bool Evolver::getStatic2(int level, int parentLevel, int x, int y, int z)
+bool Evolver3D::getStatic2(int level, int parentLevel, int x, int y, int z)
 {
   int dirX = x%2 ? 1 : -1;
   int xParent = x>>1;
@@ -77,7 +77,7 @@ bool Evolver::getStatic2(int level, int parentLevel, int x, int y, int z)
 }
 
 // type 1
-bool Evolver::getStatic3(int level, int parentLevel, int x, int y, int z)
+bool Evolver3D::getStatic3(int level, int parentLevel, int x, int y, int z)
 {
   int dirX = x%2 ? 1 : -1;
   int xParent = x>>1;
@@ -103,12 +103,6 @@ bool Evolver::getStatic3(int level, int parentLevel, int x, int y, int z)
   else if (numParents >= 7)
     return true;
   
-//   int sixth = (int)get(parentLevel, xParent-dirX, yParent+dirY, zParent) + 
-//               (int)get(parentLevel, xParent-dirX, yParent, zParent+dirZ) + 
-//               (int)get(parentLevel, xParent+dirX, yParent-dirY, zParent) + 
-//               (int)get(parentLevel, xParent, yParent-dirY, zParent+dirZ) + 
-//               (int)get(parentLevel, xParent+dirX, yParent, zParent-dirZ) +
-//               (int)get(parentLevel, xParent, yParent+dirY, zParent-dirZ);
   int seventh = (int)get(parentLevel, xParent-dirX, yParent, zParent) + 
                 (int)get(parentLevel, xParent, yParent-dirY, zParent) + 
                 (int)get(parentLevel, xParent, yParent, zParent-dirZ);
@@ -121,7 +115,7 @@ bool Evolver::getStatic3(int level, int parentLevel, int x, int y, int z)
 }
 
 
-bool Evolver::getStatic4(int level, int parentLevel, int x, int y, int z)
+bool Evolver3D::getStatic4(int level, int parentLevel, int x, int y, int z)
 {
   int dirX = x%2 ? 1 : -1;
   int xParent = x>>1;
@@ -164,7 +158,7 @@ bool Evolver::getStatic4(int level, int parentLevel, int x, int y, int z)
   return genome[totalParents];
 }
 
-bool Evolver::getStatic5(int level, int parentLevel, int x, int y, int z)
+bool Evolver3D::getStatic5(int level, int parentLevel, int x, int y, int z)
 {
   int dirX = (x%2) ? 1 : -1;
   int xParent = x>>1;
@@ -210,7 +204,7 @@ bool Evolver::getStatic5(int level, int parentLevel, int x, int y, int z)
     return !genome[1023 - total]; // bit symmetry
 }
 
-bool Evolver::getStatic6(int level, int parentLevel, int x, int y, int z)
+bool Evolver3D::getStatic6(int level, int parentLevel, int x, int y, int z)
 {
   int dirX = x%2 ? 1 : -1;
   int xParent = x>>1;
@@ -257,7 +251,7 @@ bool Evolver::getStatic6(int level, int parentLevel, int x, int y, int z)
 }
 
 // This one is asymmetric in height, which is the z axis
-bool Evolver::getStatic7(int level, int parentLevel, int x, int y, int z)
+bool Evolver3D::getStatic7(int level, int parentLevel, int x, int y, int z)
 {
   int dirX = x%2 ? 1 : -1;
   int xParent = x>>1;
@@ -293,7 +287,7 @@ bool Evolver::getStatic7(int level, int parentLevel, int x, int y, int z)
 }
 
 // This one is asymmetric in height, which is the z axis
-bool Evolver::getStatic8(int level, int parentLevel, int x, int y, int z)
+bool Evolver3D::getStatic8(int level, int parentLevel, int x, int y, int z)
 {
   int dirX = x%2 ? 1 : -1;
   int xParent = x>>1;
@@ -328,7 +322,7 @@ bool Evolver::getStatic8(int level, int parentLevel, int x, int y, int z)
 }
 
 // This one is asymmetric in height, which is the z axis
-bool Evolver::getStatic9(int level, int parentLevel, int x, int y, int z)
+bool Evolver3D::getStatic9(int level, int parentLevel, int x, int y, int z)
 {
   int dirX = x%2 ? 1 : -1;
   int xParent = x>>1;
@@ -366,251 +360,3 @@ bool Evolver::getStatic9(int level, int parentLevel, int x, int y, int z)
   else
     return !genome[(319 - total) + (up&1)*160];
 }
-// this is an odd function (it acts the same if 0 and 1 are swapped
-bool Evolver::getDynamic1(int level, int x, int y, int z, int numNeighbours)
-{
-  if (numNeighbours == 27)
-    return true;
-  int dirX = (x+1)&1;
-  int dirY = (y+1)&1;
-  int dirZ = (z+1)&1;
-
-  bool self = get(level, x, y, z);
-  numNeighbours -= (int)self;
-  numNeighbours += level > 0 ? getNumInQuad(level-1, (x>>1)-dirX, (y>>1)-dirY, (z>>1)-dirZ, grids[level-1]) : 4;
-  numNeighbours += level<depthUsed ? getNumInQuad(level+1, x<<1, y<<1, z<<1, grids[level+1]) : 4;
-
-  if (numNeighbours <= 8)
-    return false;
-  if (numNeighbours >= (42 - 8))
-    return true;
-
-  if (numNeighbours < 21)
-    return genome[numNeighbours + 21*(int)self];
-  else if (numNeighbours > 21)
-    return !genome[42 - numNeighbours + 21*(1-(int)self)];
-  return self; // if mid way then just return what centre currently is
-}
-
-// bit symmetric
-bool Evolver::getDynamic2(int level, int x, int y, int z, int numNeighbours)
-{
-  if (numNeighbours == 27)
-    return true;
-  int dirX = (x+1)&1;
-  int dirY = (y+1)&1;
-  int dirZ = (z+1)&1;
-
-  bool self = get(level, x, y, z);
-  numNeighbours -= (int)self;
-  int numParents = level > 0 ? getNumInQuad(level-1, (x>>1)-dirX, (y>>1)-dirY, (z>>1)-dirZ, grids[level-1]) : 4;
-  int numChildren = level<depthUsed ? getNumInQuad(level+1, x<<1, y<<1, z<<1, grids[level+1]) : 4;
-
-  numNeighbours += (numChildren>>2) + 4*numParents; // total = 60, mid = 30
-  if (numNeighbours < 8)
-    return false;
-  if (numNeighbours > (60 - 8))
-    return true;
-
-  if (numNeighbours < 30)
-    return genome[numNeighbours];
-  else if (numNeighbours > 30)
-    return !genome[60-numNeighbours];
-  else 
-    return self; // equal in all respects so leave as it is
-}
-
-
-bool Evolver::getDynamic3(int level, int x, int y, int z, int numNeighbours)
-{
-  int dirX = (x+1)&1;
-  int dirY = (y+1)&1;
-  int dirZ = (z+1)&1;
-
-  int numParents = level > 0 ? getNumInQuad(level-1, (x>>1)-dirX, (y>>1)-dirY, (z>>1)-dirZ, grids[level-1]) : 4;
-  int numChildren = level<depthUsed ? getNumInQuad(level+1, x<<1, y<<1, z<<1, grids[level+1]) : 4;
-
-  numNeighbours = max(numNeighbours, max(numParents, numChildren));
-  if (numNeighbours < 5)
-    return false;
-
-  return genome[numNeighbours]; // very simple rule here. TODO: add more rule types
-}
-
-// this is an odd function (it acts the same if 0 and 1 are swapped
-bool Evolver::getDynamic4(int level, int x, int y, int z, int numNeighbours)
-{
-  if (numNeighbours == 27)
-    return true;
-
-  int numFaces = (int)get(level, x-1, y, z) + (int)get(level, x+1, y, z) + 
-                 (int)get(level, x, y-1, z) + (int)get(level, x, y+1, z) + 
-                 (int)get(level, x, y, z-1) + (int)get(level, x, y, z+1);
-  int numChildren = level<depthUsed ? getNumInQuad(level+1, x<<1, y<<1, z<<1, grids[level+1]) : 4; 
-  int dirX = (x+1)&1;
-  int dirY = (y+1)&1;
-  int dirZ = (z+1)&1;
-  int numParents = level > 0 ? getNumInQuad(level-1, (x>>1)-dirX, (y>>1)-dirY, (z>>1)-dirZ, grids[level-1]) : 4;
-  if (numFaces < 1)
-    numFaces = 1;
-  else if (numFaces > 5)
-    numFaces = 5;
-  if (numChildren < 2)
-    numChildren = 2;
-  else if (numChildren > 6)
-    numChildren = 6;
-  if (numParents < 2)
-    numParents = 2;
-  else if (numParents > 6)
-    numParents = 6;
-  numFaces--;   // 0 to 4
-  numChildren-=2;// 0 to 4
-  numParents-=2; // 0 to 4
-
-  int total = (numFaces*5 + numChildren)*5 + numParents; // max = 124
-  if (total < 62)
-    return genome[total]; // genome size 62
-  else if (total > 62)
-    return !genome[124 - total];
-  else return get(level, x, y, z);
-}
-
-
-// this is an odd function (it acts the same if 0 and 1 are swapped
-bool Evolver::getDynamic5(int level, int x, int y, int z, int numNeighbours)
-{
-  if (numNeighbours == 27)
-    return true;
-
-  bool self = get(level, x, y, z);
-  int numFaces = (int)get(level, x-1, y, z) + (int)get(level, x+1, y, z) + 
-                 (int)get(level, x, y-1, z) + (int)get(level, x, y+1, z) + 
-                 (int)get(level, x, y, z-1) + (int)get(level, x, y, z+1) + 
-                 2*(int)self;
-  int numChildren = level<depthUsed ? getNumInQuad(level+1, x<<1, y<<1, z<<1, grids[level+1]) : 4; 
-  int dirX = (x+1)&1;
-  int dirY = (y+1)&1;
-  int dirZ = (z+1)&1;
-  int numParents = level > 0 ? getNumInQuad(level-1, (x>>1)-dirX, (y>>1)-dirY, (z>>1)-dirZ, grids[level-1]) : 4;
-  if (numFaces < 2)
-    numFaces = 2;
-  else if (numFaces > 6)
-    numFaces = 6;
-  if (numChildren < 2)
-    numChildren = 2;
-  else if (numChildren > 6)
-    numChildren = 6;
-  if (numParents < 2)
-    numParents = 2;
-  else if (numParents > 6)
-    numParents = 6;
-  numFaces-=2;   // 0 to 4
-  numChildren-=2;// 0 to 4
-  numParents-=2; // 0 to 4
-
-  int total = (numFaces*5 + numChildren)*5 + numParents; // max = 124
-  if (total < 62)
-    return genome[total]; // genome size 62
-  else if (total > 62)
-    return !genome[124 - total];
-  else return self;
-}
-
-bool Evolver::getDynamic6(int level, int x, int y, int z, int numNeighbours)
-{
-  if (numNeighbours == 27)
-    return true;
-
-  int numChildren = level<depthUsed ? getNumInQuad(level+1, x<<1, y<<1, z<<1, grids[level+1]) : 4; 
-  int dirX = (x+1)&1;
-  int dirY = (y+1)&1;
-  int dirZ = (z+1)&1;
-  int numParents = level > 0 ? getNumInQuad(level-1, (x>>1)-dirX, (y>>1)-dirY, (z>>1)-dirZ, grids[level-1]) : 4;
-  if (numNeighbours < 11)
-    numNeighbours = 11;
-  else if (numNeighbours > 16)
-    numNeighbours = 16;
-  if (numChildren < 2)
-    numChildren = 2;
-  else if (numChildren > 6)
-    numChildren = 6;
-  if (numParents < 2)
-    numParents = 2;
-  else if (numParents > 6)
-    numParents = 6;
-  numNeighbours-=11; // 0 to 5
-  numChildren-=2;// 0 to 4
-  numParents-=2; // 0 to 4
-
-  int total = (numNeighbours*5 + numChildren)*5 + numParents; // max = 149
-  if (total <= 74)
-    return genome[total]; // genome size 74
-  else 
-    return !genome[149 - total];
-}
-
-
-bool Evolver::getDynamic7(int level, int x, int y, int z, int numNeighbours)
-{
-  if (numNeighbours == 27)
-    return true;
-
-  bool self = get(level, x, y, z);
-  int numCentres = (int)self;
-  numCentres += level>0 ? (int)get(level-1, x>>1, y>>1, z>>1) : 1;
-  numCentres += level<depthUsed ? getNumInQuad(level+1, x<<1, y<<1, z<<1, grids[level+1]) : 4; 
-
-  int dirX = (x+1)&1;
-  int dirY = (y+1)&1;
-  int dirZ = (z+1)&1;
-  int numFaces = (int)get(level, x-1, y, z) + (int)get(level, x+1, y, z)
-               + (int)get(level, x, y-1, z) + (int)get(level, x, y+1, z)
-               + (int)get(level, x, y, z-1) + (int)get(level, x, y, z+1);
-  if (level > 0)
-  {
-    numFaces += 3*(int)get(level-1, (x>>1)-dirX, (y>>1)-dirY, (z>>1)-dirZ);
-    numFaces += (int)get(level-1, x>>1, (y>>1)-dirY, (z>>1)-dirZ);
-    numFaces += (int)get(level-1, (x>>1)-dirX, y>>1, (z>>1)-dirZ);
-    numFaces += (int)get(level-1, (x>>1)-dirX, (y>>1)-dirY, z>>1);
-  }
-
-  int numEdges = (int)get(level, x-1, y-1, z) + (int)get(level, x-1, y+1, z) + (int)get(level, x+1, y+1, z) + (int)get(level, x+1, y-1, z)
-               + (int)get(level, x-1, y, z-1) + (int)get(level, x-1, y, z+1) + (int)get(level, x+1, y, z+1) + (int)get(level, x+1, y, z-1)
-               + (int)get(level, x, y-1, z-1) + (int)get(level, x, y-1, z+1) + (int)get(level, x, y+1, z+1) + (int)get(level, x, y+1, z-1);
-  if (level > 0)
-  {
-    numEdges += 3*(int)get(level-1, (x>>1)-dirX, (y>>1)-dirY, (z>>1)-dirZ);
-    numEdges += 2*(int)get(level-1, x>>1, (y>>1)-dirY, (z>>1)-dirZ);
-    numEdges += 2*(int)get(level-1, (x>>1)-dirX, y>>1, (z>>1)-dirZ);
-    numEdges += 2*(int)get(level-1, (x>>1)-dirX, (y>>1)-dirY, z>>1);
-    numEdges += (int)get(level-1, (x>>1)-dirX, y>>1, z>>1);
-    numEdges += (int)get(level-1, x>>1, (y>>1)-dirY, z>>1);
-    numEdges += (int)get(level-1, x>>1, y>>1, (z>>1)-dirZ);
-  }
-
-  if (numEdges < 9)
-    numEdges = 9;
-  else if (numEdges > 15)
-    numEdges = 15;
-  if (numFaces < 4)
-    numFaces = 4;
-  else if (numFaces > 8)
-    numFaces = 8;
-  if (numCentres < 3)
-    numCentres = 3;
-  else if (numCentres > 7)
-    numCentres = 7;
-
-  numEdges-=9; // 0 to 6
-  numFaces-=4; // 0 to 4
-  numCentres-=3; // 0 to 4
-
-  int total = (numEdges*5 + numFaces)*5 + numCentres; // max = 174
-  if (total < 87)
-    return genome[total]; // genome size 87
-  else if (total > 87)
-    return !genome[174 - total];
-  else 
-    return self;
-}
-

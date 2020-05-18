@@ -1,35 +1,32 @@
-﻿#include "View.h"
+﻿#include "View3D.h"
 #include "Screen.h"
 #include <conio.h>
 #include <string.h>
 
-int g_type = 1;
-bool g_isDynamic = true;
+static int g_type = 2;
 static int numEvolvers = 7; 
 bool g_fullView = false;
 
-View::View(int width, int height)
+View3D::View3D(int width, int height)
 {
   this->width = width;
   this->height = height;
 
-  bigEvolver = new Evolver(g_type, true, false);
+  bigEvolver = new Evolver3D(g_type, true);
 
   for (int i = 0; i<numEvolvers; i++)
-  {
-    evolvers[i] = new Evolver(g_type, false, g_isDynamic);
-    evolvers[i]->start(); // run
-  }
+    evolvers[i] = new Evolver3D(g_type, false);
 
   printf("3D Fractal Automata Search Tool\n");
   printf("Click on your preferred of the seven systems to bring it to the top and generate six new mutated versions below\n");
   printf("Press key 'l' to load, 's' to save, with this window in focus.\n");
-  printf("Press 'z','x','c','.' or 'o' for letter shapes, or 'r' for random, 'h' for plan view of hills, 'g' for ground view. \n");
-  printf("Press key 'd' to toggle between static and dynamic types.\n");
+  printf("Press 'z','x','c','.' or 'o' for letter shapes, as shown in figure 20.\n");
+  printf("Press 'r' for random and 'h' for plan view of hills.\n");
+  printf("Press 'g' for ground view, as shown in Figure 21. \n");
   printf("Number keys are mapping families to search within:\n");
 }
 
-void View::recordToScreen(Screen* screen)
+void View3D::recordToScreen(Screen* screen)
 {
   glClearColor(0.25f, 0.25f, 0.25f, 1.0f);   
   glClear(GL_COLOR_BUFFER_BIT);
@@ -65,28 +62,14 @@ void View::recordToScreen(Screen* screen)
   }
 }
 
-void View::endThreads()
-{
-  for (int i = 0; i<numEvolvers; i++)
-    evolvers[i]->endUpdate = true;
-  for (int i = 0; i<numEvolvers; i++)
-  {
-    WaitForSingleObject(evolvers[i]->handle, INFINITE); // could use waitForMultipleObjectsHere
-  }
-}
-
-void View::setMaster(int m)
+void View3D::setMaster(int m)
 {
   if (g_fullView)
     return;
   if (g_type != evolvers[m]->type)
     printf("Now using type %d\n", evolvers[m]->type);
-  if (g_isDynamic != evolvers[m]->getDynamic())
-    printf("Now using %s type\n", evolvers[m]->getDynamic() ? "dynamic" : "static");
-  endThreads();
 
   g_type = evolvers[m]->type;
-  g_isDynamic = evolvers[m]->getDynamic();
   if (m!=0)
     evolvers[0]->set(*evolvers[m]);
   evolvers[0]->randomise();
@@ -98,30 +81,15 @@ void View::setMaster(int m)
   }
 }
 
-void View::resetFromHead(int type, bool isDynamic)
+void View3D::resetFromHead(int type)
 {
-  if (isDynamic)
-  {
-    if (evolvers[0]->getDynamicValue[type] == NULL)
-      return;
-  }
-  else
-  {
-    if (evolvers[0]->getStaticValue[type] == NULL)
-      return;
-  }
+  if (evolvers[0]->getStaticValue[type] == NULL)
+    return;
   if (g_fullView)
     return;
-  if (g_isDynamic != isDynamic)
-  {
-    printf(isDynamic ? "switched to dynamic types \n" : "switched to static types 1\n");
-    g_isDynamic = isDynamic;
-  }
   if (g_type != type)
     printf("Now using type %d\n", type);
-  endThreads();
 
-  evolvers[0]->setDynamic(isDynamic);
   g_type = evolvers[0]->type = type;
 
   for (int i = 0; i<numEvolvers; i++)
@@ -131,15 +99,12 @@ void View::resetFromHead(int type, bool isDynamic)
   }
 }
 
-void View::load()
+void View3D::load()
 {
   if (g_fullView)
     return;
   char ext[5];
-  if (g_isDynamic)
-    sprintf_s(ext, ".ed%d", g_type);
-  else
-    sprintf_s(ext, ".es%d", g_type);
+  sprintf_s(ext, ".es%d", g_type);
   printf("Type name of %s file to load, without extension: ", ext);
   char key[80];
   int c = 0;
@@ -155,7 +120,6 @@ void View::load()
       printf("%c", key[c]);
   } while (key[c++] != 0);
   strcat_s(key, ext);
-  endThreads();
   evolvers[0]->load(key, g_type);
   evolvers[0]->randomise();
   for (int i = 1; i<numEvolvers; i++)
@@ -167,11 +131,10 @@ void View::load()
   printf("File loaded\n");
 }
 
-void View::setToLetter(char letter)
+void View3D::setToLetter(char letter)
 {
   if (g_fullView)
     return;
-  endThreads();
   for (int i = 0; i<numEvolvers; i++)
   {
     evolvers[i]->setToLetter(letter);
@@ -179,13 +142,10 @@ void View::setToLetter(char letter)
   }
 }
 
-void View::save()
+void View3D::save()
 {
   char ext[5];
-  if (g_isDynamic)
-    sprintf_s(ext, ".ed%d", g_type);
-  else
-    sprintf_s(ext, ".es%d", g_type);
+  sprintf_s(ext, ".es%d", g_type);
   printf("Type name of %s file to save, without extension: ", ext);
   char key[80];
   int c = 0;
@@ -212,18 +172,13 @@ void View::save()
   printf("File saved\n");
 }
 
-void View::update()
+void View3D::update()
 {
-   if (g_fullView)
-     bigEvolver->update();
-   else
-   {
-     for (int i = 0; i<numEvolvers; i++)
-     {
-       if (!evolvers[i]->isRunning && evolvers[i]->frame==1)
-         evolvers[i]->start();
-     }
-   }
+  if (g_fullView)
+    bigEvolver->update();
+  else
+    for (int i = 0; i<numEvolvers; i++)
+      evolvers[i]->update();
 
   if (_kbhit())
   {
@@ -234,13 +189,10 @@ void View::update()
       int width = 768;
       if (g_fullView) // copy data across
       {
-        endThreads();
         width = 512;
         bigEvolver->set(*evolvers[0], true);
-        if (bigEvolver->getDynamic())
-          bigEvolver->randomise();
         bigEvolver->frame = 1;
-        bigEvolver->update(); // is this needed? I doubt it
+        bigEvolver->update(); 
       }
       else
       {
@@ -254,7 +206,7 @@ void View::update()
       return; 
     if (c >= '1' && c <= '9')
     {
-      resetFromHead(c + 1 - '1', g_isDynamic);
+      resetFromHead(c + 1 - '1');
       return;
     }
     switch(c)
@@ -274,9 +226,6 @@ void View::update()
     case('g'):
     case('h'):
       setToLetter(c);
-      break;
-    case('d'):
-      resetFromHead(1, !g_isDynamic);
       break;
     default:
       break;

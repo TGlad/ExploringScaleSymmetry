@@ -43,6 +43,9 @@
     <Filter Include="Source Files\Chapter6\automata2D">
       <UniqueIdentifier>{53cd3fe7-2469-4b11-90c1-e1c84fa4e7da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Chapter6\automata3D">
+      <UniqueIdentifier>{d0a1c417-2278-4c89-86ce-ed55c166436f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -86,6 +89,15 @@
     </ClInclude>
     <ClInclude Include="Chapter6\automata2D\View.h">
       <Filter>Source Files\Chapter6\automata2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata3D\evolver3D.h">
+      <Filter>Source Files\Chapter6\automata3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata3D\View3D.h">
+      <Filter>Source Files\Chapter6\automata3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter6\automata3D\Core3D.h">
+      <Filter>Source Files\Chapter6\automata3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +238,21 @@
     </ClCompile>
     <ClCompile Include="Chapter6\ch6_figure3.cpp">
       <Filter>Source Files\Chapter6</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata3D\EvolverRules.cpp">
+      <Filter>Source Files\Chapter6\automata3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\ch6_figure19.cpp">
+      <Filter>Source Files\Chapter6</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata3D\Evolver3D.cpp">
+      <Filter>Source Files\Chapter6\automata3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata3D\View3D.cpp">
+      <Filter>Source Files\Chapter6\automata3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter6\automata3D\Core3D.cpp">
+      <Filter>Source Files\Chapter6\automata3D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

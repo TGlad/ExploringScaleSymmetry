@@ -10,7 +10,7 @@ public:
   void init(int screenWidth, int screenHeight);
   void deinit();
   void render();
-  void update(TimePeriod timeStep);
+  void update(double timeStep);
   Screen* screen;
   View* view;
 };

@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <string>
 
-int g_type = 1;
+static int g_type = 1;
 int g_fullView = 0;
 bool g_timeSymmetric = false;
 static int numEvolvers = 7;

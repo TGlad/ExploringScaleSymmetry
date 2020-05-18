@@ -7,7 +7,6 @@ class Matrix33
 public:
   Vector3 row[3];
   Matrix33(){}
-  Matrix33(const RotationVector& rotationVector);
   inline Vector3& forwards(){ return row[2]; }
   inline Vector3& right(){ return row[0]; }
   inline Vector3& up(){ return row[1]; }
@@ -22,6 +21,5 @@ public:
   bool invert();
   Vector3 rotateVector(const Vector3& pos) const;
   Vector3 inverseRotateVector(const Vector3& pos) const;
-  void scale(Scale scale);
 };
 

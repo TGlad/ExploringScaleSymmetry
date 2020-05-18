@@ -1,23 +1,22 @@
 ﻿#pragma once
 #include "basics.h"
-#include "Evolver.h"
+#include "Evolver3D.h"
 
-class View 
+class View3D 
 {
 public:
-  View(int width, int height);
+  View3D(int width, int height);
   int width;
   int height;
   class Screen* screen; 
   void recordToScreen(Screen* screen);
   void update();
   void setMaster(int m);
-  void resetFromHead(int type, bool isDynamic);
+  void resetFromHead(int type);
   void load();
   void save();
   void setToLetter(char letter);
-  void endThreads();
   
-  Evolver* evolvers[7];
-  Evolver* bigEvolver; // is allocated and deallocated on the fly
+  Evolver3D* evolvers[7];
+  Evolver3D* bigEvolver; // is allocated and deallocated on the fly
 };

@@ -1,16 +1,16 @@
 #include <stdlib.h>
 #include <glut.h>
 #include <stdio.h>
-#include "Core.h"
-#include "view.h"
+#include "Core3D.h"
+#include "view3D.h"
 #include <time.h>
 
-static Core core; // Just a singleton
+static Core3D core; // Just a singleton
 static int width = 768;
 static int height = 768;
 extern bool g_fullView;
 
-void init(void)
+static void init(void)
 {    
   srand((unsigned int)time(NULL));
   glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -19,25 +19,25 @@ void init(void)
   core.init(width, height);
 }
 
-void display(void)
+static void display(void)
 {
   core.render();
   glutSwapBuffers();
 }
 
-void update(void)
+static void update(void)
 {
   core.update(1.0f/60.0f); // avoids outliers
   glutPostRedisplay();
-//  glutIdleFunc(NULL); // means you click for each update
 }
-void reshape(int w, int h)
+
+static void reshape(int w, int h)
 {
   width = w;
   height = h;
 }
 
-void mouse(int button, int state, int x, int y) 
+static void mouse(int button, int state, int x, int y) 
 {
    switch (button) {
       case GLUT_LEFT_BUTTON:
@@ -68,18 +68,23 @@ void mouse(int button, int state, int x, int y)
    }
 }
 
-int main(int argc, char** argv)
+int chapter6Figure19()
 {
-   glutInit(&argc, argv);   
-   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
-   glutInitWindowSize(width, height); 
-   glutInitWindowPosition(100, 100);
-   glutCreateWindow(argv[0]);
-   init();
-   glutDisplayFunc(display); 
-   glutReshapeFunc(reshape);
-   glutMouseFunc(mouse);
-   glutIdleFunc(update); // starts the updating
-   glutMainLoop();
-   return 0;
+  int n = 1;
+  char *name = "automata3D";
+  int *argc = &n;
+  char **argv = &name;
+  
+  glutInit(argc, argv);
+  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);
+  glutInitWindowSize(width, height); 
+  glutInitWindowPosition(100, 100);
+  glutCreateWindow(argv[0]);
+  init();
+  glutDisplayFunc(display); 
+  glutReshapeFunc(reshape);
+  glutMouseFunc(mouse);
+  glutIdleFunc(update); // starts the updating
+  glutMainLoop();
+  return 0;
 }

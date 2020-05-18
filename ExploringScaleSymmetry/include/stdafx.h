@@ -24,6 +24,7 @@ int chapter5Figure25();
 int chapter6Figure3();
 int chapter6Figure12();
 int chapter6Figure17();
+int chapter6Figure19();
 int chapter7Figure1();
 int chapter7Figure3();
 int chapter7Figure4();

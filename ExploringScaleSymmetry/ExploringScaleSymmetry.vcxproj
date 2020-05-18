@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Tom\Documents\GitHub\freeglut\include\GL;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\Chapter6\automata2D;C:\Code\Eigen;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\Chapter6\automata3D;C:\Users\Tom\Documents\GitHub\freeglut\include\GL;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\Chapter6\automata2D;C:\Code\Eigen;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
     </ClCompile>
     <Link>
@@ -70,7 +70,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Tom\Documents\GitHub\freeglut\include\GL;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\Chapter6\automata2D;C:\Code\Eigen;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\Chapter6\automata3D;C:\Users\Tom\Documents\GitHub\freeglut\include\GL;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\Chapter6\automata2D;C:\Code\Eigen;C:\Users\Tom\Documents\GitHub\ExploringScaleSymmetry\ExploringScaleSymmetry\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
     </ClCompile>
     <Link>
@@ -94,6 +94,9 @@
     <ClInclude Include="Chapter6\automata2D\ScreenColour.h" />
     <ClInclude Include="Chapter6\automata2D\Vector3.h" />
     <ClInclude Include="Chapter6\automata2D\View.h" />
+    <ClInclude Include="Chapter6\automata3D\Core3D.h" />
+    <ClInclude Include="Chapter6\automata3D\evolver3D.h" />
+    <ClInclude Include="Chapter6\automata3D\View3D.h" />
     <ClInclude Include="include\bmp.h" />
     <ClInclude Include="include\PolyMesh.h" />
     <ClInclude Include="include\stdafx.h" />
@@ -125,8 +128,13 @@
     <ClCompile Include="Chapter6\automata2D\Screen.cpp" />
     <ClCompile Include="Chapter6\automata2D\Vector3.cpp" />
     <ClCompile Include="Chapter6\automata2D\View.cpp" />
+    <ClCompile Include="Chapter6\automata3D\Core3D.cpp" />
+    <ClCompile Include="Chapter6\automata3D\Evolver3D.cpp" />
+    <ClCompile Include="Chapter6\automata3D\EvolverRules.cpp" />
+    <ClCompile Include="Chapter6\automata3D\View3D.cpp" />
     <ClCompile Include="Chapter6\ch6_figure12.cpp" />
     <ClCompile Include="Chapter6\ch6_figure17.cpp" />
+    <ClCompile Include="Chapter6\ch6_figure19.cpp" />
     <ClCompile Include="Chapter6\ch6_figure3.cpp" />
     <ClCompile Include="Chapter7\ch7_figure1.cpp" />
     <ClCompile Include="Chapter7\ch7_figure12.cpp" />

@@ -19,7 +19,7 @@ void Core::render()
   view->recordToScreen(screen);
 }
 
-void Core::update(TimePeriod timeStep)
+void Core::update(double timeStep)
 {
   view->update();
 }

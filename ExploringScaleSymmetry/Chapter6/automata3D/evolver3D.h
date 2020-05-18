@@ -2,47 +2,32 @@
 #include "basics.h"
 #include "Thread.h"
 #include "ScreenColour.h"
-#include "Timer.h"
 
-class Evolver : public Thread
+class Evolver3D
 {
 public:
   static const int depth = 8;
   int frame;
   int type;
-  Timer timer;
 
-  Evolver(int type, bool bigSize, bool isDynamic);
+  Evolver3D(int type, bool bigSize);
   void load(char* fileName, int type);
 
-  bool endUpdate;
-
-  void randomiseMasks(const Evolver& master, float percentVariation);
+  void randomiseMasks(const Evolver3D& master, float percentVariation);
   void randomise();
-  void set(const Evolver& evolver, bool copyGrid = false);
+  void set(const Evolver3D& evolver, bool copyGrid = false);
   void draw();
   void update();
   void reset();
   void write(FILE* fp);
   void run(); 
-  void setDynamic(bool dynamic)
+  void setup()
   {
-    isDynamic = dynamic;
     float renderWidth = (float)(1<<depthUsed);
-    if (dynamic)
-    {
-      renderWidth *= 0.75; // since depth is halfed, we need more fog
-      depthUsed = sizeAddition + depth-1;
-      bitmap = smallBitmapData[bitmapIndex];
-    }
-    else
-    {
-      depthUsed = sizeAddition + depth;
-      bitmap = largeBitmapData[bitmapIndex];
-    }
+    depthUsed = sizeAddition + depth;
+    bitmap = largeBitmapData[bitmapIndex];
     fogScale = 1.5f * 0.64f/renderWidth;  
   }
-  bool getDynamic(){ return isDynamic; }
 
   void setToLetter(char letter){ this->letter = letter; }
   unsigned char* grids[depth+2];
@@ -50,18 +35,12 @@ public:
 
   static const int numTypes = 10;
   // function callbacks:
-	typedef bool (Evolver::*GetStaticValueFunction)(int level, int parentLevel, int x, int y, int z);
-	typedef bool (Evolver::*GetDynamicValueFunction)(int level, int x, int y, int z, int numNeighbours);
+  typedef bool (Evolver3D::*GetStaticValueFunction)(int level, int parentLevel, int x, int y, int z);
   GetStaticValueFunction getStaticValue[numTypes];
-  GetDynamicValueFunction getDynamicValue[numTypes];
 private:
-  bool isDynamic;
   class Image* largeBitmapData[2];
-  class Image* smallBitmapData[2];
   class Image* bitmap;
   int bitmapIndex;
-  bool drawLocked;
-  int dynamicMinLevel; // used for fixed low res images in dynamic case
 
 
   void read(FILE* fp);
@@ -135,24 +114,6 @@ private:
     else
       res &= ~(1<<xShift);
   }
-//     inline void setTest(int level, int x, int y, int z, bool val)
-//   {
-//     x++;
-//     y++;
-//     z+=2;
-//     unsigned char* contains = grids[level];
-//     int xDiv = x>>3; // /8
-//     ASSERT(x>=0 && xDiv<scaleY[level] && y >=0 && z>=0);
-//     ASSERT((xDiv + y*scaleY[level] + z*scaleZ[level]) < maxSize[level]);
-//     int xShift = x&7;
-//     unsigned char& res = contains[xDiv + y*scaleY[level] + z*scaleZ[level]]; // unfortunately we can't use [] notation as the widths are not compile-time
-//     unsigned char oldVal = res;
-//     if (val)
-//       res |= 1<<xShift;
-//     else
-//       res &= ~(1<<xShift);
-//     ASSERT(res == oldVal);
-//   }
 
   // Note, you must check level != depth before calling this
   inline int getNumInQuad(int level, int x, int y, int z, unsigned char* grid)
@@ -292,11 +253,4 @@ private:
   bool getStatic7(int level, int parentLevel, int x, int y, int z);
   bool getStatic8(int level, int parentLevel, int x, int y, int z);
   bool getStatic9(int level, int parentLevel, int x, int y, int z);
-  bool getDynamic1(int level, int x, int y, int z, int numNeighbours);
-  bool getDynamic2(int level, int x, int y, int z, int numNeighbours);
-  bool getDynamic3(int level, int x, int y, int z, int numNeighbours);
-  bool getDynamic4(int level, int x, int y, int z, int numNeighbours);
-  bool getDynamic5(int level, int x, int y, int z, int numNeighbours);
-  bool getDynamic6(int level, int x, int y, int z, int numNeighbours);
-  bool getDynamic7(int level, int x, int y, int z, int numNeighbours);
 };

@@ -1,14 +1,15 @@
 ﻿#pragma once
 #include "basics.h"
-#include "View.h"
+#include "View3D.h"
+#include "Screen.h"
 
-class Core
+class Core3D
 {
 public:
   void init(int screenWidth, int screenHeight);
   void deinit();
   void render();
-  void update(TimePeriod timeStep);
+  void update(double timeStep);
   Screen* screen;
-  View* view;
+  View3D* view;
 };

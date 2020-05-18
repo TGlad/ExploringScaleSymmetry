@@ -2,42 +2,6 @@
 // Simple 3x3 matrix class (written prior to uptake of Eigen)
 #include "basics.h"
 
-Matrix33::Matrix33(const RotationVector& rotationVector)
-{
-  float mag2 = rotationVector.magnitudeSquared();
-  float mag = sqrtf(mag2);
-  float x,y,z,w;
-  if (mag < 1e-10f)
-  {
-    x = 0; y = 0; z = 0; w = 1;
-  }
-  else
-  {
-    float phi = 0.5f * mag;
-    float scale = sinf(phi) / mag;
-    w = cosf(phi);
-    x = rotationVector.x * scale; 
-    y = rotationVector.y * scale; 
-    z = rotationVector.z * scale;
-  }
-
-  const float q0t2 = w * 2;
-  const float q1t2 = x * 2;
-  const float q0sq = w * w;
-  const float q1sq = x * x;
-  const float q2sq = y * y;
-  const float q3sq = z * z;
-  const float q0q1 = q0t2 * x;
-  const float q0q2 = q0t2 * y;
-  const float q0q3 = q0t2 * z;
-  const float q1q2 = q1t2 * y;
-  const float q1q3 = q1t2 * z;
-  const float q2q3 = y * z * 2;
-  row[0].set(q0sq + q1sq - q2sq - q3sq, q1q2 + q0q3, -q0q2 + q1q3);
-  row[1].set(q1q2 - q0q3, q0sq - q1sq + q2sq - q3sq, q0q1 + q2q3);
-  row[2].set(q0q2 + q1q3, -q0q1 + q2q3, q0sq - q1sq - q2sq + q3sq);
-}
-
 void Matrix33::setIdentity()
 {
   row[0].set(1, 0, 0);
@@ -106,13 +70,6 @@ Vector3 Matrix33::inverseRotateVector(const Vector3& pos) const
   result.y = pos.x * row[1].x + pos.y * row[1].y + pos.z * row[1].z;
   result.z = pos.x * row[2].x + pos.y * row[2].y + pos.z * row[2].z;
   return result;
-}
-
-void Matrix33::scale(float scale)
-{
-  row[0] *= scale;
-  row[1] *= scale;
-  row[2] *= scale;
 }
 
 Matrix33 Matrix33::operator*(const Matrix33& m) const
