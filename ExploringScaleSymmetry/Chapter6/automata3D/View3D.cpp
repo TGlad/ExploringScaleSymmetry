@@ -1,7 +1,7 @@
 ﻿#include "View3D.h"
 #include "Screen.h"
 #include <conio.h>
-#include <string.h>
+#include <string>
 
 static int g_type = 2;
 static int numEvolvers = 7; 
@@ -16,6 +16,19 @@ View3D::View3D(int width, int height)
 
   for (int i = 0; i<numEvolvers; i++)
     evolvers[i] = new Evolver3D(g_type, false);
+
+  evolvers[1]->load("data/figure19a.es3", 3);
+  evolvers[2]->load("data/figure19c.es4", 4);
+  evolvers[3]->load("data/figure19d.es6", 6);
+  evolvers[4]->load("data/tree.es8", 8);
+  evolvers[4]->setToLetter('g');
+  evolvers[5]->load("data/figure21a.es9", 9);
+  evolvers[5]->setToLetter('g');
+  evolvers[6]->load("data/figure21b.es8", 8);
+  evolvers[6]->setToLetter('g');
+  for (int i = 1; i <= 6; i++)
+    evolvers[i]->randomise();
+
 
   printf("3D Fractal Automata Search Tool\n");
   printf("Click on your preferred of the seven systems to bring it to the top and generate six new mutated versions below\n");
@@ -122,7 +135,7 @@ void View3D::load()
       printf("%c", key[c]);
   } while (key[c++] != 0);
   strcat_s(key, ext);
-  evolvers[0]->load(key, g_type);
+  evolvers[0]->load(("data/" + std::string(key)).c_str(), g_type);
   evolvers[0]->randomise();
   for (int i = 1; i<numEvolvers; i++)
   {
@@ -164,7 +177,8 @@ void View3D::save()
   } while (key[c++] != 0);
   FILE* fp;
   strcat_s(key, ext);
-  if (fopen_s(&fp, key, "wb"))
+  std::string file = "data/" + std::string(key);
+  if (fopen_s(&fp, file.c_str(), "wb"))
   {
     printf("Cannot open file for writing: %s\n", key);
     return;

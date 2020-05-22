@@ -95,7 +95,7 @@ void Evolver3D::reset()
   randomiseMasks(*this, 50.0f); // 50%
 }
 
-void Evolver3D::load(char* fileName, int type)
+void Evolver3D::load(const char* fileName, int type)
 {
   this->type = type;
   setup();
@@ -211,6 +211,7 @@ void Evolver3D::set(const Evolver3D& evolver, bool copyGrid)
 {
   type = evolver.type;
   yUp = evolver.yUp;
+  letter = evolver.letter;
   setup();
 
   memcpy(genome,  evolver.genome,  sizeof(bool)*genomeSize);

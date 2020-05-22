@@ -11,7 +11,7 @@ public:
   int type;
 
   Evolver3D(int type, bool bigSize);
-  void load(char* fileName, int type);
+  void load(const char* fileName, int type);
 
   void randomiseMasks(const Evolver3D& master, float percentVariation);
   void randomise();
