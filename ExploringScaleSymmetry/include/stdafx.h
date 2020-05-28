@@ -51,6 +51,7 @@ int chapter9Figure12_spheretree();
 #else
 #include <eigen3/Eigen/Eigen>
 #include <eigen3/Eigen/StdVector>
+typedef unsigned char BYTE;
 #endif
 
 using namespace std;
