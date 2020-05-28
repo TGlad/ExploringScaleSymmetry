@@ -3,7 +3,8 @@
 // The method generates to a larger image first (called out), then downscales to a smaller one. The result of this is that
 // the dense and repeated mixture of all three colours in the Koch-like fractal regions appears as as a constant colour (a mix of all three). 
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <set>
 
 // resolution:
@@ -87,7 +88,6 @@ bool addMid(vector<BYTE> &out, const Vector2i &pos0, const Vector2i &pos1, const
 
 int chapter6Figure17()
 {
-  long s2;
   vector<BYTE> out(width*height); // .bmp pixel buffer
   int startWidth = width;
   memset(&out[0], 0, out.size() * sizeof(BYTE)); 
@@ -175,10 +175,7 @@ int chapter6Figure17()
     }
   }
 
-  BYTE* c = ConvertRGBToBMPBuffer(&image[0], width, height, &s2);
-  LPCTSTR file = L"three_colour_automaton.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("three_colour_automaton.png", width, height, 3, &image[0], 3*width);
   return 0;
 }
 

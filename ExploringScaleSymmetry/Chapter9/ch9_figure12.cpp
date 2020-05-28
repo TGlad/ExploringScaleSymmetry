@@ -2,7 +2,8 @@
 // Calculates the (unnormalised) Minkowski content (c) of multiple scale-symmetric shapes.
 // Also generates an image showing the expanded shape
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <sstream>
 #include <fstream>
 
@@ -244,7 +245,7 @@ int chapter9Figure12()
   vector<Node, aligned_allocator<Node> > list;
   recurse(list, base);
 
-  long s2;
+  
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   vector<double> graph;
   double c = 0;
@@ -377,10 +378,7 @@ int chapter9Figure12()
     cout << "radius: " << r << ", d: " << d << ", c: " << c << endl;
 #endif
 
-    BYTE* buf = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-    LPCTSTR file = L"expanded_shape.bmp";
-    SaveBMP(buf, width, height, s2, file);
-    delete[] buf;
+    stbi_write_png("expanded_shape.png", width, height, 3, &out[0], 3 * width);
   }
   return 0;
 #endif

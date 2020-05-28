@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 // Generates four of the 25 2D classes, the cluster-tree, cluster-cluster, tree-cluster and tree-tree.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <fstream>
 
 static int width = 1024;
@@ -101,7 +102,7 @@ int chapter8Figure2()
     base.pos = Vector2d(512, 780);
 
     vector<Node, aligned_allocator<Node> > cluster;
-    long s2;
+    
     vector<BYTE> out(width*height * 3); // .bmp pixel buffer
     memset(&out[0], 255, out.size() * sizeof(BYTE)); // background is grey
 
@@ -109,10 +110,8 @@ int chapter8Figure2()
     for (auto &planet : cluster)
       drawDisk(planet.pos, out, planet.radius, 255);
 
-    BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-    LPCTSTR files[] = { L"cluster-cluster.bmp", L"tree-cluster.bmp", L"cluster-tree.bmp", L"tree-tree.bmp" };
-    SaveBMP(c, width, height, s2, files[i]);
-    delete[] c;
+    const char *files[] = { "cluster-cluster.png", "tree-cluster.png", "cluster-tree.png", "tree-tree.png" };
+    stbi_write_png(files[i], width, height, 3, &out[0], 3 * width);
   }
   return 0;
 }

@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 // Generates a disk tree, which is a form of recursive Ford spheres. 
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <fstream>
 
 // controls the visual detail level
@@ -20,7 +21,7 @@ static void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 
 int chapter4Figure20()
 {
-  long s2;
+  
   vector<BYTE> out(width*height * 3); 
   memset(&out[0], 255, out.size() * sizeof(BYTE)); 
    
@@ -47,9 +48,6 @@ int chapter4Figure20()
     }
   }
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"disk_tree.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("disk_tree.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }

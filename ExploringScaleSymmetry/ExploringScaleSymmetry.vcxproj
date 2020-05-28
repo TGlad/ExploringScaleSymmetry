@@ -97,7 +97,7 @@
     <ClInclude Include="Chapter6\automata3D\Core3D.h" />
     <ClInclude Include="Chapter6\automata3D\evolver3D.h" />
     <ClInclude Include="Chapter6\automata3D\View3D.h" />
-    <ClInclude Include="include\bmp.h" />
+    <ClInclude Include="include\imagewrite.h" />
     <ClInclude Include="include\PolyMesh.h" />
     <ClInclude Include="include\stdafx.h" />
     <ClInclude Include="include\targetver.h" />
@@ -151,7 +151,6 @@
     <ClCompile Include="Chapter9\ch9_figure2.cpp" />
     <ClCompile Include="Chapter9\ch9_figure4.cpp" />
     <ClCompile Include="Chapter9\ch9_figure5.cpp" />
-    <ClCompile Include="include\bmp.cpp" />
     <ClCompile Include="include\PolyMesh.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

@@ -2,7 +2,6 @@
 // Generates the 1.5D 'mushroom fractal', as a vector graphic .svg file
 #include <fstream>
 #include "stdafx.h"
-#include "bmp.h"
 
 // The number of iterations
 static int order = 3; 

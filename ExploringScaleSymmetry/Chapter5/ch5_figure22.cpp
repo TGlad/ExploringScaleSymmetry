@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 // Generates a Mobius multiset with a large iteration count, to approximate the limit set, and remove cloudy results.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -112,7 +113,7 @@ static void generateFullMap(vector<BYTE> &out)
 int chapter5Figure22()
 {
   init();
-  long s2;
+  
 
   width = 28 * 128;
   height = 7 * 128;
@@ -122,9 +123,6 @@ int chapter5Figure22()
 
   generateFullMap(out);
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"mobius_multimap.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("mobius_multimap.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }

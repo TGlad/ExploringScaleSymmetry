@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 // Generates an image representing colliding segments through time. These conserve momentum (if they are the same density) but not energy.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <sstream>
 #include <fstream>
 static int width = 1024;
@@ -33,7 +34,7 @@ int chapter7Figure1()
 {
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   memset(&out[0], 255, out.size() * sizeof(BYTE)); 
-  long s2;
+  
   int i = 0;
   for (double scale = 1.0; scale > 0.001; scale /= 2.0)
   {
@@ -43,9 +44,6 @@ int chapter7Figure1()
       drawPolygon(out, scale, y, col);
   }
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"colliding_segments.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("colliding_segments.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }

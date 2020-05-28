@@ -54,9 +54,6 @@
     <ClInclude Include="include\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\bmp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -98,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="Chapter6\automata3D\Core3D.h">
       <Filter>Source Files\Chapter6\automata3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imagewrite.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -204,9 +204,6 @@
       <Filter>Source Files\Chapter9</Filter>
     </ClCompile>
     <ClCompile Include="include\PolyMesh.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="include\bmp.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="Chapter3\ch3_figure17.cpp">

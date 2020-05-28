@@ -1,10 +1,8 @@
 // Thomas Lowe, 2020.
 // Fractal canopies
 #include "stdafx.h"
-#include "bmp.h"
 #include <fstream>
 static int type = 0; // 0 = thick tree, 1 = thin tree, 2 = tree leaves
-
 
 static double gradient = type == 0 ? 0.15 : 0.0001;
 namespace

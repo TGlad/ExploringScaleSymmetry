@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 // Generates 8 example co-similar fractals. In these images the white+yellow shape is a larger version of the white shape. The white+pink shape is a larger version of the pink shape (which is also the yellow shape).
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <set>
 #include <conio.h>
 
@@ -32,7 +33,6 @@ static double randomVal(double start, double end)
 
 int chapter3Figure17()
 {
-  long s2;
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   // seven nice indices of randomly chosen transforms
   int indices[] = { 1148124, 1930700, 2129150, 2536776, 2930738, 3372686, 3472683, 0 };
@@ -135,14 +135,9 @@ int chapter3Figure17()
       }
     }
 
-    BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-    wstringstream str;
-    str << L"shape" << ii << L".bmp";
-    wstring strng = str.str();
-    const TCHAR * bll = strng.c_str();
-    LPCTSTR file = bll;
-    SaveBMP(c, width, height, s2, file);
-    delete[] c;
+    stringstream str;
+    str << "shape" << ii << ".png";
+    stbi_write_png(str.str().c_str(), width, height, 3, &out[0], 3 * width);
   }
   return 0;
 }

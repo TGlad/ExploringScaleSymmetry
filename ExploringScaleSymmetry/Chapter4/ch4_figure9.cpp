@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 // 2D bubble fractal. 
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <fstream>
 
 // smaller values give more complex structures.
@@ -22,7 +23,7 @@ static void putpixel(vector<BYTE> &out, const Vector2i &pos, int shade)
 
 int chapter4Figure9()
 {
-  long s2;
+  
   vector<BYTE> out(width*height * 3); 
   memset(&out[0], 255, out.size() * sizeof(BYTE)); 
   Vector2d vs[3] = { Vector2d(0, 1), Vector2d(sqrt(3) / 2.0, -0.5), Vector2d(-sqrt(3) / 2.0, -0.5) };
@@ -69,9 +70,6 @@ int chapter4Figure9()
     }
   }
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"bubble_fractal.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("bubble_fractal.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }

@@ -1,7 +1,6 @@
 // Thomas Lowe, 2020.
 // Generates the three forms of Koch curve: spatial, Newtonian spacetime, and Minkowski spacetime.
 #include "stdafx.h"
-#include "bmp.h"
 #include <fstream>
 #include <complex>
 typedef complex<double> Complex;

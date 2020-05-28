@@ -2,7 +2,8 @@
 // Calculates the fractal content for a limit set over multiple scales, and plots it as a log-log graph, to demonstrate its oscillation.
 // This also plots the limit set itself and the expanded limit set at every scale. Use a breakpoint in this look to see each expanded set.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <sstream>
 #include <fstream>
 
@@ -154,7 +155,7 @@ int chapter9Figure2()
 #endif
   cout << "min coordinate: " << minVec.transpose() << ", max coordinate: " << maxVec.transpose() << endl;
 
-  long s2;
+  
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   vector<double> graph;
   double c = 0;
@@ -203,10 +204,7 @@ int chapter9Figure2()
 
     graph.push_back(c);
 #if defined DRAW_EXPANDED_SET
-    BYTE* buf = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-    LPCTSTR file = L"substitutionRuleExpandedSet.bmp";
-    SaveBMP(buf, width, height, s2, file);
-    delete[] buf;
+    stbi_write_png("substitutionRuleExpandedSet.png", width, height, 3, &out[0], 3 * width);
 #endif
   }
 

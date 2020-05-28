@@ -1,6 +1,5 @@
 // Thomas Lowe, 2020.
 #pragma once
-
 #include "targetver.h"
 
 int chapter2Figure3();

@@ -2,7 +2,8 @@
 // Calculates the volume of the expanded sphere tree (or its surface or centre points), by the radius r, and renders a slice to file.
 // Calculating for multiple values of the radius r, allows you to estimate the fractal dimension and unnormalised Minkowski content of the structure.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <set>
 #include <sstream>
 #include <fstream>
@@ -115,7 +116,7 @@ static double distanceToTree(Vector3d p)
 
 int chapter9Figure12_spheretree()
 {
-  long s2;
+  
   vector<BYTE> out(width*width * 3); // .bmp pixel buffer
   memset(&out[0], 255, out.size() * sizeof(BYTE)); // background is white
 
@@ -154,9 +155,6 @@ int chapter9Figure12_spheretree()
   double volume = count * step*step*step;
   cout << "r: " << r << ", volume: " << volume << endl;
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"sphere_tree_points.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("sphere_tree_points.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }
