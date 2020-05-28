@@ -3,14 +3,11 @@
 #include "stdafx.h"
 #include <iostream>
 #include <vector>
-#include "/Code/Eigen/Eigen"
-#include "/Code/Eigen/StdVector"
 
 using namespace std;
 using namespace Eigen;
 
 #include <fstream>
-#include <windows.h>
 #include <stdio.h>       // for memset
 
 static ofstream svg;

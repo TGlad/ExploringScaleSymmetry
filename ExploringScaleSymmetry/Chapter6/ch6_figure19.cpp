@@ -1,8 +1,8 @@
 #include <stdlib.h>
-#include <glut.h>
+#include <GL/glut.h>
 #include <stdio.h>
 #include "Core3D.h"
-#include "view3D.h"
+#include "View3D.h"
 #include <time.h>
 
 static Core3D core; // Just a singleton
@@ -71,9 +71,9 @@ static void mouse(int button, int state, int x, int y)
 int chapter6Figure19()
 {
   int n = 1;
-  char *name = "automata3D";
+  const char *name = "automata3D";
   int *argc = &n;
-  char **argv = &name;
+  char **argv = (char **)&name;
   
   glutInit(argc, argv);
   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);

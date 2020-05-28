@@ -4,7 +4,7 @@
 #include <fstream>
 
 // The tree parameters
-static double time = 248.0;                                   // the rendered time point. At 0, the result shows spatial symmetry
+static double timeT = 248.0;                                   // the rendered time point. At 0, the result shows spatial symmetry
 static double widthPerLength = 0.2;                           // affects the thickness of the tree
 static double omega = 2.0;
 
@@ -72,14 +72,14 @@ void buildTree(vector<SSBranch, aligned_allocator<SSBranch> > &tree, const SSBra
   SSBranch child1;
   child1.pos = node.pos + node.yAxis() * node.length;
   child1.length = node.length * scale1;
-  child1.angle = node.angle + angle1 + sway * sin(time / child1.length);
+  child1.angle = node.angle + angle1 + sway * sin(timeT / child1.length);
   child1.flip = !node.flip;
   buildTree(tree, child1);
 
   SSBranch child2;
   child2.pos = node.pos + node.yAxis() * node.length;
   child2.length = node.length * scale2;
-  child2.angle = node.angle + angle2 + sway * sin(time / child2.length);
+  child2.angle = node.angle + angle2 + sway * sin(timeT / child2.length);
   child2.flip = !node.flip;
   buildTree(tree, child2);
 }

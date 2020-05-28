@@ -1,7 +1,7 @@
 ﻿// Thomas Lowe, 2020.
 #pragma once
 #include "basics.h"
-#include "glut.h"
+#include "GL/glut.h"
 
 struct ScreenColour
 {

@@ -41,7 +41,7 @@ namespace
   };
 }
 
-static double time = 0.0;
+static double timeT = 0.0;
 
 // recursive construction of child planets
 static void buildCluster(vector<Planet, aligned_allocator<Planet> > &cluster, const Planet &node)
@@ -51,13 +51,13 @@ static void buildCluster(vector<Planet, aligned_allocator<Planet> > &cluster, co
     return;
 
   Planet child1;
-  child1.angle = time / (node.radius * orbitalDist1);
+  child1.angle = timeT / (node.radius * orbitalDist1);
   child1.pos = node.pos + child1.yAxis() * node.radius * orbitalDist1;
   child1.radius = node.radius * scale1;
   buildCluster(cluster, child1);
 
   Planet child2;
-  child2.angle = time / (node.radius * orbitalDist2);
+  child2.angle = timeT / (node.radius * orbitalDist2);
   child2.pos = node.pos + child2.yAxis() * node.radius * orbitalDist2;
   child2.radius = node.radius * scale2;
   buildCluster(cluster, child2);
@@ -78,7 +78,7 @@ int chapter7Figure7()
 
   for (int shade = 0; shade < 256; shade += 1)
   {
-    time = orbitalTime + 125.0 * ((double)shade / 255.0 - 1.0);
+    timeT = orbitalTime + 125.0 * ((double)shade / 255.0 - 1.0);
     cluster.clear();
     buildCluster(cluster, base);
     for (auto &planet : cluster)

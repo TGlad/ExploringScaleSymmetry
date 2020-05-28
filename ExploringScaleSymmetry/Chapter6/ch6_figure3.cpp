@@ -1,10 +1,10 @@
 // Thomas Lowe, 2020.
 // Select-and-mutate interface for finding interesting scale-symmetric automata
 #include <stdlib.h>
-#include <glut.h>
+#include <GL/glut.h>
 #include <stdio.h>
 #include "Core3D.h"
-#include "view3D.h"
+#include "View3D.h"
 #include <time.h>
 
 static Core3D core; // Just a singleton

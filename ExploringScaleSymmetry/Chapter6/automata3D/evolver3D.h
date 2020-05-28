@@ -1,7 +1,5 @@
 #pragma once
 #include "basics.h"
-#include "Thread.h"
-#include "ScreenColour.h"
 
 class Evolver3D
 {
@@ -31,7 +29,7 @@ public:
 
   void setToLetter(char letter){ this->letter = letter; }
   unsigned char* grids[depth+2];
-  Colour normalColours[7];
+  Vector3 normalColours[7];
 
   static const int numTypes = 10;
   // function callbacks:
@@ -222,7 +220,7 @@ private:
     num += (contains[xDiv]>>xShift)&1;
     return num;
   }
-  __forceinline void addNumInLine(unsigned char* contains, int x, int xDiv1, int xDiv2, int xDiv3, int xShift1, int xShift2, int xShift3, int& num)
+  inline void addNumInLine(unsigned char* contains, int x, int xDiv1, int xDiv2, int xDiv3, int xShift1, int xShift2, int xShift3, int& num)
   {
     num += (contains[xDiv1]>>xShift1)&1;
     num += (contains[xDiv2]>>xShift2)&1;

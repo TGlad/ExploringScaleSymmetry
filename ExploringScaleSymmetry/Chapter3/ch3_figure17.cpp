@@ -4,7 +4,6 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "imagewrite.h"
 #include <set>
-#include <conio.h>
 
 // when defined it renders 8 examples. Otherwise it generates a new random example every keypress.
 #define SHOW_EXAMPLES

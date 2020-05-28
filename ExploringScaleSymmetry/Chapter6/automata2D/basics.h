@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <iostream>
 
 
 
@@ -14,10 +15,10 @@ inline float clamped(float value, float left, float right)
 {
   return value<left ? left : (value > right ? right : value);
 }
-inline float random()
+/*inline float random()
 {
   return -1.0f + (2.0f * (float)rand() / (float)RAND_MAX);
-}
+}*/
 inline float random(float min, float max)
 {
   return min + (max-min)*((float)rand() / (float)RAND_MAX);
@@ -43,13 +44,6 @@ inline float absf(float a)
   int b=(*((int *)(&a)))&0x7FFFFFFF;
   return *((float *)(&b));
 }
-
-#include <crtdbg.h> // won't work on linux
-#define BREAK() __debugbreak()
-#if defined(_DEBUG)
-#define ASSERT(exp)  { if(!(exp)) { printf("assert failed: %s", #exp); BREAK(); } }
-#else
-#define ASSERT(exp) {}
-#endif
+#define ASSERT(exp){ if (!(exp)){ std::cout << "assertion failure, debug in code to find error." << std::endl; }}
 
 #include "Matrix33.h"
