@@ -42,13 +42,18 @@ int chapter9Figure12_forddisks();
 int chapter9Figure12_spheretree();
 
 #include <stdio.h>
-#include <tchar.h>
 #include <iostream>
 #include <vector>
-#include <windows.h>
 #include <strstream>
+#if defined USING_WINDOWS
+#include <windows.h>
 #include <Eigen>
 #include <StdVector>
+#else
+#include <eigen3/Eigen/Eigen>
+#include <eigen3/Eigen/StdVector>
+#endif
+
 using namespace std;
 using namespace Eigen;
 EIGEN_DEFINE_STL_VECTOR_SPECIALIZATION(Vector2d);

@@ -2,7 +2,11 @@
 #include "stdafx.h"
 #include <iostream>
 
+#if defined USING_WINDOWS
 int _tmain(int argc, _TCHAR* argv[])
+#else
+int main(int argc, char *argv[])
+#endif
 {
   vector<int (*)()> chapters[10];
   for (int i = 0; i < 10; i++)
