@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 // Generates the set of 64 diamond-square automata of two colours.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <set>
 
 static vector<Vector2i> pointset, pointset2;
@@ -114,7 +115,7 @@ static bool addMid(vector<BYTE> &out, const Vector2d &pos0, const Vector2d &pos1
 
 int chapter6Figure12()
 {
-  long s2;
+  
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   int startWidth = eachWidth;
   memset(&out[0], 0, out.size() * sizeof(BYTE)); 
@@ -151,10 +152,7 @@ int chapter6Figure12()
     }
   }
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"diamond_square_automata.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("diamond_square_automata.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }
 

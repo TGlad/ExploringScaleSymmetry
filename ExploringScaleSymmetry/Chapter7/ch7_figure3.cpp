@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 // Generates image of scale-symmetric billiards. The balls are all the same density, and collide elastically 
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <set>
 
 // These are the primary free parameters
@@ -89,7 +90,7 @@ static void drawDisk(const Vector2d &pos, vector<BYTE> &out, double rad, int sha
 
 int chapter7Figure3()
 {
-  long s2;
+  
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   memset(&out[0], 255, out.size() * sizeof(BYTE)); // background is grey
 
@@ -166,10 +167,7 @@ int chapter7Figure3()
     }
   }
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"scale_symmetric_billiards.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("scale_symmetric_billiards.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }
 

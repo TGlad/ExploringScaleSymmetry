@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 // Generates image of a planetary system of orbiting black holes. The star has two planets, which each have two moons etc.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <fstream>
 
 static double orbitalTime = 315;
@@ -71,7 +72,7 @@ int chapter7Figure7()
 
   vector<Planet, aligned_allocator<Planet> > cluster;
 
-  long s2;
+  
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   memset(&out[0], 255, out.size() * sizeof(BYTE)); 
 
@@ -89,9 +90,6 @@ int chapter7Figure7()
     }
   }
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"black_hole_planetary_system.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("black_hole_planetary_system.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }

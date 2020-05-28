@@ -2,7 +2,8 @@
 // Calculates the unknown scaling component in the three displayed binary trees. This is the (unnormalised) Minkowski content (c)
 // Also generates an image showing the expanded shape
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <sstream>
 #include <fstream>
 
@@ -78,7 +79,7 @@ int chapter9Figure4()
   vector<Node, aligned_allocator<Node> > list;
   recurse(list, base);
 
-  long s2;
+  
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   vector<double> graph;
   double c = 0;
@@ -171,10 +172,7 @@ int chapter9Figure4()
     }
 #endif
 
-    BYTE* buf = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-    LPCTSTR file = L"binary_tree_expanded.bmp";
-    SaveBMP(buf, width, height, s2, file);
-    delete[] buf;
+    stbi_write_png("binary_tree_expanded.png", width, height, 3, &out[0], 3 * width);
   }
   return 0;
 }

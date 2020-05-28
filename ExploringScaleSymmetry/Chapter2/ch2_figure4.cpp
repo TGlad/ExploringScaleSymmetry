@@ -2,7 +2,6 @@
 // Generates the three alternative permutations of the basic fractal curve, in vector file format (.svg). 
 #include <fstream>
 #include "stdafx.h"
-#include "bmp.h"
 
 // This defines the type of curve
 static int type = 1; // 1: new type 1, 2: new type 2, 3: new type 3 

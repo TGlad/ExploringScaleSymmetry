@@ -1,7 +1,6 @@
 // Thomas Lowe, 2020.
 // Generates the five forms of trangle tree: The tree, its outline, its leaves, its skeleton, and its branch points.
 #include "stdafx.h"
-#include "bmp.h"
 #include <fstream>
 
 static double minLength = 0.001;

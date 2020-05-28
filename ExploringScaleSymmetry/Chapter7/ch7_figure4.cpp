@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 // Generates image of scale-symmetric ocean water. It is a first order approximation of water with low amplitude and depth.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <set>
 
 static double seaHeight = -0.1;
@@ -74,7 +75,7 @@ static Vector3d getSeaColour(const Vector3d &p, const Vector3d &n, const Vector3
 
 int chapter7Figure4()
 {
-  long s2;
+  
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   memset(&out[0], 255, out.size() * sizeof(BYTE)); 
 
@@ -129,10 +130,7 @@ int chapter7Figure4()
     }
   }
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"ocean_water.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("ocean_water.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }
 

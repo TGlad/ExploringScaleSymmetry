@@ -1,7 +1,6 @@
 // Thomas Lowe, 2020.
 // Generates a vector graphic (.svg) of a spacetime scale-symmetric tree at a specified time instant
 #include "stdafx.h"
-#include "bmp.h"
 #include <fstream>
 
 // The tree parameters

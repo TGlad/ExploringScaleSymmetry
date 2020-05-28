@@ -2,7 +2,8 @@
 // Calculates the expanded area of Ford Disks (or their boundary or their centre points), and renders the expanded shape to file.
 // Calculating this area for multiple radii can be used to extract the (unnormalised) fractal content, and the fractal dimension.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <set>
 #include <sstream>
 #include <fstream>
@@ -59,7 +60,7 @@ static double distanceToDisks(Vector2d &p)
 
 int chapter9Figure12_forddisks()
 {
-  long s2;
+  
   vector<BYTE> out(width*width * 3); // .bmp pixel buffer
   memset(&out[0], 255, out.size() * sizeof(BYTE)); // background is white
 
@@ -94,9 +95,6 @@ int chapter9Figure12_forddisks()
   double area = count * stepX*stepY;
   cout << "r: " << r << ", area: " << area << endl;
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"ford_disks_points.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("ford_disks_points.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }

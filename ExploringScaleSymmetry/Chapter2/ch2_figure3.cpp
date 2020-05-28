@@ -3,7 +3,6 @@
 // the well-known Levy C, Koch and Dragon curves
 #include <fstream>
 #include "stdafx.h"
-#include "bmp.h"
 
 // This defines the type of curve
 static int type = 0; // 0: Levy C curve, 1: Koch curve, 2: Dragon curve 

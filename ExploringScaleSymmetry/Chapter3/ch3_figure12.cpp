@@ -2,7 +2,6 @@
 // Generates one of the cross family of structures. 
 #include <fstream>
 #include "stdafx.h"
-#include "bmp.h"
 
 // Change this parameter for cross structures with different numbers of sides. 
 static int sides = 5;

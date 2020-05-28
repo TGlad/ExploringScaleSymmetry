@@ -2,7 +2,8 @@
 // Calculates the area of the expanded disk tree (or its boundary or centre points), and draws the expanded image.
 // Calling this for multiple values of r, can be used to calculate the fractal dimension and unnormalised Minkowski content.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <set>
 #include <sstream>
 #include <fstream>
@@ -59,7 +60,7 @@ static double distanceToTree(Vector2d &p)
 
 int chapter9Figure12_disktree()
 {
-  long s2;
+  
   vector<BYTE> out(width*width * 3); // .bmp pixel buffer
   memset(&out[0], 255, out.size() * sizeof(BYTE)); // background is white
 
@@ -93,9 +94,6 @@ int chapter9Figure12_disktree()
   double area = count * step*step;
   cout << "r: " << r << ", area: " << area << endl;
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"disk_tree_points.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("disk_tree_points.png", width, height, 3, &out[0], 3 * width);
   return 0;
 }

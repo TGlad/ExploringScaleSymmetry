@@ -3,7 +3,8 @@
 // for this reason, you can run with BIG undefined (which caches coarse depth information to file, and a low res image), 
 // then run with BIG defined to generate a high resolution image.
 #include "stdafx.h"
-#include "bmp.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "imagewrite.h"
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -89,7 +90,7 @@ int chapter5Figure25()
 #else
   cout << "Generating cache data and small image. Run with marco BIG defined to generate image from this data" << endl;
 #endif
-  long s2;
+  
   vector<BYTE> out(width*height * 3); // .bmp pixel buffer
   memset(&out[0], 255, out.size() * sizeof(BYTE)); 
   vector<double> depths(width*height);
@@ -263,10 +264,7 @@ int chapter5Figure25()
     }
   }
 
-  BYTE* c = ConvertRGBToBMPBuffer(&out[0], width, height, &s2);
-  LPCTSTR file = L"mobius_multiset_3D.bmp";
-  SaveBMP(c, width, height, s2, file);
-  delete[] c;
+  stbi_write_png("mobius_multiset_3D.png", width, height, 3, &out[0], 3 * width);
 #if !defined BIG
   vector<double> ds = depths;
   for (int i = 0; i < width; i++)
