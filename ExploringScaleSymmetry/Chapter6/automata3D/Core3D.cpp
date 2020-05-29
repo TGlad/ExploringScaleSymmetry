@@ -1,7 +1,5 @@
 ﻿#include "Core3D.h"
 #include "Screen.h"
-#include <conio.h>
-#include <windows.h>
 
 void Core3D::init(int screenWidth, int screenHeight)
 {

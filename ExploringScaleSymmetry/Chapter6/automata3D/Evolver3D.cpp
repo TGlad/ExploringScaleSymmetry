@@ -1,6 +1,9 @@
 #include "evolver3D.h"
 #include "Image.h"
+#include <stdio.h>
+#include <string.h>
 #include <memory>
+#include "ScreenColour.h"
 
 static bool letterZ[4][4][4] = {
   {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}},
@@ -68,7 +71,7 @@ Evolver3D::Evolver3D(int type, bool bigSize)
     // important to show the '3d'ness.
     int I = i==6 ? 4: i; // i==5 is the 45 degree light direction.
     float normalBlend = (float)(I) / 5.0f; // 0 to 1
-    normalColours[i] = Colour(1.0f, 0.85f, 0.4f)*normalBlend + Colour(0.2f, 0.1f, 0.1f)*2.0f*(1.0f - normalBlend);
+    normalColours[i] = Vector3(1.0f, 0.85f, 0.4f)*normalBlend + Vector3(0.2f, 0.1f, 0.1f)*2.0f*(1.0f - normalBlend);
   }
   
   setup();
@@ -100,7 +103,7 @@ void Evolver3D::load(const char* fileName, int type)
   this->type = type;
   setup();
   FILE* fp;
-  if (fopen_s(&fp, fileName, "rb"))
+  if (fp = fopen(fileName, "rb"))
   {
     printf("Cannot find file: %s\n", fileName);
     return;
@@ -303,7 +306,7 @@ void Evolver3D::renderPoint(int level, int x, int y, int z, int totalNeighbours)
 #endif
   if (getDistance(x, y) < z)
     return;
-  Colour col(0.7f, 0.7f, 0.7f);
+  Vector3 col(0.7f, 0.7f, 0.7f);
 #define DIFFUSE_SHADING
 #if defined(DIFFUSE_SHADING)
   int d1 = -1;
@@ -325,7 +328,7 @@ void Evolver3D::renderPoint(int level, int x, int y, int z, int totalNeighbours)
 
 #define FOG
 #if defined(FOG)
-  Weight blend = (float)z * fogScale;
+  float blend = (float)z * fogScale;
   blend = blend > 1.0f ? 1.0f : blend;
 
   // now check for shadows

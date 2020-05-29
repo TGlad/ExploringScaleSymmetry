@@ -1,6 +1,6 @@
 // Thomas Lowe, 2020.
 // Defines the evolution of the automaton. Typically a fixed function of the neighbouring cells.
-#include "Evolver.h"
+#include "evolver.h"
 #include "Image.h"
 #include <iostream>
 #include <string.h>
@@ -72,7 +72,7 @@ void Evolver::load(const char* fileName, int type)
 {
   this->type = type;
   FILE* fp;
-  if (fopen_s(&fp, fileName, "rb"))
+  if (fp = fopen(fileName, "rb"))
   {
     printf("Cannot find file: %s\n", fileName);
     return;

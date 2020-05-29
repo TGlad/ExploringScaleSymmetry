@@ -75,9 +75,9 @@ static void mouse(int button, int state, int x, int y)
 int chapter6Figure3()
 {
    int n = 1;
-   char *name = "automata2D";
+   const char *name = "automata2D";
    int *argc = &n;
-   char **argv = &name;
+   char **argv = (char **)&name;
 
    glutInit(argc, argv);   
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA);

@@ -1,11 +1,12 @@
 ﻿#include "View3D.h"
 #include "Screen.h"
-#include <conio.h>
 #include <string>
+#include <sstream>
 
 static int g_type = 2;
 static int numEvolvers = 7; 
-bool g_fullView = false;
+static bool g_fullView = false;
+using namespace std;
 
 View3D::View3D(int width, int height)
 {
@@ -82,7 +83,7 @@ void View3D::setMaster(int m)
   if (g_fullView)
     return;
   if (g_type != evolvers[m]->type)
-    printf("Now using type %d\n", evolvers[m]->type);
+    cout << "Now using type " << evolvers[m]->type << endl;;
 
   g_type = evolvers[m]->type;
   if (m!=0)
@@ -103,7 +104,7 @@ void View3D::resetFromHead(int type)
   if (g_fullView)
     return;
   if (g_type != type)
-    printf("Now using type %d\n", type);
+    cout << "Now using type " << type << endl;;
 
   g_type = evolvers[0]->type = type;
 
@@ -118,9 +119,7 @@ void View3D::load()
 {
   if (g_fullView)
     return;
-  char ext[5];
-  sprintf_s(ext, ".es%d", g_type);
-  printf("Type name of %s file to load, without extension: ", ext);
+  cout << "Type name of %s file to load, without extension: .es" << g_type << endl;
   char key[80];
   int c = 0;
   do
@@ -134,8 +133,10 @@ void View3D::load()
     else
       printf("%c", key[c]);
   } while (key[c++] != 0);
-  strcat_s(key, ext);
-  evolvers[0]->load(("data/" + std::string(key)).c_str(), g_type);
+
+  stringstream strm;
+  strm << "data/" << string(key) << ".es" << g_type;
+  evolvers[0]->load(strm.str().c_str(), g_type);
   evolvers[0]->randomise();
   for (int i = 1; i<numEvolvers; i++)
   {
@@ -143,7 +144,7 @@ void View3D::load()
     evolvers[i]->randomiseMasks(*evolvers[0], (float)i*2);
     evolvers[i]->randomise();
   }
-  printf("File loaded\n");
+  cout << "File loaded" << endl;
 }
 
 void View3D::setToLetter(char letter)
@@ -159,9 +160,7 @@ void View3D::setToLetter(char letter)
 
 void View3D::save()
 {
-  char ext[5];
-  sprintf_s(ext, ".es%d", g_type);
-  printf("Type name of %s file to save, without extension: ", ext);
+  cout << "Type name of %s file to save, without extension: .es" << g_type << endl;
   char key[80];
   int c = 0;
   do
@@ -175,17 +174,18 @@ void View3D::save()
     else
       printf("%c", key[c]);
   } while (key[c++] != 0);
+ 
+  stringstream strm;
+  strm << "data/" << string(key) << ".es" << g_type;
   FILE* fp;
-  strcat_s(key, ext);
-  std::string file = "data/" + std::string(key);
-  if (fopen_s(&fp, file.c_str(), "wb"))
+  if (fp = fopen(strm.str().c_str(), "wb"))
   {
     printf("Cannot open file for writing: %s\n", key);
     return;
   }
   evolvers[0]->write(fp);
   fclose(fp);
-  printf("File saved\n");
+  cout << "File saved" << endl;
 }
 
 void View3D::update()

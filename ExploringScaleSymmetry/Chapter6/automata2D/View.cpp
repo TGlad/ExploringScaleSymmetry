@@ -2,13 +2,15 @@
 // Defined the main interaction with the select-and-mutate scheme
 #include "View.h"
 #include "Screen.h"
-#include <conio.h>
 #include <string>
+#include <iostream>
+#include <sstream>
 
 static int g_type = 1;
 int g_fullView = 0;
 bool g_timeSymmetric = false;
 static int numEvolvers = 7;
+using namespace std;
 
 View::View(int width, int height)
 {
@@ -119,7 +121,7 @@ void View::recordToScreen(Screen* screen)
 void View::setMaster(int m)
 {
   if (g_type != evolvers[m]->type)
-    printf("Now using type %d\n", evolvers[m]->type);
+    cout << "Now using type " << evolvers[m]->type << endl;
   g_type = evolvers[m]->type;
   if (m!=0)
     evolvers[0]->set(*evolvers[m]);
@@ -138,7 +140,7 @@ void View::setMaster(int m)
 void View::resetFromHead(char c)
 {
   if (g_type != evolvers[0]->type)
-    printf("Now using type %d\n", evolvers[0]->type);
+    cout << "Now using type " << evolvers[0]->type << endl;
 
   g_type = evolvers[0]->type;
   bool starts[16];
@@ -172,9 +174,7 @@ void View::resetFromHead(char c)
 
 void View::load()
 {
-  char ext[8];
-  sprintf_s(ext, ".ev%d", g_type);
-  printf("Type name of %s file to load, without extension: ", ext);
+  cout << "Type name of %s file to load, without extension: .ev" << g_type << endl; 
   char key[80];
   int c = 0;
   do
@@ -188,24 +188,23 @@ void View::load()
     else
       printf("%c", key[c]);
   } while (key[c++] != 0);
-  strcat_s(key, ext);
-  std::string file = "data/" + std::string(key);
-  evolvers[0]->load(file.c_str(), g_type);
+  
+  stringstream strm;
+  strm << "data/" << string(key) << ".ev" << g_type;
+  evolvers[0]->load(strm.str().c_str(), g_type);
   evolvers[0]->randomise();
   for (int i = 1; i<numEvolvers; i++)
   {
     evolvers[i]->randomiseMasks(*evolvers[0], (float)i*2);
     evolvers[i]->randomise();
   }
-  printf("File loaded\n");
+  cout << "File loaded" << endl;
 }
 
 
 void View::save()
 {
-  char ext[8];
-  sprintf_s(ext, ".ev%d", g_type);
-  printf("Type name of %s file to save, without extension: ", ext);
+  cout << "Type name of %s file to save, without extension: .ev" << g_type << endl;
   char key[80];
   int c = 0;
   do
@@ -219,17 +218,18 @@ void View::save()
     else
       printf("%c", key[c]);
   } while (key[c++] != 0);
-  FILE* fp;
-  strcat_s(key, ext);
-  std::string file = "data/" + std::string(key);
-  if (fopen_s(&fp, file.c_str(), "wb"))
+  stringstream strm;
+
+  strm << "data/" << string(key) << ".ev" << g_type << endl;
+  FILE *fp;
+  if (fp = fopen(strm.str().c_str(), "wb"))
   {
-    printf("Cannot open file for writing: %s\n", key);
+    cout << "Cannot open file for writing: " << strm.str() << endl;
     return;
   }
   evolvers[0]->write(fp);
   fclose(fp);
-  printf("File saved\n");
+  cout << "File saved" << endl;
 }
 
 void View::update()

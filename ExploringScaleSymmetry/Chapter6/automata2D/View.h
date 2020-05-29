@@ -1,7 +1,7 @@
 ﻿// Thomas Lowe, 2020.
 #pragma once
 #include "basics.h"
-#include "Evolver.h"
+#include "evolver.h"
 
 class View 
 {

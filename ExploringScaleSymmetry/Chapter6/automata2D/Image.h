@@ -12,6 +12,12 @@ public:
   int *data;
   GLuint textureID;
 
+  inline void setPixel(int x, int y, const ScreenColour& colour)
+  {
+    int *ptr = data + x+1 + (y+1)*width;
+    int col = colour.red + (colour.green<<8) + (colour.blue<<16);
+    *ptr = col;
+  }
   inline void setPixel(int x, int y, const int& colour)
   {
     int *ptr = data + x+1 + (y+1)*width;

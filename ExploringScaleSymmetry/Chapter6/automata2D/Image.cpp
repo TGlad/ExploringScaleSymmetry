@@ -1,7 +1,7 @@
 // Thomas Lowe, 2020.
 // OpenGL image rendering
 #include "Image.h"
-#include "glut.h"
+#include "GL/glut.h"
 #include "string.h"
 
 Image::Image(int width, int height)
