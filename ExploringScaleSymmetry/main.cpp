@@ -40,11 +40,11 @@ int main(int argc, char *argv[])
   cout << "The available figures to generate are:" << endl;
   for (int c = 0; c < 10; c++)
   {
-    cout << "Chapter ";
-    for (int f = 0; f < (int)chapters[c].size()-1; f++)
-      cout << chapters[c][f] << ", ";
-    if (chapters[c].size() > 0)
-      cout << chapters[c].back() << endl;
+    cout << "Chapter " << c << ": ";
+    for (int f = 0; f < (int)chapters[c].size(); f++)
+      if (chapters[c][f] != NULL)
+        cout << f << ", ";
+    cout << endl;
   }
   return 1;
 }
