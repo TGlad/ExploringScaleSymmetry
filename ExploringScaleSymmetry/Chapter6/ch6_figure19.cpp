@@ -8,7 +8,7 @@
 static Core3D core; // Just a singleton
 static int width = 768;
 static int height = 768;
-extern bool g_fullView;
+extern bool g_fullView3D;
 
 static void init(void)
 {    
@@ -42,7 +42,7 @@ static void mouse(int button, int state, int x, int y)
    switch (button) {
       case GLUT_LEFT_BUTTON:
          if (state == GLUT_DOWN)
-         if (!g_fullView)
+         if (!g_fullView3D)
          {
            if (x > 256 && x<512 && y>0 && y<256) // clicked the master
            {

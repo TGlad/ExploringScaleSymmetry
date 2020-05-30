@@ -46,7 +46,9 @@ inline float absf(float a)
 }
 #define ASSERT(exp){ if (!(exp)){ std::cout << "assertion failure, debug in code to find error." << std::endl; }}
 
-#if !defined USING_WINDOWS
+#ifdef _WIN32
+#include <conio.h>
+#else
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <termios.h>

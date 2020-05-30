@@ -5,7 +5,7 @@
 
 static int g_type = 2;
 static int numEvolvers = 7; 
-static bool g_fullView = false;
+bool g_fullView3D = false;
 using namespace std;
 
 View3D::View3D(int width, int height)
@@ -54,7 +54,7 @@ void View3D::recordToScreen(Screen* screen)
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  if (g_fullView)
+  if (g_fullView3D)
   {
     glRasterPos2i(0, 0);
     bigEvolver->draw();
@@ -80,7 +80,7 @@ void View3D::recordToScreen(Screen* screen)
 
 void View3D::setMaster(int m)
 {
-  if (g_fullView)
+  if (g_fullView3D)
     return;
   if (g_type != evolvers[m]->type)
     cout << "Now using type " << evolvers[m]->type << endl;;
@@ -101,7 +101,7 @@ void View3D::resetFromHead(int type)
 {
   if (evolvers[0]->getStaticValue[type] == NULL)
     return;
-  if (g_fullView)
+  if (g_fullView3D)
     return;
   if (g_type != type)
     cout << "Now using type " << type << endl;;
@@ -117,7 +117,7 @@ void View3D::resetFromHead(int type)
 
 void View3D::load()
 {
-  if (g_fullView)
+  if (g_fullView3D)
     return;
   cout << "Type name of %s file to load, without extension: .es" << g_type << endl;
   char key[80];
@@ -149,7 +149,7 @@ void View3D::load()
 
 void View3D::setToLetter(char letter)
 {
-  if (g_fullView)
+  if (g_fullView3D)
     return;
   for (int i = 0; i<numEvolvers; i++)
   {
@@ -178,7 +178,7 @@ void View3D::save()
   stringstream strm;
   strm << "data/" << string(key) << ".es" << g_type;
   FILE* fp;
-  if (fp = fopen(strm.str().c_str(), "wb"))
+  if ((fp = fopen(strm.str().c_str(), "wb"))==NULL)
   {
     printf("Cannot open file for writing: %s\n", key);
     return;
@@ -190,7 +190,7 @@ void View3D::save()
 
 void View3D::update()
 {
-  if (g_fullView)
+  if (g_fullView3D)
     bigEvolver->update();
   else
     for (int i = 0; i<numEvolvers; i++)
@@ -201,9 +201,9 @@ void View3D::update()
     char c = _getch();
     if (c == 'f')
     {
-      g_fullView = !g_fullView;
+      g_fullView3D = !g_fullView3D;
       int width = 768;
-      if (g_fullView) // copy data across
+      if (g_fullView3D) // copy data across
       {
         width = 512;
         bigEvolver->set(*evolvers[0], true);
@@ -218,7 +218,7 @@ void View3D::update()
       // resize the screen here?
       glutReshapeWindow(width, width);
     }
-    if (g_fullView) // most features not implemented when in full view
+    if (g_fullView3D) // most features not implemented when in full view
       return; 
     if (c >= '1' && c <= '9')
     {

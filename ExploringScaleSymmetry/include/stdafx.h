@@ -44,7 +44,7 @@ int chapter9Figure12_spheretree();
 #include <iostream>
 #include <vector>
 #include <strstream>
-#if defined USING_WINDOWS
+#ifdef _WIN32
 #include <windows.h>
 #include <Eigen>
 #include <StdVector>
@@ -54,11 +54,11 @@ int chapter9Figure12_spheretree();
 typedef unsigned char BYTE;
 #endif
 
-using namespace std;
 using namespace Eigen;
 EIGEN_DEFINE_STL_VECTOR_SPECIALIZATION(Vector2d);
 EIGEN_DEFINE_STL_VECTOR_SPECIALIZATION(Vector3d);
 EIGEN_DEFINE_STL_VECTOR_SPECIALIZATION(Vector4d);
+using namespace std;
 const double pi = 3.14159265;
 inline double sqr(double x)
 {

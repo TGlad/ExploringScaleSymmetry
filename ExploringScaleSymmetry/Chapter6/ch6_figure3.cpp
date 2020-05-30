@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 #include <stdio.h>
-#include "Core3D.h"
-#include "View3D.h"
+#include "Core.h"
+#include "View.h"
 #include <time.h>
 
-static Core3D core; // Just a singleton
+static Core core; // Just a singleton
 static int width = 768;
 static int height = 768;
 extern int g_fullView;

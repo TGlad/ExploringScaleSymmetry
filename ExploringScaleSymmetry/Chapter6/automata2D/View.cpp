@@ -222,7 +222,7 @@ void View::save()
 
   strm << "data/" << string(key) << ".ev" << g_type << endl;
   FILE *fp;
-  if (fp = fopen(strm.str().c_str(), "wb"))
+  if ((fp = fopen(strm.str().c_str(), "wb"))==NULL)
   {
     cout << "Cannot open file for writing: " << strm.str() << endl;
     return;

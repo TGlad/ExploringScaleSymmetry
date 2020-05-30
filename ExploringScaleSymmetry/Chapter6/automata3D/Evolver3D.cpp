@@ -103,7 +103,7 @@ void Evolver3D::load(const char* fileName, int type)
   this->type = type;
   setup();
   FILE* fp;
-  if (fp = fopen(fileName, "rb"))
+  if ((fp = fopen(fileName, "rb"))==NULL)
   {
     printf("Cannot find file: %s\n", fileName);
     return;
@@ -196,7 +196,7 @@ void Evolver3D::randomiseMasks(const Evolver3D& master, float percentVariation)
   float threshold = 1.0f - 2.0f*0.01f*percentVariation;
 
   for (int i = 0; i<genomeSize; i++)
-    if (random() > threshold)
+    if (random(-1.0, 1.0) > threshold)
       genome[i] = !genome[i];
 }
 

@@ -2,7 +2,8 @@
 #include "stdafx.h"
 #include <iostream>
 
-#if defined USING_WINDOWS
+#ifdef _WIN32
+#include <tchar.h>
 int _tmain(int argc, _TCHAR* argv[])
 #else
 int main(int argc, char *argv[])

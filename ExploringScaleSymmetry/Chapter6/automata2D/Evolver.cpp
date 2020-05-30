@@ -42,28 +42,28 @@ void Evolver::reset()
 
   // type 3
   for (int i = 0; i<1<<9; i++)
-    siblingMasks[i] = random()>0;
+    siblingMasks[i] = random(-1.0, 1.0)>0;
   checkSiblings();
   for (int i = 0; i<1<<4; i++)
-    parentMasks[i] = random()>0;
+    parentMasks[i] = random(-1.0, 1.0)>0;
   for (int i = 0; i<1<<4; i++)
-    childMasks[i] = random()>0;
+    childMasks[i] = random(-1.0, 1.0)>0;
 
   for (int i = 0; i<32; i++)
-    totalMasks[i] = random() > 0 ? 1 : 0;
+    totalMasks[i] = random(-1.0, 1.0) > 0 ? 1 : 0;
 
   // type 6
   for (int i = 0; i<6; i++)
     for (int j = 0; j<3; j++)
       for (int k = 0; k<3; k++)
       {
-        parentsAdd[i][j][k] = random() > 0 ? 1 : 0;
-        parentsRemove[i][j][k] = random() > 0 ? 1 : 0;
+        parentsAdd[i][j][k] = random(-1.0, 1.0) > 0 ? 1 : 0;
+        parentsRemove[i][j][k] = random(-1.0, 1.0) > 0 ? 1 : 0;
       }
 
   // type 7
   for (int i = 0; i<1<<7; i++)
-    octagonalMasks[i] = random()>0;
+    octagonalMasks[i] = random(-1.0, 1.0)>0;
 
   randomise();
 }
@@ -72,7 +72,7 @@ void Evolver::load(const char* fileName, int type)
 {
   this->type = type;
   FILE* fp;
-  if (fp = fopen(fileName, "rb"))
+  if ((fp = fopen(fileName, "rb"))==NULL)
   {
     printf("Cannot find file: %s\n", fileName);
     return;
@@ -89,20 +89,20 @@ void Evolver::randomiseMasks(const Evolver& master, float percentVariation)
   for (int i = 0; i<1<<9; i++)
   {
     siblingMasks[i] = master.siblingMasks[i];
-    if (random() > threshold)
+    if (random(-1.0, 1.0) > threshold)
       siblingMasks[i] = !siblingMasks[i];
   }
   checkSiblings();
   for (int i = 0; i<1<<4; i++)
   {
     parentMasks[i] = master.parentMasks[i];
-    if (random() > threshold)
+    if (random(-1.0, 1.0) > threshold)
       parentMasks[i] = !parentMasks[i];
   }
   for (int i = 0; i<1<<4; i++)
   {
     childMasks[i] = master.childMasks[i];
-    if (random() > threshold)
+    if (random(-1.0, 1.0) > threshold)
       childMasks[i] = !childMasks[i];
   }
   frame = 0;
@@ -110,7 +110,7 @@ void Evolver::randomiseMasks(const Evolver& master, float percentVariation)
   for (int i = 0; i<32; i++)
   {
     totalMasks[i] = master.totalMasks[i];
-    if (random() > threshold)
+    if (random(-1.0, 1.0) > threshold)
       totalMasks[i] = 1-totalMasks[i];
   }
   for (int i = 0; i<6; i++)
@@ -119,16 +119,16 @@ void Evolver::randomiseMasks(const Evolver& master, float percentVariation)
       {
         parentsAdd[i][j][k] = master.parentsAdd[i][j][k];
         parentsRemove[i][j][k] = master.parentsRemove[i][j][k];
-        if (random() > threshold)
+        if (random(-1.0, 1.0) > threshold)
           parentsAdd[i][j][k] = !parentsAdd[i][j][k];
-        if (random() > threshold)
+        if (random(-1.0, 1.0) > threshold)
           parentsRemove[i][j][k] = !parentsRemove[i][j][k];
       }
 
   for (int i = 0; i<1<<7; i++)
   {
     octagonalMasks[i] = master.octagonalMasks[i];
-    if (random() > threshold)
+    if (random(-1.0, 1.0) > threshold)
       octagonalMasks[i] = !octagonalMasks[i];
   }
 }
@@ -150,7 +150,7 @@ void Evolver::randomise(bool *starts)
     }
     for (int i = 0; i<size; i++)
       for (int j = 0; j<size; j++)
-        bitmaps[level]->setPixel(i, j, random() > (type == 7 ? 0.0f : 0.5f) ? 128 : 0);
+        bitmaps[level]->setPixel(i, j, random(-1.0, 1.0) > (type == 7 ? 0.0f : 0.5f) ? 128 : 0);
   }
 }
 
