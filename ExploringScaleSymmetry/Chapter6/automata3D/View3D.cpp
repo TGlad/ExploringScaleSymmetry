@@ -125,7 +125,7 @@ void View3D::load()
   do
   {
     key[c] = _getch();
-    if (key[c] == 13)
+    if (key[c] == enterKey)
     {
       key[c] = 0; // null terminate
       printf("\n");
@@ -136,15 +136,19 @@ void View3D::load()
 
   stringstream strm;
   strm << "data/" << string(key) << ".es" << g_type;
-  evolvers[0]->load(strm.str().c_str(), g_type);
-  evolvers[0]->randomise();
-  for (int i = 1; i<numEvolvers; i++)
+  if (evolvers[0]->load(strm.str().c_str(), g_type))
   {
-    evolvers[i]->set(*evolvers[0]);
-    evolvers[i]->randomiseMasks(*evolvers[0], (float)i*2);
-    evolvers[i]->randomise();
+    evolvers[0]->randomise();
+    for (int i = 1; i<numEvolvers; i++)
+    {
+      evolvers[i]->set(*evolvers[0]);
+      evolvers[i]->randomiseMasks(*evolvers[0], (float)i*2);
+      evolvers[i]->randomise();
+    }
+    cout << "File: " << strm.str() << " loaded" << endl;
   }
-  cout << "File loaded" << endl;
+  else
+    cout << "Could not file file: " << strm.str() << endl;
 }
 
 void View3D::setToLetter(char letter)
@@ -166,7 +170,7 @@ void View3D::save()
   do
   {
     key[c] = _getch();
-    if (key[c] == 13)
+    if (key[c] == enterKey)
     {
       key[c] = 0; // null terminate
       printf("\n");
@@ -185,7 +189,7 @@ void View3D::save()
   }
   evolvers[0]->write(fp);
   fclose(fp);
-  cout << "File saved" << endl;
+  cout << "File: " << strm.str() << " saved" << endl;
 }
 
 void View3D::update()

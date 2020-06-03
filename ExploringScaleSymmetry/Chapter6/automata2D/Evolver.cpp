@@ -68,17 +68,18 @@ void Evolver::reset()
   randomise();
 }
 
-void Evolver::load(const char* fileName, int type)
+bool Evolver::load(const char* fileName, int type)
 {
   this->type = type;
   FILE* fp;
   if ((fp = fopen(fileName, "rb"))==NULL)
   {
     printf("Cannot find file: %s\n", fileName);
-    return;
+    return false;
   }
   read(fp);
   fclose(fp);
+  return true;
 }
 
 
@@ -940,7 +941,7 @@ void Evolver::update()
   }
   // I need to get the timing algorithm right here...
   int currentLevel = -1;
-  for (int i = 0; i<32 && currentLevel==-1; i++)
+  for (int i = 0; i<depth && currentLevel==-1; i++)
     if ((1<<i) & frame)
       currentLevel = i; // should go 0,1,0,2,0,1,0,3,...
   currentLevel = depth - currentLevel; // so most common is the highest detail.

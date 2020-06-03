@@ -44,7 +44,7 @@ inline float absf(float a)
   int b=(*((int *)(&a)))&0x7FFFFFFF;
   return *((float *)(&b));
 }
-#define ASSERT(exp){ if (!(exp)){ std::cout << "assertion failure, debug in code to find error." << std::endl; }}
+#define ASSERT(exp){ if (!(exp)){ std::cout << "assertion failure: " << #exp << std::endl; }}
 
 #ifdef _WIN32
 #include <conio.h>
@@ -90,6 +90,11 @@ inline char _getch()
           perror ("tcsetattr ~ICANON");
   return (buf);
 }
+#endif
+#ifdef _WIN32
+const char enterKey = 13;
+#else
+const char enterKey = 10;
 #endif
 
 #include "Matrix33.h"

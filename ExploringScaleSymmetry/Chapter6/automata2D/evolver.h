@@ -28,7 +28,7 @@ public:
   class Image** bitmapDuals;
 
   Evolver(int depth);
-  void load(const char* fileName, int type);
+  bool load(const char* fileName, int type);
   void randomiseMasks(const Evolver& master, float percentVariation);
   void randomise(bool *starts = NULL);
   void checkSiblings();

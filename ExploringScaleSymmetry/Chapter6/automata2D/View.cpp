@@ -180,7 +180,7 @@ void View::load()
   do
   {
     key[c] = _getch();
-    if (key[c] == 13)
+    if (key[c] == enterKey)
     {
       key[c] = 0; // null terminate
       printf("\n");
@@ -191,14 +191,16 @@ void View::load()
   
   stringstream strm;
   strm << "data/" << string(key) << ".ev" << g_type;
-  evolvers[0]->load(strm.str().c_str(), g_type);
-  evolvers[0]->randomise();
-  for (int i = 1; i<numEvolvers; i++)
+  if (evolvers[0]->load(strm.str().c_str(), g_type))
   {
-    evolvers[i]->randomiseMasks(*evolvers[0], (float)i*2);
-    evolvers[i]->randomise();
+    evolvers[0]->randomise();
+    for (int i = 1; i<numEvolvers; i++)
+    {
+      evolvers[i]->randomiseMasks(*evolvers[0], (float)i*2);
+      evolvers[i]->randomise();
+    }
+    cout << "File: " << strm.str() << " loaded" << endl;
   }
-  cout << "File loaded" << endl;
 }
 
 
@@ -210,7 +212,7 @@ void View::save()
   do
   {
     key[c] = _getch();
-    if (key[c] == 13)
+    if (key[c] == enterKey)
     {
       key[c] = 0; // null terminate
       printf("\n");
@@ -220,7 +222,7 @@ void View::save()
   } while (key[c++] != 0);
   stringstream strm;
 
-  strm << "data/" << string(key) << ".ev" << g_type << endl;
+  strm << "data/" << string(key) << ".ev" << g_type;
   FILE *fp;
   if ((fp = fopen(strm.str().c_str(), "wb"))==NULL)
   {
@@ -229,7 +231,7 @@ void View::save()
   }
   evolvers[0]->write(fp);
   fclose(fp);
-  cout << "File saved" << endl;
+  cout << "File: " << strm.str() << " saved" << endl;
 }
 
 void View::update()

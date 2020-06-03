@@ -1,7 +1,8 @@
 // Thomas Lowe, 2020.
 #include "stdafx.h"
 #include <iostream>
-
+// #define RUN_ALL_PROGRAMS  // run all the programs in turn, except the interactive automata from Ch6.
+  
 #ifdef _WIN32
 #include <tchar.h>
 int _tmain(int argc, _TCHAR* argv[])
@@ -23,6 +24,28 @@ int main(int argc, char *argv[])
   chapters[8][2] = &chapter8Figure2;
   chapters[9][2] = &chapter9Figure2; chapters[9][4] = &chapter9Figure4; chapters[9][5] = &chapter9Figure5; chapters[9][12] = &chapter9Figure12;
   
+  #if defined RUN_ALL_PROGRAMS
+    for (int c = 0; c < 10; c++)
+    {
+      for (int f = 0; f < (int)chapters[c].size(); f++)
+      {
+        if (c==6 && (f==3 || f==19))
+          continue; // interactive 
+        if (chapters[c][f] != NULL)
+        {
+          cout << "Running Chapter " << c << " figure " << f << endl;
+          int returnVal = chapters[c][f]();
+          if (returnVal != 0)
+          {
+            cout << "bad output from chapter " << c << " figure " << f << endl;
+            exit(1);
+          }
+        }
+      }
+      cout << endl;
+    }
+    return 0;
+  #endif
   if (argc == 3)
   {
     int chapter = stoi(argv[1]);
@@ -47,5 +70,5 @@ int main(int argc, char *argv[])
         cout << f << ", ";
     cout << endl;
   }
-  return 1;
+  return 0;
 }

@@ -98,7 +98,7 @@ void Evolver3D::reset()
   randomiseMasks(*this, 50.0f); // 50%
 }
 
-void Evolver3D::load(const char* fileName, int type)
+bool Evolver3D::load(const char* fileName, int type)
 {
   this->type = type;
   setup();
@@ -106,10 +106,11 @@ void Evolver3D::load(const char* fileName, int type)
   if ((fp = fopen(fileName, "rb"))==NULL)
   {
     printf("Cannot find file: %s\n", fileName);
-    return;
+    return false;
   }
   read(fp);
   fclose(fp);
+  return true;
 }
 
 void Evolver3D::randomise()
