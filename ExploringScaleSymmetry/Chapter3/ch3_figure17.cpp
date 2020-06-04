@@ -45,7 +45,11 @@ int chapter3Figure17()
     srand(5);
     for (int j = 0; j < stopii; j++)
       for (int i = 0; i < 10; i++)
-        randomVal(1, 2);
+      {
+        double c = randomVal(1, 2);
+        if (j == 0)
+          cout << c << endl;
+      }
 #else
   for (int ii = 0; ii < 4000000; ii++)
   {
@@ -62,6 +66,7 @@ int chapter3Figure17()
     posi[0] = Vector2d(randomVal(-0.5, 0.5), randomVal(-0.5, 0.5));
     double anglei2 = randomVal(-maxang, maxang);
     posi[1] = Vector2d(randomVal(-0.5, 0.5), randomVal(-0.5, 0.5));
+    cout << "angles: " << angle2 << ", " << anglei1 << ", " << scalei << endl;
 #if defined SHOW_EXAMPLES // this is the hard-coded approximate values for the densest set found so far (that doesn't tend to a trivial set like a rectangle).
     if (ii == 7)
     {
