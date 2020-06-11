@@ -24,46 +24,53 @@ float DE(vec3 p)
      vec3 n2 = vec3(-0.5, sqrt(3.0)/2.0,0.0);
 
      float scale = 0.45; // adjusting this can help with the stepping scheme, but doesn't affect geometry.
+     float root3 = sqrt(3.0);
 
      float innerScale = sqrt(3.0)/(1.0 + sqrt(3.0));
+     float innerScaleB = innerScale*innerScale*0.25;
      for (int i = 0; i < Iterations; i++)
      {
-        if (length(p-vec3(0,0,innerScale*0.5)) < innerScale*0.5)
+        vec3 pB = p-vec3(0,0,innerScale*0.5);
+        if (dot(pB, pB) < innerScaleB)
           break; // definitely inside
         float maxH = 0.4;
         if (i==0)
           maxH = -100;
-        if (p.z > maxH && length(p-vec3(0,0,0.5*1.1)) > 0.5*1.1)
+        vec3 pC = p-vec3(0,0,0.6);
+        if (p.z > maxH && dot(pC, pC) > 0.6*0.6)
           break; // definitely outside
-        if (p.z < maxH && length(p -vec3(0,0,0.5)) > 0.5)
+        vec3 pD = p-vec3(0,0,0.5);
+        float sc = dot(p,p);
+        if (p.z < maxH && dot(pD, pD) > 0.5*0.5)
         {
           // needs a sphere inverse
-          float sc =  dot(p,p);
           scale *= sc; 
           p /= sc; 
         }
         else 
         {
           // stretch onto a plane at zero 
-          scale *= dot(p, p);
-          p /= dot(p, p);
+          scale *= sc;
+          p /= sc;
           p.z -= 1.0;
           p.z *= -1.0;
-          p *= sqrt(3.0);
-          scale /= sqrt(3.0);
+          p *= root3;
+          scale /= root3;
           p.z += 1.0;
 
           // and rotate it a twelfth of a revolution
-          float a = 3.1415/6.0;
-          float xx = p.x*cos(a) + p.y*sin(a);
-          float yy = -p.x*sin(a) + p.y*cos(a);
+          float a = 3.14159265/6.0;
+          float cosA = cos(a);
+          float sinA = sin(a);
+          float xx = p.x*cosA + p.y*sinA;
+          float yy = -p.x*sinA + p.y*cosA;
           p.x = xx; 
           p.y = yy;
         }
         // now modolu the space so we move to being in just the central hexagon, inner radius 0.5
         float h = p.z;
-        float x = dot(p, -n2) * 2.0/sqrt(3.0);
-        float y = dot(p, -n1) * 2.0/sqrt(3.0);  
+        float x = dot(p, -n2) * 2.0/root3;
+        float y = dot(p, -n1) * 2.0/root3;  
         x = mod(x, 1.0);
         y = mod(y, 1.0);
         if (x + y > 1.0)
@@ -97,7 +104,7 @@ Detail = -2.84956
 DetailAO = -1.33
 FudgeFactor = 1
 MaxRaySteps = 96
-Dither = 0.5
+Dither = 0.0
 AO = 0,0,0,0.7
 Specular = 0.1666
 SpecularExp = 16
