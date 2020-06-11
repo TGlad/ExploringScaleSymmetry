@@ -6,6 +6,7 @@
 #include <set>
 #include <fstream>
 #include <iostream>
+#include "basics.h"
 
 // when defined it renders 8 examples. Otherwise it generates a new random example every keypress.
 #define SHOW_EXAMPLES
@@ -43,11 +44,6 @@ int chapter3Figure17()
 #if defined SHOW_EXAMPLES
   for (int ii = 0; ii < 8; ii++)
   {
-    int stopii = indices[ii];
-    srand(5);
-    for (int j = 0; j < stopii; j++)
-      for (int i = 0; i < 10; i++)
-        randomVal(1, 2);
 #else
   for (int ii = 0; ii < 4000000; ii++)
   {
@@ -55,37 +51,14 @@ int chapter3Figure17()
 #endif
     Vector2d pos[2];
     Vector2d posi[2];
-    double angle1;// = 0;
- //   pos[0] = Vector2d(0.5, 0);
-    double angle2;// = randomVal(-maxang, maxang);
- //   pos[1] = Vector2d(randomVal(-1.0, 1.0), randomVal(-1.0, 1.0));
-    double anglei1;// = randomVal(-maxang, maxang);
-    double scalei;// = randomVal(0.6, 0.8);
- //   posi[0] = Vector2d(randomVal(-0.5, 0.5), randomVal(-0.5, 0.5));
-    double anglei2;// = randomVal(-maxang, maxang);
-  //  posi[1] = Vector2d(randomVal(-0.5, 0.5), randomVal(-0.5, 0.5));
-#if 0 // defined SHOW_EXAMPLES // this is the hard-coded approximate values for the densest set found so far (that doesn't tend to a trivial set like a rectangle).
-    if (ii == 7)
-    {
-      angle1 = 0.0825;
-      angle2 = -1.832775;
-      pos[0] = Vector2d(0.4493, 0.0);
-      pos[1] = Vector2d(-0.5925, 0.53515);
-      anglei1 = 2.00338;
-      scalei = 0.6933;
-      posi[0] = Vector2d(-0.2417, -0.3413);
-      anglei2 = 0.6476;
-      posi[1] = Vector2d(-0.1895, -0.0965);
-    }
-#endif
+    double angle1;
+    double angle2;
+    double anglei1;
+    double scalei;
+    double anglei2;
+#if defined SHOW_EXAMPLES
     stringstream strm;
     strm << "data/cosimilar_" << ii << ".txt";
- /*   std::ofstream os;
-    os.open(strm.str().c_str(), ios::out);
-    os << angle1 << " " << angle2 << " " << pos[0][0] << " " << pos[0][1] << " " << pos[1][0] << " " << pos[1][1] << " " << anglei1 << " " << scalei << 
-      " " << posi[0][0] << " " << posi[0][1] << " " << anglei2 << " " << posi[1][0] << " " << posi[1][1] << endl;
-    os.close();*/
-
     std::ifstream is;
     is.open(strm.str(), ios::in);
     if (!is.is_open())
@@ -95,6 +68,17 @@ int chapter3Figure17()
     }
     is >> angle1 >> angle2 >> pos[0][0] >> pos[0][1] >> pos[1][0] >> pos[1][1] >> anglei1 >> scalei >> posi[0][0] >> posi[0][1] >> anglei2 >> posi[1][0] >> posi[1][1];
     is.close();
+#else
+    angle1 = 0;
+    pos[0] = Vector2d(0.5, 0);
+    angle2 = randomVal(-maxang, maxang);
+    pos[1] = Vector2d(randomVal(-1.0, 1.0), randomVal(-1.0, 1.0));
+    anglei1;// = randomVal(-maxang, maxang);
+    scalei = randomVal(0.6, 0.8);
+    posi[0] = Vector2d(randomVal(-0.5, 0.5), randomVal(-0.5, 0.5));
+    anglei2 = randomVal(-maxang, maxang);
+    posi[1] = Vector2d(randomVal(-0.5, 0.5), randomVal(-0.5, 0.5));
+#endif
 
     cout << "index: " << ii << " transforms- angle 1: " << angle1 << ", pos[0]: " << pos[0].transpose() << ", angle2: " << angle2 << ", pos[1]: " << pos[1].transpose() << ", anglei1: " << anglei1 << ", scalei: " << scalei << ", posi[0]: " << posi[0].transpose() << ", anglei2: " << anglei2 << ", posi[1]: " << posi[1].transpose() << endl;
     Matrix2d mat[2];  // mat + pos i for shape 1 equals shape i in orientation defined by rmat + rpos i (which can have any scale) 
