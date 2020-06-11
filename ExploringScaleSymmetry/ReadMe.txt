@@ -1,40 +1,31 @@
-========================================================================
-    CONSOLE APPLICATION : ExploringScaleSymmetry Project Overview
-========================================================================
+*NOT READY FOR USE, NOT YET COMPLETE*
+*Exploring Scale Symmetry*
 
-AppWizard has created this ExploringScaleSymmetry application for you.
+Code to run the methods shown in the book: https://www.worldscientific.com/worldscibooks/10.1142/11219
 
-This file contains a summary of what you will find in each of the files that
-make up your ExploringScaleSymmetry application.
+You will need to build the code, as described below, then run the executable:
 
+>> exploringScaleSymmetry
 
-ExploringScaleSymmetry.vcxproj
-    This is the main project file for VC++ projects generated using an Application Wizard.
-    It contains information about the version of Visual C++ that generated the file, and
-    information about the platforms, configurations, and project features selected with the
-    Application Wizard.
+This will print the set of figures that can be generated. For chapter C, figure F run >> exploringScaleSymmetry C F
 
-ExploringScaleSymmetry.vcxproj.filters
-    This is the filters file for VC++ projects generated using an Application Wizard. 
-    It contains information about the association between the files in your project 
-    and the filters. This association is used in the IDE to show grouping of files with
-    similar extensions under a specific node (for e.g. ".cpp" files are associated with the
-    "Source Files" filter).
+*Building on Windows*
+- Download Eigen 3 from: http://eigen.tuxfamily.org/index.php?title=Main_Page#Download
+- load ExploringScaleSymmetry.sln into Microsoft Visual Studio
+- right click the project in Visual Studio, and select 'properties' to go to the Configuration Properties pages
+- Download freeglut from here: https://www.transmissionzero.co.uk/software/freeglut-devel/ (only used for Ch6)
+- under C/C++ | General | Additional Include Directories, add the path to the Eigen folder
+-  also add the path to the freeglut library (...\freeglut\include)
+- under Linker | Genreal | Additional Library Directories, add the path to the freeglut lib folder
 
-ExploringScaleSymmetry.cpp
-    This is the main application source file.
+Now you should be able to build and run the examples.
 
-/////////////////////////////////////////////////////////////////////////////
-Other standard files:
+*Building on Linux (or through CMake)*
 
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named ExploringScaleSymmetry.pch and a precompiled types file named StdAfx.obj.
+- Download Eigen 3 from: http://eigen.tuxfamily.org/index.php?title=Main_Page#Download
+- Download freeglut from http://freeglut.sourceforge.net/
+- build and install freeglut according to its build instructions
+- in the ExploringScaleSymmetry/ExploringScaleSymmetry folder, mkdir build, cd build
+- cmake .. & make
 
-/////////////////////////////////////////////////////////////////////////////
-Other notes:
-
-AppWizard uses "TODO:" comments to indicate parts of the source code you
-should add to or customize.
-
-/////////////////////////////////////////////////////////////////////////////
+this should generate the exploringScaleSymmetry executable.
