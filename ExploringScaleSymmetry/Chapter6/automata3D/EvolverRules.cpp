@@ -1,6 +1,8 @@
 #include "evolver3D.h"
 #include <memory.h>
+#include <algorithm>
 // Code related to specific rule types
+using namespace std;
 
 // type 1 
 bool Evolver3D::getStatic1(int level, int parentLevel, int x, int y, int z)

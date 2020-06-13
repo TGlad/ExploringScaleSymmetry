@@ -6,10 +6,12 @@ int openInFragmentarium()
 {
   cout << "to generate this figure, open the associated .frag file (in the Chapter folder) in the Fragmentarium program" << endl;
   cout << "https://github.com/3Dickulus/FragM" << endl;
+  return 0;
 }
 int chapter5Figure6()
 {
   cout << "To generate this figure, open the figure6.txt file in the Chapter5 folder. Then follow the instructions at the start of this file." << endl;
+  return 0;
 }
 
 #ifdef _WIN32
@@ -26,7 +28,7 @@ int main(int argc, char *argv[])
   
   chapters[2][3] = &chapter2Figure3; chapters[2][4] = &chapter2Figure4; chapters[2][6] = &chapter2Figure6; chapters[2][10] = &chapter2Figure10; chapters[2][14] = &openInFragmentarium;  chapters[2][15] = &chapter2Figure15; chapters[2][16] = &chapter2Figure16; chapters[2][19] = &chapter2Figure19;
   chapters[3][1] = &chapter3Figure1; chapters[3][5] = &chapter3Figure5; chapters[3][9] = &chapter3Figure9; chapters[3][10] = &chapter3Figure10; chapters[3][12] = &chapter3Figure12; chapters[3][17] = &chapter3Figure17;
-  chapters[3][8] = &openInFragmentarium; chapters[4][9] = &chapter4Figure9; chapters[4][11] = &chapter4Figure11; chapters[3][14] = &openInFragmentarium; chapters[3][15] = &openInFragmentarium; chapters[3][17] = &openInFragmentarium; chapters[4][20] = &chapter4Figure20;
+  chapters[4][8] = &openInFragmentarium; chapters[4][9] = &chapter4Figure9; chapters[4][11] = &chapter4Figure11; chapters[4][14] = &openInFragmentarium; chapters[4][15] = &openInFragmentarium; chapters[4][17] = &openInFragmentarium; chapters[4][20] = &chapter4Figure20;
   chapters[5][6] = &chapter5Figure6; chapters[5][22] = &chapter5Figure22; chapters[5][25] = &chapter5Figure25;
   chapters[6][3] = &chapter6Figure3; chapters[6][12] = &chapter6Figure12; chapters[6][17] = &chapter6Figure17; chapters[6][19] = &chapter6Figure19;
   chapters[7][1] = &chapter7Figure1; chapters[7][3] = &chapter7Figure3; chapters[7][4] = &chapter7Figure4; chapters[7][6] = &chapter7Figure6; chapters[7][7] = &chapter7Figure7; chapters[7][12] = &chapter7Figure12; chapters[7][13] = &chapter7Figure13;
@@ -68,10 +70,10 @@ int main(int argc, char *argv[])
     }
   }
   cout << "Exploring Scale Symmetry: Figure Generation. Example usage:" << endl;
-  cout << " generateFigure 2 3  -- generates Chapter 2, Figure 3." << endl;
+  cout << " ExploringScaleSymmetry 2 3  -- generates Chapter 2, Figure 3." << endl;
   cout << "Figure options and parameters are at the top of each figure's .cpp file." << endl;
   cout << "The available figures to generate are:" << endl;
-  for (int c = 0; c < 10; c++)
+  for (int c = 2; c < 10; c++)
   {
     cout << "Chapter " << c << ": ";
     for (int f = 0; f < (int)chapters[c].size(); f++)

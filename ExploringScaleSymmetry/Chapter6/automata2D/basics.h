@@ -21,15 +21,8 @@ inline float random(float min, float max)
 {
   return min + (max-min)*((float)rand() / (float)RAND_MAX);
 }
-template<class T> inline const T& max(const T& left, const T& right)
-{	
-	return right>left ? right : left;
-}
-template<class T> inline const T& min(const T& left, const T& right)
-{	
-	return right<left ? right : left;
-}
-template<class T> inline const T& clamped(const T& value, const T& left, const T& right)
+template<class T> 
+inline const T& clamped(const T& value, const T& left, const T& right)
 {	
   return value<left ? left : (value > right ? right : value);
 }
