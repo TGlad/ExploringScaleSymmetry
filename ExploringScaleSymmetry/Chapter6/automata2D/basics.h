@@ -6,8 +6,6 @@
 #include <math.h>
 #include <iostream>
 
-
-
 #include "Vector3.h"
 
 // TODO: shouldn't be necessary, given templates below
