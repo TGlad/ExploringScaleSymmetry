@@ -1,5 +1,6 @@
 #pragma once
 #include "basics.h"
+#include <fstream>
 
 class Evolver3D
 {
@@ -17,7 +18,7 @@ public:
   void draw();
   void update();
   void reset();
-  void write(FILE* fp);
+  void write(std::ofstream &fp);
   void run(); 
   void setup()
   {
@@ -41,7 +42,7 @@ private:
   int bitmapIndex;
 
 
-  void read(FILE* fp);
+  void read(std::ifstream &fp);
   void constrainLayer(int level);
   void renderPoint(int level, int x, int y, int z, int totalNeighbours);
   void renderToBitmap(int level, int x, int y, int z, int totalNeighbours);

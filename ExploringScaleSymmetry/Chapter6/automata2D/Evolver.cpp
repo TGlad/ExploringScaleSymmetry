@@ -2,7 +2,6 @@
 // Defines the evolution of the automaton. Typically a fixed function of the neighbouring cells.
 #include "evolver.h"
 #include "Image.h"
-#include <iostream>
 #include <string.h>
 #include <algorithm>
 using namespace std;
@@ -73,14 +72,14 @@ void Evolver::reset()
 bool Evolver::load(const char* fileName, int type)
 {
   this->type = type;
-  FILE* fp;
-  if ((fp = fopen(fileName, "rb"))==NULL)
+  ifstream fp(fileName, ios::in | ios::binary);
+  if (!fp.is_open())
   {
     printf("Cannot find file: %s\n", fileName);
     return false;
   }
   read(fp);
-  fclose(fp);
+  fp.close();
   return true;
 }
 
@@ -157,62 +156,62 @@ void Evolver::randomise(bool *starts)
   }
 }
 
-void Evolver::read(FILE* fp)
+void Evolver::read(ifstream &fp)
 {
   switch(type)
   {
   case(1):
     for (int i = 0; i<16; i++)
-      fread(&totalMasks[i], sizeof(int), 1, fp);
+      fp.read((char *)&totalMasks[i], sizeof(int));
     break;
   case(2):
     for (int i = 0; i<17; i++)
-      fread(&totalMasks[i], sizeof(int), 1, fp);
+      fp.read((char *)&totalMasks[i], sizeof(int));
     break;
   case(3):
     for (int i = 0; i<1<<9; i++)
-      fread(&siblingMasks[i], sizeof(bool), 1, fp);
+      fp.read((char *)&siblingMasks[i], sizeof(bool));
     for (int i = 0; i<1<<4; i++)
-      fread(&parentMasks[i], sizeof(bool), 1, fp);
+      fp.read((char *)&parentMasks[i], sizeof(bool));
     for (int i = 0; i<1<<4; i++)
-      fread(&childMasks[i], sizeof(bool), 1, fp);
+      fp.read((char *)&childMasks[i], sizeof(bool));
     break;
   case(4):
     for (int i = 0; i<33; i++)
-      fread(&totalMasks[i], sizeof(int), 1, fp);
+      fp.read((char *)&totalMasks[i], sizeof(int));
     break;
   case(5):
     for (int i = 0; i<164; i++)
-      fread(&siblingMasks[i], sizeof(int), 1, fp);
+      fp.read((char *)&siblingMasks[i], sizeof(int));
     break;
   case(6):
     for (int i = 0; i<6; i++)
       for (int j = 0; j<3; j++)
         for (int k = 0; k<3; k++)
         {
-          fread(&parentsAdd[i][j][k], sizeof(bool), 1, fp);
-          fread(&parentsRemove[i][j][k], sizeof(bool), 1, fp);
+          fp.read((char *)&parentsAdd[i][j][k], sizeof(bool));
+          fp.read((char *)&parentsRemove[i][j][k], sizeof(bool));
         }
     break;
   case(7):
     for (int i = 0; i<1<<6; i++)
-      fread(&octagonalMasks[i], sizeof(bool), 1, fp);
+      fp.read((char *)&octagonalMasks[i], sizeof(bool));
     break;
   case(8) :
     for (int i = 0; i<1 << 7; i++)
-      fread(&octagonalMasks[i], sizeof(bool), 1, fp);
+      fp.read((char *)&octagonalMasks[i], sizeof(bool));
     break;
   case(9) :
     for (int i = 0; i<1 << 4; i++)
-      fread(&parentMasks[i], sizeof(bool), 1, fp);
+      fp.read((char *)&parentMasks[i], sizeof(bool));
     break;
   case(10) :
     for (int i = 0; i<89; i++)
-      fread(&siblingMasks[i], sizeof(bool), 1, fp);
+      fp.read((char *)&siblingMasks[i], sizeof(bool));
     break;
   case(11) :
     for (int i = 0; i<100; i++)
-      fread(&siblingMasks[i], sizeof(bool), 1, fp);
+      fp.read((char *)&siblingMasks[i], sizeof(bool));
     break;
   default:
     return;
@@ -220,62 +219,62 @@ void Evolver::read(FILE* fp)
   frame = 0;
 }
 
-void Evolver::write(FILE* fp)
+void Evolver::write(ofstream &fp)
 {
   switch(type)
   {
   case(1):
     for (int i = 0; i<16; i++)
-      fwrite(&totalMasks[i], sizeof(int), 1, fp);
+      fp.write((char *)&totalMasks[i], sizeof(int));
     break;
   case(2):
     for (int i = 0; i<17; i++)
-      fwrite(&totalMasks[i], sizeof(int), 1, fp);
+      fp.write((char *)&totalMasks[i], sizeof(int));
     break;
   case(3):
     for (int i = 0; i<1<<9; i++)
-      fwrite(&siblingMasks[i], sizeof(bool), 1, fp);
+      fp.write((char *)&siblingMasks[i], sizeof(bool));
     for (int i = 0; i<1<<4; i++)
-      fwrite(&parentMasks[i], sizeof(bool), 1, fp);
+      fp.write((char *)&parentMasks[i], sizeof(bool));
     for (int i = 0; i<1<<4; i++)
-      fwrite(&childMasks[i], sizeof(bool), 1, fp);
+      fp.write((char *)&childMasks[i], sizeof(bool));
     break;
   case(4):
     for (int i = 0; i<33; i++)
-      fwrite(&totalMasks[i], sizeof(int), 1, fp);
+      fp.write((char *)&totalMasks[i], sizeof(int));
     break;
   case(5):
     for (int i = 0; i<164; i++)
-      fwrite(&siblingMasks[i], sizeof(int), 1, fp);
+      fp.write((char *)&siblingMasks[i], sizeof(int));
     break;
   case(6):
     for (int i = 0; i<6; i++)
       for (int j = 0; j<3; j++)
         for (int k = 0; k<3; k++)
         {
-          fwrite(&parentsAdd[i][j][k], sizeof(bool), 1, fp);
-          fwrite(&parentsRemove[i][j][k], sizeof(bool), 1, fp);
+          fp.write((char *)&parentsAdd[i][j][k], sizeof(bool));
+          fp.write((char *)&parentsRemove[i][j][k], sizeof(bool));
         }
     break;
   case(7):
     for (int i = 0; i<1<<6; i++)
-      fwrite(&octagonalMasks[i], sizeof(bool), 1, fp);
+      fp.write((char *)&octagonalMasks[i], sizeof(bool));
     break;
   case(8) :
     for (int i = 0; i<1 << 7; i++)
-      fwrite(&octagonalMasks[i], sizeof(bool), 1, fp);
+      fp.write((char *)&octagonalMasks[i], sizeof(bool));
     break;
   case(9) :
     for (int i = 0; i<1 << 4; i++)
-      fwrite(&parentMasks[i], sizeof(bool), 1, fp);
+      fp.write((char *)&parentMasks[i], sizeof(bool));
     break;
   case(10) :
     for (int i = 0; i<89; i++)
-      fwrite(&siblingMasks[i], sizeof(bool), 1, fp);
+      fp.write((char *)&siblingMasks[i], sizeof(bool));
     break;
   case(11) :
     for (int i = 0; i<100; i++)
-      fwrite(&siblingMasks[i], sizeof(bool), 1, fp);
+      fp.write((char *)&siblingMasks[i], sizeof(bool));
     break;
   default:
     break;

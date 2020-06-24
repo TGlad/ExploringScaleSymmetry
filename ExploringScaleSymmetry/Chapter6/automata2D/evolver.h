@@ -2,6 +2,7 @@
 #pragma once
 #include "basics.h"
 #include "ScreenColour.h"
+#include <fstream>
 extern bool g_timeSymmetric;
 
 class Evolver
@@ -46,8 +47,8 @@ public:
   void update();
   void reset();
   void set(const Evolver& evolver);
-  void read(FILE* fp);
-  void write(FILE* fp);
+  void read(std::ifstream &fp);
+  void write(std::ofstream &fp);
   inline void adjustPixel(int& pixel, bool set)
   {
     if (g_timeSymmetric)

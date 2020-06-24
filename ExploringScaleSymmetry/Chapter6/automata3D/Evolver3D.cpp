@@ -4,6 +4,7 @@
 #include <string.h>
 #include <memory>
 #include "ScreenColour.h"
+using namespace std;
 
 static bool letterZ[4][4][4] = {
   {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}},
@@ -102,14 +103,14 @@ bool Evolver3D::load(const char* fileName, int type)
 {
   this->type = type;
   setup();
-  FILE* fp;
-  if ((fp = fopen(fileName, "rb"))==NULL)
+  ifstream fp(fileName, ios::binary | ios::in);
+  if (!fp.is_open())
   {
     printf("Cannot find file: %s\n", fileName);
     return false;
   }
   read(fp);
-  fclose(fp);
+  fp.close();
   return true;
 }
 
@@ -201,14 +202,14 @@ void Evolver3D::randomiseMasks(const Evolver3D& master, float percentVariation)
       genome[i] = !genome[i];
 }
 
-void Evolver3D::read(FILE* fp)
+void Evolver3D::read(ifstream &fp)
 {
-  fread(genome, sizeof(bool), genomeSize, fp);
+  fp.read((char *)&genome[0], sizeof(bool) * genomeSize);
 }
 
-void Evolver3D::write(FILE* fp)
+void Evolver3D::write(ofstream &fp)
 {
-  fwrite(genome, sizeof(bool), genomeSize, fp);
+  fp.write((char *)&genome[0], sizeof(bool) * genomeSize);
 }
 
 void Evolver3D::set(const Evolver3D& evolver, bool copyGrid)

@@ -223,14 +223,14 @@ void View::save()
   stringstream strm;
 
   strm << "data/" << string(key) << ".ev" << g_type;
-  FILE *fp;
-  if ((fp = fopen(strm.str().c_str(), "wb"))==NULL)
+  ofstream fp(strm.str(), ios::binary | ios::out);
+  if (!fp.is_open())
   {
     cout << "Cannot open file for writing: " << strm.str() << endl;
     return;
   }
   evolvers[0]->write(fp);
-  fclose(fp);
+  fp.close();
   cout << "File: " << strm.str() << " saved" << endl;
 }
 

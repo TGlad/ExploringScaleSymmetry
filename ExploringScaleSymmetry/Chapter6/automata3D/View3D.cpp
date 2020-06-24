@@ -181,14 +181,14 @@ void View3D::save()
  
   stringstream strm;
   strm << "data/" << string(key) << ".es" << g_type;
-  FILE* fp;
-  if ((fp = fopen(strm.str().c_str(), "wb"))==NULL)
+  ofstream fp(strm.str(), ios::binary | ios::out);
+  if (!fp.is_open())
   {
     printf("Cannot open file for writing: %s\n", key);
     return;
   }
   evolvers[0]->write(fp);
-  fclose(fp);
+  fp.close();
   cout << "File: " << strm.str() << " saved" << endl;
 }
 
