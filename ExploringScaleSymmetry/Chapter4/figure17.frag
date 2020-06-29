@@ -23,7 +23,7 @@ float DE(vec3 p)
      vec3 n1 = vec3(-0.5, -sqrt(3.0)/2.0,0.0);
      vec3 n2 = vec3(-0.5, sqrt(3.0)/2.0,0.0);
 
-     float scale = 0.45; // adjusting this can help with the stepping scheme, but doesn't affect geometry.
+     float scale = 1.0; // adjusting this can help with the stepping scheme, but doesn't affect geometry.
      float root3 = sqrt(3.0);
 
      float innerScale = sqrt(3.0)/(1.0 + sqrt(3.0));
@@ -90,9 +90,8 @@ float DE(vec3 p)
           p -= t2 * (2.0 * dot(p, t2) + 1.0);
         p.z = h;
       }
-      float d = (length(p-vec3(0,0,0.4)) - 0.4) * scale; // the 0.4 is slightly more averaging than 0.5
-		
-      return d;
+      float d = (length(p-vec3(0,0,0.5)) - 0.5);		
+      return d * scale;
 }
 
 #preset Default
