@@ -1,5 +1,7 @@
 # ExploringScaleSymmetry
-Runnable examples from the book Exploring Scale Symmetry by Thomas Lowe: <https://www.worldscientific.com/worldscibooks/10.1142/11219>
+Runnable examples from the book Exploring Scale Symmetry by Thomas Lowe: 
+
+   <https://www.worldscientific.com/worldscibooks/10.1142/11219>
 
 This is research code, built to operate on Windows and Linux operating systems. The code is provided "as-is" for education purposes and so no guarantees are given for its performance or stability.
 
