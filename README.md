@@ -23,7 +23,8 @@ Now build the project, and run, specifying the chapter and figure number from th
 
 The GUI of Chapter 6 requires freeglut to be installed, using:
 
-```sudo apt install freeglut3 freeglut3-dev libglew-dev
+```
+sudo apt install freeglut3 freeglut3-dev libglew-dev
 sudo apt install mesa-utils
 ```
 
@@ -31,14 +32,16 @@ Or by downloading from <http://freeglut.sourceforge.net/> and building and insta
 
 Install the Eigen3 vector library:
 
-```sudo apt install libeigen3-dev
+```
+sudo apt install libeigen3-dev
 ```
 
 or download and install Eigen 3 from: <http://eigen.tuxfamily.org/index.php?title=Main_Page#Download>
 
 Then build, from within the ExploringScaleSymmetry root folder:
 
-```cd ExploringScaleSymemtry
+```
+cd ExploringScaleSymemtry
 mkdir build
 cd build
 cmake ..
