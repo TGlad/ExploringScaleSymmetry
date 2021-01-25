@@ -49,4 +49,4 @@ make
 cd ..
 ```
 
-Now run using `\build/exploringScaleSymmetry C F` where C is the chapter number and F is the figure number to run.
+Now run using `/build/exploringScaleSymmetry C F` where C is the chapter number and F is the figure number to run.
