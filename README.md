@@ -1,7 +1,7 @@
 # ExploringScaleSymmetry
 Runnable examples from the book Exploring Scale Symmetry by Thomas Lowe: <https://www.worldscientific.com/worldscibooks/10.1142/11219>
 
-This is research code, built to operate on Windows and Linux operating systems. The code is provided "as-is" for education purposes and no guarantees are given for its performance or stability.
+This is research code, built to operate on Windows and Linux operating systems. The code is provided "as-is" for education purposes and so no guarantees are given for its performance or stability.
 
 Build instructions:
 
@@ -24,13 +24,15 @@ Now build the project, and run, specifying the chapter and figure number from th
 The GUI of Chapter 6 requires freeglut to be installed, using:
 
 ```sudo apt install freeglut3 freeglut3-dev libglew-dev
-sudo apt install mesa-utils```
+sudo apt install mesa-utils
+```
 
 Or by downloading from <http://freeglut.sourceforge.net/> and building and installing according to its instructions. Version 3.2.1 has been tested.
 
 Install the Eigen3 vector library:
 
-```sudo apt install libeigen3-dev```
+```sudo apt install libeigen3-dev
+```
 
 or download and install Eigen 3 from: <http://eigen.tuxfamily.org/index.php?title=Main_Page#Download>
 
@@ -41,10 +43,7 @@ mkdir build
 cd build
 cmake ..
 make
-cd ..```
+cd ..
+```
 
-Now run using
-
-```build/exploringScaleSymmetry C F```
-
-where C is the chapter number and F is the figure number to run.
+Now run using `\build/exploringScaleSymmetry C F` where C is the chapter number and F is the figure number to run.
