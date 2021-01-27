@@ -18,6 +18,7 @@ Either run the executable that is available in the Releases section of the [gith
 5. under C/C++ | General | Additional Include Directories, add the path to the Eigen folder
 6. also add the path to the freeglut library (...\freeglut\include)
 7. under Linker | General | Additional Library Directories, add the path to the freeglut lib folder
+8. add the freeglut.dll into the ExploringScaleSymmetry folder
 
 Now build the project, and run, specifying the chapter and figure number from the book to run, using the command line parameters, e.g: `exploringScaleSymmetry C F` for chapter C, figure F.
 
