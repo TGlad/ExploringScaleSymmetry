@@ -9,7 +9,7 @@ Build instructions:
 
 ## Windows:
 
-Either run the executable that is available in the Releases section of the github page, or build within Microsoft Visual Studio:
+Either run the executable that is available in the Releases section of the [github page](https://github.com/TGlad/ExploringScaleSymmetry), or build within Microsoft Visual Studio:
 
 1. Download Eigen 3 from: <http://eigen.tuxfamily.org/index.php?title=Main_Page#Download>
 2. Download freeglut from here: <https://www.transmissionzero.co.uk/software/freeglut-devel/> (only used for Ch6)
